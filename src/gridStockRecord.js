@@ -28,7 +28,7 @@ export default class GridStockRecord extends Component {
           <div ref={this.handleContextRef}>
               <AccordionStockRecord/>
               <Rail position='right'>
-                <Sticky context={contextRef} offset={500}>
+                <Sticky context={contextRef}>
                   <TableStockAbstract/>
                 </Sticky>
               </Rail>
