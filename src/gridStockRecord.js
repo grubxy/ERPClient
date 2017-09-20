@@ -3,6 +3,7 @@ import AccordionStockRecord from './accordionStock.js'
 import { Button ,Sticky, Rail, Grid, Segment} from 'semantic-ui-react'
 import TableStockAbstract from './tableStockAbstract.js'
 import StatisticTarget from './statisticTarget.js'
+import AddModel from './addModel.js'
 
 export default class GridStockRecord extends Component {
   constructor(props){
@@ -20,7 +21,7 @@ export default class GridStockRecord extends Component {
       <Grid celled>
         <Grid.Row>
           <Grid.Column>
-            <Button content='添加记录' icon='add' labelPosition='left'/>
+            <AddModel/>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
