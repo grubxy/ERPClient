@@ -9,7 +9,7 @@ const items = [
 
 const StatisticTarget = () => (
   <Segment attached>
-    <Statistic.Group items={items} color='blue' size='small'/>
+    <Statistic.Group items={items} color='teal' size='small'/>
   </Segment>
 )
 
