@@ -6,9 +6,11 @@
     "faker": "^4.1.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
+    "redux": "^3.7.2",
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.73.0"
   },
@@ -19,6 +21,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "redux-devtools": "^3.4.1",
     "semantic-ui": "^2.2.13"
   }
 }
