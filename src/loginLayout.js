@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import {Redirect} from 'react-router-dom'
 
 class LoginForm extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {user:'', password:''}
+    this.state = {user:'', password:'', redirect:false}
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -16,6 +17,8 @@ class LoginForm extends Component {
   handleSubmit(event) {
     console.log('user: ' + this.state.user + 'password:' + this.state.password)
     event.preventDefault()
+
+    this.setState({redirect:true})
   }
 
   handleChange(event) {
@@ -25,6 +28,13 @@ class LoginForm extends Component {
   }
 
   render() {
+
+    const redirect = this.state.redirect;
+
+    if (redirect) {
+      return <Redirect to='/app'/>
+    }
+
     return (
     <div className='login-form'>
       {/*

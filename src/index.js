@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
-import App from './App';
-import LoginForm from './loginLayout.js'
 import 'semantic-ui-css/semantic.min.css';
 import registerServiceWorker from './registerServiceWorker';
+import Routes from './routes'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+import reducer from './reducers'
+
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
-		<Router>
-			<div>
-				<Route path="/login" component={LoginForm}/>
-				<Route path="/app" component={App}/>
-			</div>
-		</Router>, 
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
 	document.getElementById('root')
 );
 registerServiceWorker();
