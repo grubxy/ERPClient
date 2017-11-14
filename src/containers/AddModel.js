@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {recordModelClose, recordModelOpen, recordModelCancle, recordModelConfirm} from '../actions'
 
 const mapStateToProps = (state)=>({
-	modelvisible: state.modelvisible
+	modelvisible: state.recordModels.modelvisible
 })
 
 const mapDispatchToProps = {
