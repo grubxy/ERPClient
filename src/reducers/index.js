@@ -1,8 +1,8 @@
 import { combineReducers} from 'redux'
-import records from './records'
+import recordModels from './recordModels'
 
 const app = combineReducers({
-  records
+  recordModels
 })
 
 export default app
