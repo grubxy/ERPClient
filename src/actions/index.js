@@ -1,4 +1,5 @@
 
+
 export const recordModelClose = ()=>({
 	type: 'RECORD_MODEL_CLOSE'
 })
@@ -13,4 +14,19 @@ export const recordModelCancle = ()=>({
 
 export const recordModelConfirm = ()=>({
 	type: 'RECORD_MODEL_CONFIRM'
+})
+
+
+export const loginLogin = (user) => ({
+  type: 'LOGIN_LOG',
+  user
+})
+
+export const loginOnChange = (target) => ({
+  type: 'LOGIN_CHANGE',
+  name: target.name,
+  value: target.value
+})
+
+export const loginOnRegister = ()=> ({
 })

@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 import registerServiceWorker from './registerServiceWorker';
-import Routes from './routes'
+import Routes from './routers/routers'
 import {Provider} from 'react-redux'
-import {createStore} from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import reducer from './reducers'
+import createSagaMiddleware from 'redux-saga'
+import mySaga from './sagas/saga'
 
-const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const sagaMiddleware = createSagaMiddleware()
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(reducer, composeEnhancers(applyMiddleware(sagaMiddleware)))
+sagaMiddleware.run(mySaga)
 
 ReactDOM.render(
   <Provider store={store}>
