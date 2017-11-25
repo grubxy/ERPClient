@@ -1,8 +1,7 @@
 import React , { Component } from 'react'
-import AccordionStockRecord from './accordionStock.js'
+import AccordionStockRecord from './accordionStock'
 import { Button ,Sticky, Rail, Grid, Segment} from 'semantic-ui-react'
-import TableStockAbstract from './tableStockAbstract.js'
-import StatisticTarget from './statisticTarget.js'
+import StatisticTarget from './statisticTarget'
 import AddModel from './containers/AddModel'
 
 export default class GridStockRecord extends Component {
@@ -25,14 +24,16 @@ export default class GridStockRecord extends Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={9}>
+          <Grid.Column>
           <div ref={this.handleContextRef}>
               <AccordionStockRecord/>
+              {/*
               <Rail position='right'>
                 <Sticky context={contextRef}>
                   <TableStockAbstract/>
                 </Sticky>
               </Rail>
+            */}
             </div>
           </Grid.Column>
         </Grid.Row>

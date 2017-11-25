@@ -1,19 +1,17 @@
-
-
-export const recordModelClose = ()=>({
-	type: 'RECORD_MODEL_CLOSE'
+export const recordModelClose = () => ({
+  type: 'RECORD_MODEL_CLOSE'
 })
 
-export const recordModelOpen = ()=>({
-	type: 'RECORD_MODEL_OPEN'
+export const recordModelOpen = () => ({
+  type: 'RECORD_MODEL_OPEN'
 })
 
-export const recordModelCancle = ()=>({
-	type: 'RECORD_MODEL_CANCLE'
+export const recordModelCancle = () => ({
+  type: 'RECORD_MODEL_CANCLE'
 })
 
-export const recordModelConfirm = ()=>({
-	type: 'RECORD_MODEL_CONFIRM'
+export const recordModelConfirm = () => ({
+  type: 'RECORD_MODEL_CONFIRM'
 })
 
 
@@ -28,5 +26,14 @@ export const loginOnChange = (target) => ({
   value: target.value
 })
 
-export const loginOnRegister = ()=> ({
+export const loginOnRegister = () => ({})
+
+export const recordTableBack = (page) => ({
+  type: 'RECORD_TABLE_BACK',
+  page: page
+})
+
+export const recordTableForword = (page) => ({
+  type: 'RECORD_TABLE_FORWORD',
+  page: page
 })

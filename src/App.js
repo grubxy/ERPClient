@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import AccordionExampleStyled from './accordionStock.js'
-import TableStockDetails from './tableStockDetails.js'
 import GridStockRecord from './gridStockRecord.js'
 import SideMenu from './sideMenu.js'
 import StatisticTarget from './statisticTarget.js'

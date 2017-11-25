@@ -5,37 +5,14 @@ import {
   Icon
 } from 'semantic-ui-react'
 
-const title = [{
-  title: 'name'
-}, {
-  title: 'code'
-}, {
-  title: 'ope'
-}, {
-  title: 'price'
-}, {
-  title: 'counts'
-}]
 
-const contenttest = [{
-  name: '11',
-  code: 'c',
-  ope: 'sd',
-  price: '222',
-  counts: '100'
-}, {
-  name: '22',
-  code: 'd',
-  price: '3333',
-  ope: 'by',
-  counts: '200'
-}]
-
-const pageinfo = {
-  size: '5'
-}
-
-const RecordTable = (content, paging) => {
+const TableNormal = ({
+  title,
+  content,
+  paging,
+  onForword,
+  onBack
+}) => {
 
   const header = title.map(item => (
     <Table.HeaderCell>{item.title}</Table.HeaderCell>
@@ -51,14 +28,21 @@ const RecordTable = (content, paging) => {
     </Table.Row>
   ))
 
-  const footer = () => (
-    <Menu.Item as='a' icon>
+  const footer = (
+    <Table.HeaderCell colSpan={title.length}>
+      <Menu floated='right' pagination>
+        <Menu.Item as='a' onClick={()=>onForword(3)} icon>
         <Icon name='left chevron'/>
-    </Menu.Item>
+        </Menu.Item>
+        <Menu.Item as='a' onClick={()=>onBack(3)} icon>
+        <Icon name='right chevron'/>
+        </Menu.Item>
+      </Menu>
+    </Table.HeaderCell>
   )
 
   return (
-    <Table>
+    <Table celled>
       <Table.Header>
         <Table.Row>
           {header}
@@ -69,15 +53,11 @@ const RecordTable = (content, paging) => {
       </Table.Body>   
       <Table.Footer>
         <Table.Row>
-          <Table.HeaderCell colSpan='3'>
-          <Menu floated='right' pagination>
           {footer}
-          </Menu>
-          </Table.HeaderCell>
         </Table.Row>
       </Table.Footer>
     </Table>
   );
 };
 
-export default RecordTable
+export default TableNormal

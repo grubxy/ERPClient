@@ -4,8 +4,7 @@ import React from 'react'
 import {
   Accordion
 } from 'semantic-ui-react'
-import TableStockDetails from './tableStockDetails.js'
-import RecordTable from './components/RecordTable'
+import RecordTable from './containers/RecordTable'
 
 const panels = _.times(100, () => ({
   title: faker.lorem.sentence(),
@@ -15,7 +14,7 @@ const panels = _.times(100, () => ({
 }))
 
 const AccordionStockRecord = () => (
-  <Accordion panels={panels} styled />
+  <Accordion panels={panels} fluid styled />
 )
 
 export default AccordionStockRecord
