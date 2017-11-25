@@ -1,8 +1,22 @@
-import React, {Component,} from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import React, {
+  Component,
+} from 'react'
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Message,
+  Segment
+} from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
-const LoginForm = ({user, onChange, onLogin})=>(
+const LoginForm = ({
+  user,
+  onChange,
+  onLogin
+}) => (
   <div className='login-form'>
     <style>{`
       body > div,

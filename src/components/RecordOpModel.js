@@ -1,13 +1,32 @@
-import {Modal, Button, Form, Icon, Dropdown} from 'semantic-ui-react'
-import React, { Component } from 'react'
+import {
+	Modal,
+	Button,
+	Form,
+	Icon,
+	Dropdown
+} from 'semantic-ui-react'
+import React, {
+	Component
+} from 'react'
 import PropTypes from 'prop-types'
 
-const options = [
-  { key: 'buy', text: '买入', value: 'buy' },
-  { key: 'sell', text: '卖出', value: 'sell' },
-]
+const options = [{
+	key: 'buy',
+	text: '买入',
+	value: 'buy'
+}, {
+	key: 'sell',
+	text: '卖出',
+	value: 'sell'
+}, ]
 
-const RecordOpModel = ({modelvisible, onClose, onOpen, onCancle, onConfirm}) => (
+const RecordOpModel = ({
+	modelvisible,
+	onClose,
+	onOpen,
+	onCancle,
+	onConfirm
+}) => (
 	<div>
 		<Button content='添加记录' icon='add' lablePosition='left' onClick={()=>onOpen()} />
 		<Modal open={modelvisible} onClose={()=>onClose()}>
@@ -35,8 +54,8 @@ const RecordOpModel = ({modelvisible, onClose, onOpen, onCancle, onConfirm}) => 
 RecordOpModel.propTypes = {
 	modelvisible: PropTypes.bool.isRequired,
 	onClose: PropTypes.func.isRequired,
-	onOpen:PropTypes.func.isRequired,
-	onCancle:PropTypes.func.isRequired
+	onOpen: PropTypes.func.isRequired,
+	onCancle: PropTypes.func.isRequired
 }
 
 export default RecordOpModel
