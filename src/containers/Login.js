@@ -1,10 +1,23 @@
 import LoginForm from '../components/LoginForm'
 import PropTypes from 'prop-types'
-import {loginLogin, loginOnChange, loginOnRegister} from '../actions'
-import { connect } from 'react-redux'
-import React, { Component } from 'react'
+import {
+  loginLogin,
+  loginOnChange,
+  loginOnRegister
+} from '../actions'
+import {
+  connect
+} from 'react-redux'
+import React, {
+  Component
+} from 'react'
 
-const Login = ({user, onChange, onLogin, onRegister}) => (
+const Login = ({
+  user,
+  onChange,
+  onLogin,
+  onRegister
+}) => (
 
   <LoginForm user={user} onChange={onChange} onLogin={onLogin}/>
 
@@ -17,7 +30,7 @@ Login.propTypes = {
   user: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state)=>({
+const mapStateToProps = (state) => ({
   user: state.loginModels
 })
 

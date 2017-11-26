@@ -20,11 +20,13 @@ const TableNormal = ({
 
   const cont = content.map(item => (
     <Table.Row>
-      <Table.Cell>{item.name}</Table.Cell>
+      <Table.Cell>{item.seq}</Table.Cell>
       <Table.Cell>{item.code}</Table.Cell>
-      <Table.Cell>{item.ope}</Table.Cell>
-      <Table.Cell>{item.price}</Table.Cell>
+      <Table.Cell>{item.name}</Table.Cell>
       <Table.Cell>{item.counts}</Table.Cell>
+      <Table.Cell>{item.date}</Table.Cell>
+      <Table.Cell>{item.state}</Table.Cell>
+      <Table.Cell>{item.detail}</Table.Cell>
     </Table.Row>
   ))
 

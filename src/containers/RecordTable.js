@@ -11,29 +11,37 @@ import {
 } from '../actions'
 
 const contenttest = [{
-  name: '11',
-  code: 'c',
-  ope: 'sd',
-  price: '222',
-  counts: '100'
+  seq: '1',
+  code: '123123',
+  name: '批次名1',
+  counts: '100',
+  date: '2017',
+  state: '完成',
+  detail: '详情'
 }, {
-  name: '22',
-  code: 'd',
-  price: '3333',
-  ope: 'by',
-  counts: '500'
+  seq: '2',
+  code: '123125',
+  name: '批次名2',
+  counts: '200',
+  date: '2017.9',
+  state: '进行中',
+  detail: '详情'
 }]
 
 const title = [{
-  title: 'name'
+  title: '序号'
 }, {
-  title: 'code'
+  title: '批次号'
 }, {
-  title: 'ope'
+  title: '名称'
 }, {
-  title: 'price'
+  title: '计划数量'
 }, {
-  title: 'counts'
+  title: '开始日期'
+}, {
+  title: '完工状态'
+}, {
+  title: '备注'
 }]
 
 const mapStateToProps = (state) => ({

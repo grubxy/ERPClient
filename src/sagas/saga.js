@@ -17,6 +17,7 @@ function* login(action) {
       password: action.user.password
     })
     .then(function(response) {
+      console.log(response)
       console.log(response.data.token)
     })
     .then(function(error) {

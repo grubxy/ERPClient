@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import GridStockRecord from './gridStockRecord.js'
-import SideMenu from './sideMenu.js'
-import StatisticTarget from './statisticTarget.js'
+import React, {
+  Component
+} from 'react';
+import {
+  Header,
+  Container
+} from 'semantic-ui-react'
+import RecordTable from './containers/RecordTable'
+import AddProduction from './containers/AddProduction'
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <SideMenu />
-        <StatisticTarget/>
-        <GridStockRecord/>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Container style={{marginTop:'3em'}}>
+    <Header as='h1'>生产批次总览</Header>
+      <AddProduction/>
+      <RecordTable/>
+  </Container>
+)
 
-export default App;
+export default App
