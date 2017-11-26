@@ -3,6 +3,8 @@ import {
   put,
   takeEvery
 } from 'redux-saga/effects'
+import axios from 'axios'
+
 
 function* fetchRecordModel(action) {
   console.log("xddfsdfsdf");
@@ -10,6 +12,17 @@ function* fetchRecordModel(action) {
 
 function* login(action) {
   console.log("log start password: " + action.user.password + " username: " + action.user.username)
+  axios.post('/auth', {
+      username: action.user.username,
+      password: action.user.password
+    })
+    .then(function(response) {
+      console.log(response.data.token)
+    })
+    .then(function(error) {
+      console.log(error)
+    })
+
 }
 
 function* recordTableBack(action) {
