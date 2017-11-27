@@ -8,9 +8,6 @@ import {
 import {
   connect
 } from 'react-redux'
-import React, {
-  Component
-} from 'react'
 import PropTypes from 'prop-types'
 
 const mapStateToProps = (state) => {
@@ -26,9 +23,9 @@ const mapDispatchToProps = {
   onChange: productionInputChange
 }
 
-const AddProduction = connect(mapStateToProps, mapDispatchToProps)(ProductionModel)
+const ProductionAdd = connect(mapStateToProps, mapDispatchToProps)(ProductionModel)
 
-AddProduction.propTypes = {
+ProductionAdd.propTypes = {
   data: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
@@ -37,4 +34,4 @@ AddProduction.propTypes = {
 }
 
 
-export default AddProduction
+export default ProductionAdd

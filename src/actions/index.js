@@ -18,6 +18,9 @@ export const productionInputChange = (target) => ({
   value: target.value
 })
 
+// 生产面包条
+export const productionBreadActive = () => ({})
+
 // 生产表格
 export const recordTableBack = (page) => ({
   type: 'RECORD_TABLE_BACK',

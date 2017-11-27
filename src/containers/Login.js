@@ -8,9 +8,7 @@ import {
 import {
   connect
 } from 'react-redux'
-import React, {
-  Component
-} from 'react'
+import React from 'react'
 
 const Login = ({
   user,

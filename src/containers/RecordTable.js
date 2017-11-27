@@ -1,7 +1,4 @@
 import TableNormal from '../components/TableNormal'
-import React, {
-  Component
-} from 'react'
 import {
   connect
 } from 'react-redux'
