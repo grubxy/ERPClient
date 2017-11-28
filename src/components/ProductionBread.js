@@ -9,7 +9,7 @@ const ProductionBread = ({
 	<Breadcrumb size='large'>
   <Breadcrumb.Section onClick={()=>onActive()} link>生产批次</Breadcrumb.Section>
   <Breadcrumb.Divider>/</Breadcrumb.Divider>
-  <Breadcrumb.Section active>施工单</Breadcrumb.Section>
+  <Breadcrumb.Section active>批次生产详情</Breadcrumb.Section>
   </Breadcrumb>
 )
 

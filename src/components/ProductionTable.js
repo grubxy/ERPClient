@@ -19,9 +19,9 @@ const ProductionTable = ({
   ))
 
   const cont = content.map(item => (
-    <Table.Row>
+    <Table.Row onClick={()=>onForword(item.code)}>
       <Table.Cell>{item.seq}</Table.Cell>
-      <Table.Cell><a onClick={()=>onForword(4)}> {item.code} </a></Table.Cell>
+      <Table.Cell>{item.code}</Table.Cell>
       <Table.Cell>{item.name}</Table.Cell>
       <Table.Cell>{item.counts}</Table.Cell>
       <Table.Cell>{item.date}</Table.Cell>
