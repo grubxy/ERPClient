@@ -8,6 +8,7 @@ import {
 import ProductionListTable from './containers/ProductionListTable'
 import ProductionAdd from './containers/ProductionAdd'
 import ProductionChangeBread from './containers/ProductionChangeBread'
+import ProductionDetail from './components/ProductionDetail'
 
 const App = () => (
   <Container style={{marginTop:'3em'}}>
@@ -17,6 +18,8 @@ const App = () => (
     </Header>
     <Divider section/>
     <ProductionChangeBread/>
+    <Divider clearing/>
+      <ProductionDetail/>
     <Divider clearing/>
       <ProductionAdd/>
       <ProductionListTable/>

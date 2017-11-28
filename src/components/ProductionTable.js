@@ -62,7 +62,7 @@ const ProductionTable = ({
         </Table.Row>
       </Table.Footer>
     </Table>
-  );
-};
+  )
+}
 
 export default ProductionTable
