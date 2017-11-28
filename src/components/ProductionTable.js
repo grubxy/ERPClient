@@ -6,7 +6,7 @@ import {
 } from 'semantic-ui-react'
 
 
-const TableNormal = ({
+const ProductionTable = ({
   title,
   content,
   paging,
@@ -21,7 +21,7 @@ const TableNormal = ({
   const cont = content.map(item => (
     <Table.Row>
       <Table.Cell>{item.seq}</Table.Cell>
-      <Table.Cell>{item.code}</Table.Cell>
+      <Table.Cell><a onClick={()=>onForword(4)}> {item.code} </a></Table.Cell>
       <Table.Cell>{item.name}</Table.Cell>
       <Table.Cell>{item.counts}</Table.Cell>
       <Table.Cell>{item.date}</Table.Cell>
@@ -44,7 +44,7 @@ const TableNormal = ({
   )
 
   return (
-    <Table celled>
+    <Table selectable celled>
       <Table.Header>
         <Table.Row>
           {header}
@@ -62,4 +62,4 @@ const TableNormal = ({
   );
 };
 
-export default TableNormal
+export default ProductionTable

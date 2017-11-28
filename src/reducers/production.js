@@ -18,6 +18,8 @@ const production = (state = {
       return {
         open: false
       }
+    case 'PRODUCTION_BREAD_ACTIVE':
+      return state
     default:
       return state
   }

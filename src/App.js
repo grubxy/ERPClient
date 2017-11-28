@@ -5,7 +5,7 @@ import {
   Icon,
   Divider
 } from 'semantic-ui-react'
-import RecordTable from './containers/RecordTable'
+import ProductionListTable from './containers/ProductionListTable'
 import ProductionAdd from './containers/ProductionAdd'
 import ProductionChangeBread from './containers/ProductionChangeBread'
 
@@ -19,7 +19,7 @@ const App = () => (
     <ProductionChangeBread/>
     <Divider clearing/>
       <ProductionAdd/>
-      <RecordTable/>
+      <ProductionListTable/>
   </Container>
 )
 

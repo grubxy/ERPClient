@@ -1,4 +1,4 @@
-import TableNormal from '../components/TableNormal'
+import ProductionTable from '../components/ProductionTable'
 import {
   connect
 } from 'react-redux'
@@ -52,6 +52,6 @@ const mapDispatchToProps = {
   onForword: recordTableForword
 }
 
-const RecordTable = connect(mapStateToProps, mapDispatchToProps)(TableNormal)
+const ProductionListTable = connect(mapStateToProps, mapDispatchToProps)(ProductionTable)
 
-export default RecordTable
+export default ProductionListTable
