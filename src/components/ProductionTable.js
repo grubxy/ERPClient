@@ -2,7 +2,8 @@ import React from 'react'
 import {
   Table,
   Menu,
-  Icon
+  Icon,
+  Progress
 } from 'semantic-ui-react'
 
 
@@ -25,7 +26,9 @@ const ProductionTable = ({
       <Table.Cell>{item.name}</Table.Cell>
       <Table.Cell>{item.counts}</Table.Cell>
       <Table.Cell>{item.date}</Table.Cell>
-      <Table.Cell>{item.state}</Table.Cell>
+      <Table.Cell>
+        <Progress size='tiny'percent={50} indicating />
+      </Table.Cell>
       <Table.Cell>{item.detail}</Table.Cell>
     </Table.Row>
   ))
