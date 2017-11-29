@@ -15,7 +15,7 @@ const Routes = () => (
   <Router>
      <div>
       <Route path="/login" component={LoginPage}/>
-      <PrivateRoute path="/app" component={App}/>
+      <PrivateRoute path="/production" component={App}/>
     </div>
   </Router>
 )

@@ -20,7 +20,6 @@ const App = () => (
     <ProductionChangeBread/>
     <Divider clearing/>
       <ProductionListDetail/>
-    <Divider clearing/>
       <ProductionAdd/>
       <ProductionListTable/>
   </Container>

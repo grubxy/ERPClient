@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 const mapStateToProps = (state) => {
   return ({
     data: state.productionAll.production,
+    show: !state.breadp.subActive
   })
 }
 

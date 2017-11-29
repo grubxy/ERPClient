@@ -6,14 +6,13 @@ import {
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const show = false
-
 const ProductionModel = ({
 	onClose,
 	onOpen,
 	onConfirm,
 	onChange,
-	data
+	data,
+	show
 }) => {
 	if (!show)
 		return <div/>

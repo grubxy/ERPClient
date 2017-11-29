@@ -1,17 +1,19 @@
 import React from 'react'
 import {
   Table,
-  Menu,
   Icon,
-  Button
+  Button,
+  Modal
 } from 'semantic-ui-react'
 
 const ConstructionTable = ({
   title,
   content,
   paging,
-  onForword,
-  onBack
+  onOpen,
+  onClose,
+  onConfirm,
+  onChange
 }) => {
 
   const header = title.map(item => (
@@ -29,19 +31,32 @@ const ConstructionTable = ({
       <Table.Cell>{item.ecounts}</Table.Cell>
       <Table.Cell>{item.error}</Table.Cell>
       <Table.Cell>
-      <Button primary>修改</Button>
+      <Button primary onClick={()=>onOpen(item)}>修改</Button>
       </Table.Cell>
     </Table.Row>
   ))
   const footer = (
     <Table.HeaderCell colSpan={title.length + 1}>
-      <Button floated='right' icon labelPosition='left' primary size='small'>
+      <Button floated='right' icon labelPosition='left' primary size='small' onClick={()=>onOpen(null)}>
         <Icon name='configure' /> 新增施工单
       </Button>
     </Table.HeaderCell>
   )
 
+  const model = (
+    <Modal open={false}>
+      <Modal.Header>{}</Modal.Header>
+      <Modal.Content></Modal.Content>
+      <Modal.Actions>
+        <Button onClick={()=>onClose()}> 取消 </Button>
+        <Button color='blue' onClick={()=>onConfirm()}> 确定 </Button> 
+      </Modal.Actions>
+    </Modal>
+  )
+
   return (
+    <div>
+    {model}
     <Table celled>
       <Table.Header>
         <Table.Row>
@@ -58,6 +73,7 @@ const ConstructionTable = ({
         </Table.Row>
       </Table.Footer>
     </Table>
+    </div>
   )
 
 }
