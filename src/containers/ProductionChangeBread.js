@@ -1,17 +1,17 @@
 import ProductionBread from '../components/ProductionBread'
 import {
-  connect
+	connect
 } from 'react-redux'
 import {
-  productionBreadActive
+	productionBreadActive
 } from '../actions'
 
 const mapStateToProps = (state) => ({
-
+	subActive: state.breadp.subActive
 })
 
 const mapDispatchToProps = {
-  onActive: productionBreadActive,
+	onActive: productionBreadActive,
 }
 
 const ProductionChangeBread = connect(mapStateToProps, mapDispatchToProps)(ProductionBread)

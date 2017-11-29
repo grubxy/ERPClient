@@ -7,9 +7,10 @@ export const productionModelOpen = () => ({
   type: 'PRODUCTION_MODEL_OPEN'
 })
 
-export const productionModelConfirm = (data) => ({
+export const productionModelConfirm = (target) => ({
   type: 'PRODUCTION_MODEL_CONFIRM',
-  data
+  name: target.name,
+  value: target.value
 })
 
 export const productionInputChange = (target) => ({
@@ -18,10 +19,16 @@ export const productionInputChange = (target) => ({
   value: target.value
 })
 
+// 生产表格打开详情
+export const productionDetailSelect = (id) => ({
+  type: 'PRODUCTION_TABLE_SELECT',
+  id
+})
+
 // 生产面包条
-export const productionBreadActive = (data) => ({
-  type: 'PRODUCTION_BREAD_ACTIVE',
-  data
+export const productionBreadActive = (subActive) => ({
+  type: 'PRODUCTION_BREAD',
+  subActive
 })
 
 // 生产表格

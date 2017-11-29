@@ -4,7 +4,8 @@ import {
 } from 'react-redux'
 import {
   recordTableBack,
-  recordTableForword
+  recordTableForword,
+  productionDetailSelect
 } from '../actions'
 
 const contenttest = [{
@@ -44,12 +45,14 @@ const title = [{
 const mapStateToProps = (state) => ({
   // content: state.recordTables
   content: contenttest,
-  title: title
+  title: title,
+  show: !state.breadp.subActive
 })
 
 const mapDispatchToProps = {
   onBack: recordTableBack,
-  onForword: recordTableForword
+  onForword: recordTableForword,
+  onSelect: productionDetailSelect
 }
 
 const ProductionListTable = connect(mapStateToProps, mapDispatchToProps)(ProductionTable)

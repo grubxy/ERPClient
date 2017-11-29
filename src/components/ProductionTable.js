@@ -12,15 +12,20 @@ const ProductionTable = ({
   content,
   paging,
   onForword,
-  onBack
+  onBack,
+  onSelect,
+  show
 }) => {
+
+  if (!show)
+    return <div/>
 
   const header = title.map(item => (
     <Table.HeaderCell>{item.title}</Table.HeaderCell>
   ))
 
   const cont = content.map(item => (
-    <Table.Row onClick={()=>onForword(item.code)}>
+    <Table.Row onClick={()=>onSelect(item.code)}>
       <Table.Cell>{item.seq}</Table.Cell>
       <Table.Cell>{item.code}</Table.Cell>
       <Table.Cell>{item.name}</Table.Cell>

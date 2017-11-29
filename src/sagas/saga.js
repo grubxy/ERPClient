@@ -34,11 +34,21 @@ function* recordTableForword(action) {
   console.log("forword..." + action.page)
 }
 
+function* productionTableSelect(action) {
+  console.log("bread action get id:" + action.id)
+    // 关闭主目录，打开子目录
+  yield put({
+    type: "PRODUCTION_BREAD",
+    subActive: true
+  })
+}
+
 function* mySaga() {
-  yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel);
+  yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel)
   yield takeEvery("LOGIN_LOG", login)
   yield takeEvery("RECORD_TABLE_BACK", recordTableBack)
   yield takeEvery("RECORD_TABLE_FORWORD", recordTableForword)
+  yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
 }
 
 export default mySaga

@@ -6,14 +6,19 @@ import {
 import React from 'react'
 import PropTypes from 'prop-types'
 
+const show = false
+
 const ProductionModel = ({
 	onClose,
 	onOpen,
 	onConfirm,
 	onChange,
 	data
-}) => (
-	<div>
+}) => {
+	if (!show)
+		return <div/>
+	return (
+		<div>
 	<Button content='添加生产批次' color='blue' icon='add' onClick={()=>onOpen()}/>
 	<Modal open={data.open}>
 		<Modal.Header>添加一条生产批次</Modal.Header>
@@ -35,7 +40,8 @@ const ProductionModel = ({
 		</Modal.Actions>
 	</Modal>
 	</div>
-)
+	)
+}
 
 
 ProductionModel.propTypes = {

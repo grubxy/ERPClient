@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 
 const mapStateToProps = (state) => {
   return ({
-    data: state.production,
+    data: state.productionAll.production,
   })
 }
 

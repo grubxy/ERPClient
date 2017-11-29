@@ -1,26 +1,61 @@
 import React from 'react'
-import { Message, Divider, Accordion, Icon} from 'semantic-ui-react'
+import {
+  Message,
+  Divider,
+  Accordion,
+  Icon
+} from 'semantic-ui-react'
 import ConstructionTable from './ConstructionTable'
 
-const item= {
-  code:"12345",
-  plan:"1000",
-  remain:20,
-  over:500,
+const item = {
+  code: "12345",
+  plan: "1000",
+  remain: 20,
+  over: 500,
   error: 2
 }
 
-const title = [{title:'施工单号'}, {title:'操作工'}, {title:'单价'}, {title:'开工日期'}, {title:'开工数量'}, {title:'完工日期'}, {title:'完工数量'},{title:'报废数量'}]
+const title = [{
+  title: '施工单号'
+}, {
+  title: '操作工'
+}, {
+  title: '单价'
+}, {
+  title: '开工日期'
+}, {
+  title: '开工数量'
+}, {
+  title: '完工日期'
+}, {
+  title: '完工数量'
+}, {
+  title: '报废数量'
+}]
 
+const content = [{
+  code: "00001",
+  worker: "小王",
+  price: "100",
+  sdate: "2017:11:29",
+  scounts: "200",
+  edate: "2017:12:01",
+  ecounts: "50",
+  error: "2"
+}, ]
 
-
-const ProductionDetail = ({})=>(
-  <div>
+const ProductionDetail = ({
+  show
+}) => {
+  if (!show)
+    return <div/>
+  return (
+    <div>
   <Message positive>
     <Message.Header>
       批次:{item.code}
     </Message.Header>
-    <p>计划数量:{item.counts} 可生产数量:{item.remain} 在生产数量:{item.over} 报废数量:{item.error}</p>
+    <p>计划数量:{item.plan} 可生产数量:{item.remain} 在生产数量:{item.over} 报废数量:{item.error}</p>
   </Message>
   <Divider clearing/>
   <Accordion fluid styled>
@@ -29,7 +64,7 @@ const ProductionDetail = ({})=>(
     工序号:line-1 工序名: 工序名1
     </Accordion.Title>
     <Accordion.Content active={true} index={0}>
-      <ConstructionTable title={title}/>
+      <ConstructionTable title={title} content={content}/>
     </Accordion.Content>
     <Accordion.Title active={false} index={1}>
       <Icon name='dropdown' />
@@ -39,8 +74,8 @@ const ProductionDetail = ({})=>(
       <p>表格22。。。。。。。。。。。。</p>
     </Accordion.Content>
   </Accordion>
-
   </div>
-)
+  )
+}
 
 export default ProductionDetail
