@@ -15,7 +15,7 @@ const item = {
   error: 2
 }
 
-const title = [{
+const tabletitle = [{
   title: '施工单号'
 }, {
   title: '操作工'
@@ -33,7 +33,7 @@ const title = [{
   title: '报废数量'
 }]
 
-const content = [{
+const tablecontent = [{
   code: "00001",
   worker: "小王",
   price: "100",
@@ -42,10 +42,19 @@ const content = [{
   edate: "2017:12:01",
   ecounts: "50",
   error: "2"
-}, ]
+}]
+
+const accord = [{
+  title: '工序号:line-1 工序名: 工序名1',
+  content: <ConstructionTable title={tabletitle} content={tablecontent}/>
+}, {
+  title: '工序号:line-2 工序名: 工序名2',
+  content: <p>表格22。。。。。。。。。。。。</p>
+}]
 
 const ProductionDetail = ({
-  show
+  show,
+  onTitleClick
 }) => {
   if (!show)
     return <div/>
@@ -58,6 +67,8 @@ const ProductionDetail = ({
     <p>计划数量:{item.plan} 可生产数量:{item.remain} 在生产数量:{item.over} 报废数量:{item.error}</p>
   </Message>
   <Divider clearing/>
+  <Accordion fluid styled defaultActiveIndex={0} panels={accord} onTitleClick={()=>onTitleClick()}/>
+  {/*
   <Accordion fluid styled>
     <Accordion.Title active={true} index={0}>
       <Icon name='dropdown' />
@@ -74,6 +85,7 @@ const ProductionDetail = ({
       <p>表格22。。。。。。。。。。。。</p>
     </Accordion.Content>
   </Accordion>
+*/}
   </div>
   )
 }
