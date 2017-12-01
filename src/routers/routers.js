@@ -2,10 +2,20 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Redirect
+  Redirect,
+  Link
 } from 'react-router-dom'
-import App from '../App';
+import Production from '../Production'
+import Construction from '../Construction'
+import StoreHouse from '../StoreHouse'
+import Pay from '../Pay'
+import Manager from '../Manager'
 import LoginPage from '../containers/Login'
+import {
+  Menu,
+  Segment
+} from 'semantic-ui-react'
+
 
 const auth = {
   isAuthenticated: true
@@ -14,8 +24,31 @@ const auth = {
 const Routes = () => (
   <Router>
      <div>
+      <Segment>
+      <Menu secondary>
+        <Menu.Item>
+          <Link to="/production">生批次总览</Link>
+        </Menu.Item>
+         <Menu.Item>
+          <Link to="/construction">施工总览</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to="/pay">工资总览</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to="/store">仓库总览</Link>
+        </Menu.Item>
+         <Menu.Item>
+          <Link to="/manager">管理信息</Link>
+        </Menu.Item>
+      </Menu>
+      </Segment>
       <Route path="/login" component={LoginPage}/>
-      <PrivateRoute path="/production" component={App}/>
+      <PrivateRoute path="/production" component={Production}/>
+      <PrivateRoute path="/construction" component={Construction}/>
+      <PrivateRoute path="/pay" component={Pay}/>
+      <PrivateRoute path="/store" component={StoreHouse}/>
+      <PrivateRoute path="/manager" component={Manager}/>
     </div>
   </Router>
 )

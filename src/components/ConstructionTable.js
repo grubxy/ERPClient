@@ -9,7 +9,6 @@ import {
 const ConstructionTable = ({
   title,
   content,
-  paging,
   onOpen,
   onClose,
   onConfirm,

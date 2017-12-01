@@ -10,7 +10,7 @@ import ProductionAdd from './containers/ProductionAdd'
 import ProductionChangeBread from './containers/ProductionChangeBread'
 import ProductionListDetail from './containers/ProductionListDetail'
 
-const App = () => (
+const Production = () => (
   <Container style={{marginTop:'3em'}}>
     <Header as='h2'>
     <Icon name='settings'/>
@@ -25,4 +25,4 @@ const App = () => (
   </Container>
 )
 
-export default App
+export default Production
