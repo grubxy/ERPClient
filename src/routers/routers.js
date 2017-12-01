@@ -13,7 +13,8 @@ import Manager from '../Manager'
 import LoginPage from '../containers/Login'
 import {
   Menu,
-  Segment
+  Segment,
+  Container
 } from 'semantic-ui-react'
 
 
@@ -25,6 +26,7 @@ const Routes = () => (
   <Router>
      <div>
       <Segment>
+      <Container>
       <Menu secondary>
         <Menu.Item>
           <Link to="/production">生批次总览</Link>
@@ -42,6 +44,7 @@ const Routes = () => (
           <Link to="/manager">管理信息</Link>
         </Menu.Item>
       </Menu>
+      </Container>
       </Segment>
       <Route path="/login" component={LoginPage}/>
       <PrivateRoute path="/production" component={Production}/>

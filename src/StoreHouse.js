@@ -8,7 +8,7 @@ import {
 
 const StoreHouse = () => (
     <Container style={{marginTop:'3em'}}>
-    <Header as='h2'>
+    <Header as='h3'>
     <Icon name='home'/>
     <Header.Content>仓库总览</Header.Content>
     </Header>

@@ -12,11 +12,11 @@ import ProductionListDetail from './containers/ProductionListDetail'
 
 const Production = () => (
   <Container style={{marginTop:'3em'}}>
-    <Header as='h2'>
+    <Header as='h3'>
     <Icon name='settings'/>
     <Header.Content>生产批次总览</Header.Content>
     </Header>
-    <Divider section/>
+    <Divider hidden/>
     <ProductionChangeBread/>
     <Divider clearing/>
       <ProductionListDetail/>

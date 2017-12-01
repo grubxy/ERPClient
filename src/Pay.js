@@ -8,7 +8,7 @@ import {
 
 const Pay = () => (
     <Container style={{marginTop:'3em'}}>
-    <Header as='h2'>
+    <Header as='h3'>
     <Icon name='money'/>
     <Header.Content>工资总览</Header.Content>
     </Header>
