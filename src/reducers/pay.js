@@ -1,6 +1,12 @@
 const pay = (state = {
 	table: {
-		data: [],
+		data: [{
+			name: '小王',
+			pay: '200'
+		}, {
+			name: '小李',
+			pay: '300'
+		}],
 		headers: {
 			name: {
 				title: '姓名'

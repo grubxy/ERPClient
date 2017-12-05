@@ -25,31 +25,38 @@ const TableNormal = ({
 			console.log("title: " + headers[key].title)
 		})
 	*/
-	const header = () => {
-		// return Object.keys(headers).map((key, i) => {
-		// 	return <Table.HeaderCell>{headers[key].title}</Table.HeaderCell>
-		// })
-		return <Table.HeaderCell>xx</Table.HeaderCell>
-	}
+	let header = (
+		<Table.Header>
+		<Table.Row>
+	 		{Object.keys(headers).map((key, i) => (
+ 				<Table.HeaderCell key={i}>{headers[key].title}</Table.HeaderCell>
+		 ))}
+	 	</Table.Row>
+	 	</Table.Header>
+	)
 
-	let body = () => {
-		return data.map((row, i) => {
-			return (
-				<Table.Row>
-				{
-					Object.keys(headers).map((_, j)=>{
-					let key = Object.keys(headers)[j]
-					let value = row[key]
-					return <Table.Cell>value</Table.Cell>
-					})
-				}
-				</Table.Row>
-			)
-		})
-	}
 
-	let footer = () => (
-		<Table.HeaderCell colSpan={headers.length}>
+	let body = (
+		<Table.Body>
+		{
+			data.map((row, i) => (
+					<Table.Row>
+					{
+						Object.keys(headers).map((_, j)=>{
+							let key = Object.keys(headers)[j]
+							let value = row[key]
+							return <Table.Cell>{value}</Table.Cell>
+						})
+					}
+					</Table.Row>
+				))
+		}
+		</Table.Body>
+	)
+
+	let footer = (
+		<Table.Footer>
+		  <Table.HeaderCell colSpan={Object.keys(headers).length}>
 			  <Menu floated='right' pagination>
 			    <Menu.Item as='a' onClick={()=>goToPage(page, pageSize)} icon>
 			    <Icon name='angle double left'/>
@@ -65,15 +72,14 @@ const TableNormal = ({
 			    </Menu.Item>
 			  </Menu>
 			</Table.HeaderCell>
+	  </Table.Footer>
 	)
 
 	return (
 		<Table celled>
-	      <Table.Header>
-	        <Table.Row>
-	          {header}
-	        </Table.Row>
-	      </Table.Header>
+	    	{header}
+	    	{body}
+	    	{footer}
 		</Table>
 	)
 }

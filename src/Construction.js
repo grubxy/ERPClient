@@ -5,6 +5,7 @@ import {
     Divider,
     Icon
 } from 'semantic-ui-react'
+import ConstructionShow from './containers/ConstructionShow'
 
 const Construction = () => (
     <Container style={{marginTop:'3em'}}>
@@ -13,6 +14,7 @@ const Construction = () => (
     <Header.Content>施工总览</Header.Content>
     </Header>
     <Divider section/>
+    <ConstructionShow/>
   </Container>
 )
 
