@@ -43,6 +43,14 @@ export const recordTableForword = (page) => ({
 })
 
 
+// 工资表格分页
+export const paygoToPage = (page, pageSize) => ({
+  type: 'PAY_TABLE_SEACH',
+  page: page,
+  pageSize: pageSize
+})
+
+
 // 登录
 export const loginLogin = (user) => ({
   type: 'LOGIN_LOG',
