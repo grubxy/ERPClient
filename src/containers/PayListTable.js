@@ -1,20 +1,44 @@
 import {
-	connect
+  connect
 } from 'react-redux'
 import {
-	paygoToPage
+  paygoToPage
 } from '../actions'
+import React, {
+  Component
+} from 'react'
 import TableNormal from '../components/TableNormal'
 
+class PayListTable extends Component {
+
+  componentWillMount = () => {
+    const {
+      goToPage,
+      table
+    } = this.props
+    goToPage(table, 'goFirst')
+  }
+
+  render = () => {
+    const {
+      table,
+      goToPage
+    } = this.props
+
+    return (
+      <TableNormal goToPage={goToPage} table={table}/>
+    )
+
+  }
+}
+
 const mapStateToProps = (state) => ({
-	table: state.pay
+  table: state.pay
 })
 
 const mapDispatchToProps = {
-	goToPage: paygoToPage
+  goToPage: paygoToPage
 
 }
 
-const PayListTable = connect(mapStateToProps, mapDispatchToProps)(TableNormal)
-
-export default PayListTable
+export default connect(mapStateToProps, mapDispatchToProps)(PayListTable)

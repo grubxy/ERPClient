@@ -1,11 +1,5 @@
 const pay = (state = {
-	content: [{
-		name: '小王',
-		pay: '200'
-	}, {
-		name: '小李',
-		pay: '300'
-	}],
+	content: [],
 	headers: {
 		name: {
 			title: '姓名'
