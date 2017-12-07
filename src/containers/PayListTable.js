@@ -7,8 +7,7 @@ import {
 import TableNormal from '../components/TableNormal'
 
 const mapStateToProps = (state) => ({
-	data: state.pay.table.data,
-	headers: state.pay.table.headers
+	table: state.pay
 })
 
 const mapDispatchToProps = {

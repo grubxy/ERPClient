@@ -44,10 +44,10 @@ export const recordTableForword = (page) => ({
 
 
 // 工资表格分页
-export const paygoToPage = (page, pageSize) => ({
+export const paygoToPage = (table, method) => ({
   type: 'PAY_TABLE_SEACH',
-  page: page,
-  pageSize: pageSize
+  table: table,
+  method: method
 })
 
 

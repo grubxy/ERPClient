@@ -4,6 +4,9 @@ import {
   takeEvery
 } from 'redux-saga/effects'
 import axios from 'axios'
+import {
+  getEmployee
+} from '../api/pay'
 
 
 function* fetchRecordModel(action) {
@@ -20,7 +23,7 @@ function* login(action) {
       console.log(response)
       console.log(response.data.token)
     })
-    .then(function(error) {
+    .catch(function(error) {
       console.log(error)
     })
 
@@ -43,12 +46,47 @@ function* productionTableSelect(action) {
   })
 }
 
+function* payTableSelect(action) {
+  let page = action.table.number
+  let size = action.table.size
+  let totalPages = action.table.totalPages
+  let data = ''
+
+  console.log("page:" + page + " size:" + size + " method: " + action.method + ' total:' + totalPages)
+  try {
+    switch (action.method) {
+      case 'goFirst':
+        data = yield call(getEmployee, 0, size)
+        break
+      case 'goPrev':
+        data = yield call(getEmployee, Math.max(0, page - 1), size)
+        break
+      case 'goNext':
+        data = yield call(getEmployee, Math.min(page + 1, totalPages - 1), size)
+        break
+      case 'goLast':
+        data = yield call(getEmployee, totalPages - 1, size)
+        break
+      default:
+        console.log("error method")
+        break
+    }
+    yield put({
+      type: 'PAY_TABLE_UPDATE',
+      data: data
+    })
+  } catch (error) {
+    console.log("error");
+  }
+}
+
 function* mySaga() {
   yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel)
   yield takeEvery("LOGIN_LOG", login)
   yield takeEvery("RECORD_TABLE_BACK", recordTableBack)
   yield takeEvery("RECORD_TABLE_FORWORD", recordTableForword)
   yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
+  yield takeEvery("PAY_TABLE_SEACH", payTableSelect)
 }
 
 export default mySaga
