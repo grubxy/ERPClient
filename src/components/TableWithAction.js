@@ -37,15 +37,15 @@ const TableWithAction = ({
 		<Table.Body>
 		{
 			table.content.map((row, i) => (
-					<Table.Row>
+					<Table.Row key={i}>
 					{
 						Object.keys(table.headers).map((_, j)=>{
 							let key = Object.keys(table.headers)[j]
 							let value = row[key]
 							if (key === 'action') {
-								return <Table.Cell><a onClick={()=>onAction(row, table.size)}>删除</a></Table.Cell>
+								return <Table.Cell key={key}><a onClick={()=>onAction(row, table.size)}>删除</a></Table.Cell>
 							} else {
-								return <Table.Cell>{value}</Table.Cell>
+								return <Table.Cell key={key}>{value}</Table.Cell>
 							}
 						})
 					}
@@ -77,7 +77,7 @@ const TableWithAction = ({
 	)
 
 	return (
-		<Table celled>
+		<Table celled color='blue' size='small'>
 	    	{header}
 	    	{body}
 	    	{footer}

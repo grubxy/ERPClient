@@ -7,7 +7,7 @@ import {
 import React, {
   Component
 } from 'react'
-import TableNormal from '../components/TableNormal'
+import TableWithAction from '../components/TableWithAction'
 
 class PayListTable extends Component {
 
@@ -26,7 +26,7 @@ class PayListTable extends Component {
     } = this.props
 
     return (
-      <TableNormal goToPage={goToPage} table={table}/>
+      <TableWithAction goToPage={goToPage} table={table}/>
     )
 
   }

@@ -36,12 +36,12 @@ const TableNormal = ({
 		<Table.Body>
 		{
 			table.content.map((row, i) => (
-					<Table.Row>
+					<Table.Row key={i}>
 					{
 						Object.keys(table.headers).map((_, j)=>{
 							let key = Object.keys(table.headers)[j]
 							let value = row[key]
-							return <Table.Cell>{value}</Table.Cell>
+							return <Table.Cell key={key}>{value}</Table.Cell>
 						})
 					}
 					</Table.Row>
@@ -72,7 +72,7 @@ const TableNormal = ({
 	)
 
 	return (
-		<Table celled>
+		<Table celled color='blue' size='small'>
 	    	{header}
 	    	{body}
 	    	{footer}
