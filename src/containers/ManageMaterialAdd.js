@@ -20,7 +20,8 @@ const ManageMaterialAdd = ({
 	onOpen,
 	onConfirm,
 	onChange,
-	data
+	data,
+	tableSize
 }) => {
 	return (
 		<div>
@@ -39,7 +40,7 @@ const ManageMaterialAdd = ({
 		</Modal.Content>
 		<Modal.Actions>
 			<Button onClick={()=>onClose()}> 取消 </Button>
-			<Button color='blue' onClick={()=>onConfirm(data)}> 确定 </Button>
+			<Button color='blue' onClick={()=>onConfirm(data, tableSize)}> 确定 </Button>
 		</Modal.Actions>
 	</Modal>
 	</div>
@@ -59,7 +60,8 @@ ManageMaterialAdd.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-	data: state.manageAll.model
+	data: state.manageAll.model,
+	tableSize: state.manageAll.material.size
 })
 
 const mapDispatchToProps = {

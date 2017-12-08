@@ -5,9 +5,10 @@ export const materialgoToPage = (table, method) => ({
   method
 })
 
-export const materialDel = (data) => ({
+export const materialDel = (data, size) => ({
   type: 'MANAGE_TABLE_DEL',
-  data
+  data,
+  size
 })
 
 // 材料模态框表格
@@ -19,9 +20,10 @@ export const materialOpen = () => ({
   type: 'MANAGER_MODEL_OPEN'
 })
 
-export const materialConfirm = (data) => ({
+export const materialConfirm = (data, size) => ({
   type: 'MANAGER_MODEL_CONFIRM',
-  data
+  data,
+  size
 })
 
 export const materialInputChange = (target) => ({

@@ -1,9 +1,5 @@
 export const material = (state = {
-	content: [{
-		name: '物料名1',
-		code: '000001',
-		spec: '规格名1'
-	}],
+	content: [],
 	headers: {
 		name: {
 			title: '物料名称'
@@ -24,7 +20,9 @@ export const material = (state = {
 }, action) => {
 	switch (action.type) {
 		case 'MATERIAL_UPDATE':
-			return state
+			return {...action.data,
+				headers: state.headers
+			}
 		default:
 			return state
 	}

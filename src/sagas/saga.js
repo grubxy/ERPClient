@@ -8,7 +8,9 @@ import {
   getEmployee
 } from '../api/pay'
 import {
-  addMaterial
+  addMaterial,
+  delMaterial,
+  getMaterial
 } from '../api/manage'
 
 
@@ -62,13 +64,13 @@ function* payTableSelect(action) {
         data = yield call(getEmployee, 0, size)
         break
       case 'goPrev':
-        data = yield call(getEmployee, Math.max(0, page - 1), size)
+        data = yield call(getEmployee, Math.max(0, Math.max(0, page - 1)), size)
         break
       case 'goNext':
-        data = yield call(getEmployee, Math.min(page + 1, totalPages - 1), size)
+        data = yield call(getEmployee, Math.min(page + 1, Math.max(0, totalPages - 1)), size)
         break
       case 'goLast':
-        data = yield call(getEmployee, totalPages - 1, size)
+        data = yield call(getEmployee, Math.max(0, totalPages - 1), size)
         break
       default:
         console.log("error method")
@@ -83,20 +85,72 @@ function* payTableSelect(action) {
   }
 }
 
+function* materialSelect(action) {
+  let page = action.table.number
+  let size = action.table.size
+  let totalPages = action.table.totalPages
+  let data = ''
+
+  console.log("page: " + page + " size: " + size + " method: " + action.method + ' totalPages: ' + totalPages)
+  try {
+    switch (action.method) {
+      case 'goFirst':
+        data = yield call(getMaterial, 0, size)
+        break
+      case 'goPrev':
+        data = yield call(getMaterial, Math.max(0, Math.max(0, page - 1)), size)
+        break
+      case 'goNext':
+        data = yield call(getMaterial, Math.min(page + 1, Math.max(0, totalPages - 1)), size)
+        break
+      case 'goLast':
+        data = yield call(getMaterial, Math.max(0, totalPages - 1), size)
+        break
+      default:
+        console.log("error method")
+        break
+    }
+    yield put({
+      type: 'MATERIAL_UPDATE',
+      data: data
+    })
+  } catch (error) {
+    console.log("error");
+  }
+
+}
+
+
 function* manageDel(action) {
-  console.log("manage del:" + action.data.code + action.data.name + action.data.spec)
+  console.log("manage del:" + action.data.code + action.data.name + action.data.spec + 'size: ' + action.size)
+  let data = ''
+  try {
+    yield call(delMaterial, action.data)
+    data = yield call(getMaterial, 0, action.size)
+  } catch (error) {
+    console.log(error)
+  }
+  yield put({
+    type: 'MATERIAL_UPDATE',
+    data
+  })
 }
 
 function* manageAdd(action) {
-  console.log("manage add:" + action.data.name + action.data.spec)
+  let data = ''
+  console.log("manage add:" + action.data.name + action.data.spec + 'size: ' + action.size)
   try {
     yield call(addMaterial, action.data.name, action.data.spec)
-
+    data = yield call(getMaterial, 0, action.size)
   } catch (error) {
     console.log(error)
   }
   yield put({
     type: 'MANAGE_MODEL_CLOSE'
+  })
+  yield put({
+    type: 'MATERIAL_UPDATE',
+    data
   })
 }
 
@@ -107,8 +161,9 @@ function* mySaga() {
   yield takeEvery("RECORD_TABLE_FORWORD", recordTableForword)
   yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
   yield takeEvery("PAY_TABLE_SEACH", payTableSelect)
-  yield takeEvery("MANAGER_TABLE_DEL", manageDel)
+  yield takeEvery("MANAGE_TABLE_DEL", manageDel)
   yield takeEvery("MANAGER_MODEL_CONFIRM", manageAdd)
+  yield takeEvery("MANAGE_TABLE_PAGE", materialSelect)
 }
 
 export default mySaga

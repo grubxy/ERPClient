@@ -43,7 +43,7 @@ const TableWithAction = ({
 							let key = Object.keys(table.headers)[j]
 							let value = row[key]
 							if (key === 'action') {
-								return <Table.Cell><a onClick={()=>onAction(row)}>删除</a></Table.Cell>
+								return <Table.Cell><a onClick={()=>onAction(row, table.size)}>删除</a></Table.Cell>
 							} else {
 								return <Table.Cell>{value}</Table.Cell>
 							}

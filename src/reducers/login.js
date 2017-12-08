@@ -1,10 +1,10 @@
 const loginModel = (state = {}, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'LOGIN_CHANGE':
-    state[action.name]=action.value
-    return state
+      state[action.name] = action.value
+      return state
     default:
-     return state
+      return state
   }
 }
 export default loginModel
