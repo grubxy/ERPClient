@@ -5,6 +5,8 @@ import {
     Divider,
     Icon
 } from 'semantic-ui-react'
+import ManageMaterialTable from './containers/ManageMaterialTable'
+import ManageMaterialAdd from './containers/ManageMaterialAdd'
 
 const Manager = () => (
     <Container style={{marginTop:'3em'}}>
@@ -13,6 +15,8 @@ const Manager = () => (
     <Header.Content>管理信息</Header.Content>
     </Header>
     <Divider section/>
+    <ManageMaterialAdd/>
+    <ManageMaterialTable/>
   </Container>
 )
 

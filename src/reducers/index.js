@@ -6,17 +6,27 @@ import production from './production'
 import construction from './construction'
 import breadp from './breadp'
 import pay from './pay'
+import {
+	material,
+	model
+} from './material'
 
-const productionAll = combineReducers({
+let productionAll = combineReducers({
 	production,
 	construction
+})
+
+let manageAll = combineReducers({
+	material,
+	model
 })
 
 const app = combineReducers({
 	loginModels,
 	productionAll,
 	breadp,
-	pay
+	pay,
+	manageAll
 })
 
 export default app

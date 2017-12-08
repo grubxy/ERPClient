@@ -7,6 +7,9 @@ import axios from 'axios'
 import {
   getEmployee
 } from '../api/pay'
+import {
+  addMaterial
+} from '../api/manage'
 
 
 function* fetchRecordModel(action) {
@@ -80,6 +83,23 @@ function* payTableSelect(action) {
   }
 }
 
+function* manageDel(action) {
+  console.log("manage del:" + action.data.code + action.data.name + action.data.spec)
+}
+
+function* manageAdd(action) {
+  console.log("manage add:" + action.data.name + action.data.spec)
+  try {
+    yield call(addMaterial, action.data.name, action.data.spec)
+
+  } catch (error) {
+    console.log(error)
+  }
+  yield put({
+    type: 'MANAGE_MODEL_CLOSE'
+  })
+}
+
 function* mySaga() {
   yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel)
   yield takeEvery("LOGIN_LOG", login)
@@ -87,6 +107,8 @@ function* mySaga() {
   yield takeEvery("RECORD_TABLE_FORWORD", recordTableForword)
   yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
   yield takeEvery("PAY_TABLE_SEACH", payTableSelect)
+  yield takeEvery("MANAGER_TABLE_DEL", manageDel)
+  yield takeEvery("MANAGER_MODEL_CONFIRM", manageAdd)
 }
 
 export default mySaga

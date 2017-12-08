@@ -50,7 +50,6 @@ export const paygoToPage = (table, method) => ({
   method: method
 })
 
-
 // 登录
 export const loginLogin = (user) => ({
   type: 'LOGIN_LOG',
