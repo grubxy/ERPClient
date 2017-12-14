@@ -27,7 +27,7 @@ const ManageMaterialAdd = ({
 		<div>
 	<Button content='添加物料' color='blue' icon='add' onClick={()=>onOpen()}/>
 	<Modal open={data.open}>
-		<Modal.Header>添加一条生产批次</Modal.Header>
+		<Modal.Header>添加物料</Modal.Header>
 		<Modal.Content>
 		  <Form size='large'>
 		    <Form.Group>

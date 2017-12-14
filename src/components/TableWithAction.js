@@ -2,7 +2,8 @@ import React from 'react'
 import {
 	Table,
 	Menu,
-	Icon
+	Icon,
+	Progress
 } from 'semantic-ui-react'
 
 const TableWithAction = ({
@@ -12,7 +13,8 @@ const TableWithAction = ({
 	loading,
 	onSearch,
 	goToPage,
-	onAction
+	onAction,
+	onSelect
 }) => {
 
 	//console.log("header:" + JSON.stringify(headers))
@@ -36,21 +38,47 @@ const TableWithAction = ({
 	let body = (
 		<Table.Body>
 		{
-			table.content.map((row, i) => (
-					<Table.Row key={i}>
-					{
-						Object.keys(table.headers).map((_, j)=>{
-							let key = Object.keys(table.headers)[j]
-							let value = row[key]
-							if (key === 'action') {
-								return <Table.Cell key={key}><a onClick={()=>onAction(row, table.size)}>删除</a></Table.Cell>
-							} else {
-								return <Table.Cell key={key}>{value}</Table.Cell>
+			table.content.map((row, i) => {
+				if (table.selectable===true) {
+					return (
+							<Table.Row key={i} onClick={()=>onSelect(row)}>
+							{
+								Object.keys(table.headers).map((_, j)=>{
+									let key = Object.keys(table.headers)[j]
+									let value = row[key]
+									if (key === 'action') {
+										return <Table.Cell key={key}><a onClick={()=>onAction(row, table.size)}>删除</a></Table.Cell>
+									} else if (key==='state') {
+										return <Table.Cell key={key}> <Progress size='tiny'percent={value} indicating /></Table.Cell>
+									} 
+									else {
+										return <Table.Cell key={key}>{value}</Table.Cell>
+									}
+								})
 							}
-						})
-					}
-					</Table.Row>
-				))
+							</Table.Row>
+						)
+				} else {
+					return (
+						<Table.Row key={i}>
+						{
+							Object.keys(table.headers).map((_, j)=>{
+								let key = Object.keys(table.headers)[j]
+								let value = row[key]
+								if (key === 'action') {
+									return <Table.Cell key={key}><a onClick={()=>onAction(row, table.size)}>删除</a></Table.Cell>
+								} else if (key==='state') {
+									return <Table.Cell key={key}> <Progress size='tiny'percent={value} indicating /></Table.Cell>
+								} 
+								else {
+									return <Table.Cell key={key}>{value}</Table.Cell>
+								}
+							})
+						}
+						</Table.Row>
+						)
+				}
+				})
 		}
 		</Table.Body>
 	)
@@ -77,7 +105,7 @@ const TableWithAction = ({
 	)
 
 	return (
-		<Table celled color='blue' size='small'>
+		<Table celled color='blue' size='small' selectable={table.selectable}>
 	    	{header}
 	    	{body}
 	    	{footer}

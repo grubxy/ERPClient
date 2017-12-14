@@ -1,60 +1,48 @@
-import ProductionTable from '../components/ProductionTable'
 import {
-  connect
+	connect
 } from 'react-redux'
+import React, {
+	Component
+} from 'react'
 import {
-  recordTableBack,
-  recordTableForword,
-  productionDetailSelect
-} from '../actions'
+	productiongoToPage,
+	productiononSelect
+} from '../actions/production'
 
-const contenttest = [{
-  seq: '1',
-  code: '123123',
-  name: '批次名1',
-  counts: '100',
-  date: '2017',
-  state: '完成',
-  detail: '详情'
-}, {
-  seq: '2',
-  code: '123125',
-  name: '批次名2',
-  counts: '200',
-  date: '2017.9',
-  state: '进行中',
-  detail: '详情'
-}]
+import TableWithAction from '../components/TableWithAction'
 
-const title = [{
-  title: '序号'
-}, {
-  title: '批次号'
-}, {
-  title: '名称'
-}, {
-  title: '计划数量'
-}, {
-  title: '开始日期'
-}, {
-  title: '完工状态'
-}, {
-  title: '备注'
-}]
+class ProductionListTable extends Component {
+	componentWillMount = () => {
+		const {
+			goToPage,
+			table
+		} = this.props
+		goToPage(table, 'goFirst')
+	}
+
+	render = () => {
+		const {
+			table,
+			goToPage,
+			onAction,
+			onSelect,
+			show
+		} = this.props
+
+		return (
+			show && <TableWithAction goToPage={goToPage} table={table} onAction={onAction} onSelect={onSelect}/>
+		)
+	}
+}
 
 const mapStateToProps = (state) => ({
-  // content: state.recordTables
-  content: contenttest,
-  title: title,
-  show: !state.breadp.subActive
+	table: state.productionAll.production,
+	show: !state.breadp.subActive
 })
 
 const mapDispatchToProps = {
-  onBack: recordTableBack,
-  onForword: recordTableForword,
-  onSelect: productionDetailSelect
+	goToPage: productiongoToPage,
+	onSelect: productiononSelect
 }
 
-const ProductionListTable = connect(mapStateToProps, mapDispatchToProps)(ProductionTable)
-
-export default ProductionListTable
+export default connect(mapStateToProps, mapDispatchToProps)(ProductionListTable)

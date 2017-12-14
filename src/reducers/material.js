@@ -4,7 +4,7 @@ export const material = (state = {
 		name: {
 			title: '物料名称'
 		},
-		code: {
+		mcode: {
 			title: '物料代码'
 		},
 		spec: {

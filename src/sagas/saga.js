@@ -12,6 +12,10 @@ import {
   delMaterial,
   getMaterial
 } from '../api/manage'
+import {
+  getProduction,
+  addProduction
+} from '../api/production'
 
 
 function* fetchRecordModel(action) {
@@ -43,7 +47,7 @@ function* recordTableForword(action) {
 }
 
 function* productionTableSelect(action) {
-  console.log("bread action get id:" + action.id)
+  console.log("bread action get id:")
     // 关闭主目录，打开子目录
   yield put({
     type: "PRODUCTION_BREAD",
@@ -154,6 +158,61 @@ function* manageAdd(action) {
   })
 }
 
+// 生产流程
+// 生产单
+function* productinoTablePage(action) {
+  let page = action.table.number
+  let size = action.table.size
+  let totalPages = action.table.totalPages
+  let data = ''
+
+  console.log("page: " + page + " size: " + size + " method: " + action.method + ' totalPages: ' + totalPages)
+  try {
+    switch (action.method) {
+      case 'goFirst':
+        data = yield call(getProduction, 0, size)
+        break
+      case 'goPrev':
+        data = yield call(getProduction, Math.max(0, Math.max(0, page - 1)), size)
+        break
+      case 'goNext':
+        data = yield call(getProduction, Math.min(page + 1, Math.max(0, totalPages - 1)), size)
+        break
+      case 'goLast':
+        data = yield call(getProduction, Math.max(0, totalPages - 1), size)
+        break
+      default:
+        console.log("error method")
+        break
+    }
+    yield put({
+      type: 'PRODUCTION_UPDATE',
+      data: data
+    })
+  } catch (error) {
+    console.log("error");
+  }
+}
+
+// 新增生产流程
+function* productionAdd(action) {
+  let data = ''
+  console.log("production add:" + action.data.name + 'size: ' + action.size)
+  // try {
+  //   yield call(addProduction, action.data.name, action.data.dst_counts, action.data.date, action.data.detail)
+  //   data = yield call(getProduction, 0, action.size)
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  yield put({
+    type: 'PRODUCTION_MODEL_CLOSE'
+  })
+  // yield put({
+  //   type: 'PRODUCTION_UPDATE',
+  //   data
+  // })
+}
+
 function* mySaga() {
   yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel)
   yield takeEvery("LOGIN_LOG", login)
@@ -164,6 +223,8 @@ function* mySaga() {
   yield takeEvery("MANAGE_TABLE_DEL", manageDel)
   yield takeEvery("MANAGER_MODEL_CONFIRM", manageAdd)
   yield takeEvery("MANAGE_TABLE_PAGE", materialSelect)
+  yield takeEvery("PRODUCTION_TABLE_PAGE", productinoTablePage)
+  yield takeEvery("PRODUCTION_MODEL_CONFIRM", productionAdd)
 }
 
 export default mySaga

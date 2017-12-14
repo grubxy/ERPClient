@@ -2,7 +2,10 @@ import {
 	combineReducers
 } from 'redux'
 import loginModels from './login'
-import production from './production'
+import {
+	production,
+	productionModel
+} from './production'
 import construction from './construction'
 import breadp from './breadp'
 import pay from './pay'
@@ -13,7 +16,8 @@ import {
 
 let productionAll = combineReducers({
 	production,
-	construction
+	construction,
+	productionModel
 })
 
 let manageAll = combineReducers({

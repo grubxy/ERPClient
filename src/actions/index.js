@@ -1,30 +1,3 @@
-// 生产模态框表格
-export const productionModelClose = () => ({
-  type: 'PRODUCTION_MODEL_CLOSE'
-})
-
-export const productionModelOpen = () => ({
-  type: 'PRODUCTION_MODEL_OPEN'
-})
-
-export const productionModelConfirm = (target) => ({
-  type: 'PRODUCTION_MODEL_CONFIRM',
-  name: target.name,
-  value: target.value
-})
-
-export const productionInputChange = (target) => ({
-  type: 'PRODUCTION_FORM_CHANGE',
-  name: target.name,
-  value: target.value
-})
-
-// 生产表格打开详情
-export const productionDetailSelect = (id) => ({
-  type: 'PRODUCTION_TABLE_SELECT',
-  id
-})
-
 // 生产面包条
 export const productionBreadActive = (subActive) => ({
   type: 'PRODUCTION_BREAD',
