@@ -10,7 +10,8 @@ import {
 import {
   addMaterial,
   delMaterial,
-  getMaterial
+  getMaterial,
+  getAllTechnics
 } from '../api/manage'
 import {
   getProduction,
@@ -47,12 +48,29 @@ function* recordTableForword(action) {
 }
 
 function* productionTableSelect(action) {
-  console.log("bread action get id:")
-    // 关闭主目录，打开子目录
+  console.log("bread action get id:" + action.data.pid)
+    // 设置选中工程信息
   yield put({
-    type: "PRODUCTION_BREAD",
-    subActive: true
-  })
+      type: 'CONSTRUCTION_SET',
+      data: action.data
+    })
+    // 请求获取工序流程
+  let data = ''
+  try {
+
+    data = yield call(getAllTechnics)
+    yield put({
+        type: 'TECHNICS_UPDATE',
+        data
+      })
+      // 关闭主目录，打开子目录
+    yield put({
+      type: 'PRODUCTION_BREAD',
+      subActive: true
+    })
+  } catch (error) {
+    console.log('productionTableSelect error')
+  }
 }
 
 function* payTableSelect(action) {
@@ -146,16 +164,16 @@ function* manageAdd(action) {
   try {
     yield call(addMaterial, action.data.name, action.data.spec)
     data = yield call(getMaterial, 0, action.size)
+    yield put({
+      type: 'MANAGE_MODEL_CLOSE'
+    })
+    yield put({
+      type: 'MATERIAL_UPDATE',
+      data
+    })
   } catch (error) {
     console.log(error)
   }
-  yield put({
-    type: 'MANAGE_MODEL_CLOSE'
-  })
-  yield put({
-    type: 'MATERIAL_UPDATE',
-    data
-  })
 }
 
 // 生产流程
@@ -198,19 +216,19 @@ function* productinoTablePage(action) {
 function* productionAdd(action) {
   let data = ''
   console.log("production add:" + action.data.name + 'size: ' + action.size)
-  // try {
-  //   yield call(addProduction, action.data.name, action.data.dst_counts, action.data.date, action.data.detail)
-  //   data = yield call(getProduction, 0, action.size)
-  // } catch (error) {
-  //   console.log(error)
-  // }
-  yield put({
-    type: 'PRODUCTION_MODEL_CLOSE'
-  })
-  // yield put({
-  //   type: 'PRODUCTION_UPDATE',
-  //   data
-  // })
+  try {
+    yield call(addProduction, action.data.name, action.data.dst_counts, action.data.date, action.data.detail)
+    data = yield call(getProduction, 0, action.size)
+    yield put({
+      type: 'PRODUCTION_MODEL_CLOSE'
+    })
+    yield put({
+      type: 'PRODUCTION_UPDATE',
+      data
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 function* mySaga() {

@@ -12,10 +12,14 @@ export const getProduction = (page, size) => {
 			}
 		})
 		.then((resp) => {
-			return resp.data
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
 		})
 		.catch((error) => {
-			return error
+			throw error
 		})
 }
 
@@ -27,7 +31,11 @@ export const addProduction = (name, counts, date, detail) => {
 			detail: detail
 		})
 		.then((resp) => {
-			return resp.data
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
 		})
 		.catch((error => {
 			throw error

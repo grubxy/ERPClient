@@ -43,7 +43,7 @@ const ProductionAdd = ({
           </Modal.Content>
           <Modal.Actions>
             <Button onClick={()=>onClose()}> 取消 </Button>
-            <Button color='blue' onClick={()=>onConfirm({data, tableSize})}> 确定 </Button>
+            <Button color='blue' onClick={()=>onConfirm(data, tableSize)}> 确定 </Button>
           </Modal.Actions>
         </Modal>
       </div>)
@@ -66,7 +66,12 @@ const mapDispatchToProps = {
 
 
 ProductionAdd.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.number.isRequired,
+    dst_counts: PropTypes.number.isRequired,
+    date: PropTypes.number.isRequired,
+    detail: PropTypes.string
+  }),
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,

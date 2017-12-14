@@ -44,7 +44,6 @@ export const productionModel = (state = {
       return {
         open: false
       }
-      break
     case 'PRODUCTION_MODEL_OPEN':
       return {
         open: true

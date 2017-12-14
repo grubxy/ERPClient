@@ -8,7 +8,11 @@ export const getEmployee = (page, size) => {
 			}
 		})
 		.then((resp) => {
-			return resp.data
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
 		})
 		.catch((error) => {
 			throw error

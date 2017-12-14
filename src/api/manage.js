@@ -1,12 +1,16 @@
 import axios from 'axios'
 
 export const addMaterial = (name, spec) => {
-	return axios.post('/manage/add', {
+	return axios.post('/manage/material/add', {
 			name: name,
 			spec: spec
 		})
 		.then((resp) => {
-			return resp.data
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
 		})
 		.catch(error => {
 			throw error
@@ -14,9 +18,13 @@ export const addMaterial = (name, spec) => {
 }
 
 export const delMaterial = (data) => {
-	return axios.post('/manage/del', data)
+	return axios.post('/manage/material/del', data)
 		.then((resp) => {
-			return resp.data
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
 		})
 		.catch(error => {
 			throw error
@@ -31,9 +39,66 @@ export const getMaterial = (page, size) => {
 			}
 		})
 		.then((resp) => {
-			return resp.data
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
 		})
 		.catch((error) => {
-			return error
+			throw error
+		})
+}
+
+export const addTechnics = (name) => {
+	return axios.post('/manage/technics/add', {
+			name: name
+		})
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
+		})
+		.catch(error => {
+			throw error
+		})
+}
+
+export const delTechnics = () => {
+
+}
+
+export const getTechnics = (page, size) => {
+	return axios.get('/manage/technics', {
+			params: {
+				page: page,
+				size: size
+			}
+		})
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
+		})
+		.catch((error) => {
+			throw error
+		})
+}
+
+export const getAllTechnics = () => {
+	return axios.get('/manage/technicsAll')
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
+		})
+		.catch((error) => {
+			throw error
 		})
 }

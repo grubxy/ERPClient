@@ -37,12 +37,10 @@ export const model = (state = {
 			return {
 				open: false
 			}
-			break
 		case 'MANAGER_FORM_CHANGE':
 			return {...state,
 				[action.name]: action.value
 			}
-			break
 		case 'MANAGER_MODEL_OPEN':
 			return {
 				open: true

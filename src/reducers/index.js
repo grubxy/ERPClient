@@ -6,7 +6,10 @@ import {
 	production,
 	productionModel
 } from './production'
-import construction from './construction'
+import {
+	construction,
+	technics
+} from './construction'
 import breadp from './breadp'
 import pay from './pay'
 import {
@@ -16,8 +19,9 @@ import {
 
 let productionAll = combineReducers({
 	production,
+	productionModel,
 	construction,
-	productionModel
+	technics
 })
 
 let manageAll = combineReducers({
