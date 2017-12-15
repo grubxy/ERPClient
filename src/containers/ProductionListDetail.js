@@ -66,12 +66,6 @@ const ProductionDetail = ({
 		return <div/>
 	return (
 		<div>
-	  <Message positive>
-	    <Message.Header>
-	      批次:{item.code}
-	    </Message.Header>
-	    <p>计划数量:{item.plan} 可生产数量:{item.remain} 在生产数量:{item.over} 报废数量:{item.error}</p>
-	  </Message>
 	  <Divider clearing/>
 	  <Accordion fluid styled defaultActiveIndex={0} panels={accord}/>
 	 </div>

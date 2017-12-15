@@ -9,6 +9,8 @@ import ProductionListTable from './containers/ProductionListTable'
 import ProductionAdd from './containers/ProductionAdd'
 import ProductionChangeBread from './containers/ProductionChangeBread'
 import ProductionListDetail from './containers/ProductionListDetail'
+import ProductionMessage from './containers/ProductionMessage'
+import ConstructionAdd from './containers/ConstructionAdd'
 
 const Production = () => (
   <Container style={{marginTop:'3em'}}>
@@ -19,6 +21,8 @@ const Production = () => (
     <Divider hidden/>
     <ProductionChangeBread/>
     <Divider clearing/>
+      <ProductionMessage/>
+      <ConstructionAdd/>
       <ProductionListDetail/>
       <ProductionAdd/>
       <ProductionListTable/>
