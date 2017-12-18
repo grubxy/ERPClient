@@ -62,20 +62,20 @@ function* productionTableSelect(action) {
     // 工艺
     data = yield call(getAllTechnics)
     yield put({
-      type: 'TECHNICS_UPDATE',
+      type: 'CONSTRUCTION_TECHNICS_UPDATE',
       data
     })
     // 雇员
     data = yield call(getAllEmployee)
     yield put({
-      type: 'EMPLOYEE_UPDATE',
+      type: 'CONSTRUCTION_EMPLOYEE_UPDATE',
       data
     })
 
     // 材料
     data = yield call(getAllMaterial)
     yield put({
-      type: 'MATERIAL_UPDATE',
+      type: 'CONSTRUCTION_MATERIAL_UPDATE',
       data
     })
 

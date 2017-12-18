@@ -18,8 +18,7 @@ import {
 
 let getEmploy = (em) => {
 	let data = []
-	console.log("em:" + JSON.stringify(em))
-	for (let [index, elem] of em.entries()) {
+	for (let [index, elem] of Object.entries(em)) {
 		data.push({
 			'key': index,
 			'text': elem.name,
@@ -31,9 +30,7 @@ let getEmploy = (em) => {
 
 let getMaterial = (mt) => {
 	let data = []
-	if (mt.length <= 0)
-		return data
-	for (let [index, elem] of mt.entries()) {
+	for (let [index, elem] of Object.entries(mt)) {
 		data.push({
 			'key': index,
 			'text': elem.name,
@@ -44,10 +41,8 @@ let getMaterial = (mt) => {
 }
 
 let getTechnics = (tc) => {
-	if (tc.length <= 0)
-		return data
 	let data = []
-	for (let [index, elem] of tc.entries()) {
+	for (let [index, elem] of Object.entries(tc)) {
 		data.push({
 			'key': index,
 			'text': elem.name,
@@ -76,8 +71,8 @@ const ConstructionAdd = ({
 			  <Form size='large'>
 			    <Form.Group>
 			      <Form.Dropdown placeholder='操作员' name='employee' search selection options={employee} onChange={(e, {name, value})=>onSelect(name, value)}/>
-			      <Form.Dropdown placeholder='物料' name='material' search selection  onChange={(e, {name, value})=>onSelect(name, value)}/>
-			      <Form.Dropdown placeholder='工艺' name='technics' search selection  onChange={(e, {name, value})=>onSelect(name, value)}/>
+			      <Form.Dropdown placeholder='物料' name='material' search selection options={material} onChange={(e, {name, value})=>onSelect(name, value)}/>
+			      <Form.Dropdown placeholder='工艺' name='technics' search selection options={technics} onChange={(e, {name, value})=>onSelect(name, value)}/>
 			    </Form.Group>
 			    <Form.Group>
 			      <Form.Input label='生产数量' name='dst_counts' onChange={e=>onChange(e.target)}/>
@@ -100,18 +95,16 @@ const ConstructionAdd = ({
 
 ConstructionAdd.propTypes = {
 	data: PropTypes.shape({
-		emplyee: PropTypes.string.isRequired,
-		material: PropTypes.string.isRequired,
-		technics: PropTypes.bool.isRequired
+		open:PropTypes.bool.isRequired,
+		emplyee: PropTypes.string,
+		material: PropTypes.string,
+		technics: PropTypes.string
 	}),
 	onClose: PropTypes.func,
 	onOpen: PropTypes.func,
 	onConfirm: PropTypes.func,
 	onChange: PropTypes.func,
-	onSelect: PropTypes.func,
-	employee: PropTypes.array.isRequired,
-	technics: PropTypes.array.isRequired,
-	material: PropTypes.array.isRequired
+	onSelect: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({

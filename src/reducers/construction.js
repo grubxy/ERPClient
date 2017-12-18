@@ -8,9 +8,9 @@ export const constructionAll = (state = {}, action) => {
   }
 }
 
-export const technicsAll = (state = [], action) => {
+export const technicsAll = (state = {}, action) => {
   switch (action.type) {
-    case 'TECHNICS_UPDATE':
+    case 'CONSTRUCTION_TECHNICS_UPDATE':
       return { ...state,
         ...action.data
       }
@@ -19,9 +19,9 @@ export const technicsAll = (state = [], action) => {
   }
 }
 
-export const employeeAll = (state = [], action) => {
+export const employeeAll = (state = {}, action) => {
   switch (action.type) {
-    case 'EMPLOYEE_UPDATE':
+    case 'CONSTRUCTION_EMPLOYEE_UPDATE':
       return { ...state,
         ...action.data
       }
@@ -30,9 +30,9 @@ export const employeeAll = (state = [], action) => {
   }
 }
 
-export const materialAll = (state = [], action) => {
+export const materialAll = (state = {}, action) => {
   switch (action.type) {
-    case 'MATERIAL_UPDATE':
+    case 'CONSTRUCTION_MATERIAL_UPDATE':
       return { ...state,
         ...action.data
       }
