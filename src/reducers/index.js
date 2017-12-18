@@ -8,7 +8,9 @@ import {
 } from './production'
 import {
 	constructionAll,
-	technics,
+	technicsAll,
+	employeeAll,
+	materialAll,
 	addConstructionModel
 } from './construction'
 import breadp from './breadp'
@@ -23,7 +25,9 @@ let productionAll = combineReducers({
 	productionModel,
 	constructionAll,
 	addConstructionModel,
-	technics
+	technicsAll,
+	employeeAll,
+	materialAll
 })
 
 let manageAll = combineReducers({

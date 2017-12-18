@@ -50,6 +50,20 @@ export const getMaterial = (page, size) => {
 		})
 }
 
+export const getAllMaterial = ()=>{	
+	return axios.get('/manage/materialAll')
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
+		})
+		.catch((error) => {
+			throw error
+		})
+}
+
 export const addTechnics = (name) => {
 	return axios.post('/manage/technics/add', {
 			name: name

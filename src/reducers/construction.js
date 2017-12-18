@@ -1,17 +1,39 @@
 export const constructionAll = (state = {}, action) => {
   switch (action.type) {
     case 'CONSTRUCTION_SET':
-      return {...action.data
+      return { ...action.data
       }
     default:
       return state
   }
 }
 
-export const technics = (state = [], action) => {
+export const technicsAll = (state = [], action) => {
   switch (action.type) {
     case 'TECHNICS_UPDATE':
-      return {...state,
+      return { ...state,
+        ...action.data
+      }
+    default:
+      return state
+  }
+}
+
+export const employeeAll = (state = [], action) => {
+  switch (action.type) {
+    case 'EMPLOYEE_UPDATE':
+      return { ...state,
+        ...action.data
+      }
+    default:
+      return state
+  }
+}
+
+export const materialAll = (state = [], action) => {
+  switch (action.type) {
+    case 'MATERIAL_UPDATE':
+      return { ...state,
         ...action.data
       }
     default:
@@ -20,7 +42,7 @@ export const technics = (state = [], action) => {
 }
 
 export const addConstructionModel = (state = {
-  open: true
+  open: false
 }, action) => {
   switch (action.type) {
     case 'CONSTRUCTION_MODEL_CLOSE':
@@ -32,11 +54,11 @@ export const addConstructionModel = (state = {
         open: true
       }
     case 'CONSTRUCTION_MODEL_CHANGE':
-      return {...state,
+      return { ...state,
         [action.name]: action.value
       }
     case 'CONSTRUCTION_MODEL_SELECT':
-      return {...state,
+      return { ...state,
         [action.name]: action.value
       }
     default:

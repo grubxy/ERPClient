@@ -5,13 +5,15 @@ import {
 } from 'redux-saga/effects'
 import axios from 'axios'
 import {
-  getEmployee
+  getEmployee,
+  getAllEmployee
 } from '../api/pay'
 import {
   addMaterial,
   delMaterial,
   getMaterial,
-  getAllTechnics
+  getAllTechnics,
+  getAllMaterial
 } from '../api/manage'
 import {
   getProduction,
@@ -49,21 +51,35 @@ function* recordTableForword(action) {
 
 function* productionTableSelect(action) {
   console.log("bread action get id:" + action.data.pid)
-    // 设置选中工程信息
+  // 设置选中工程信息
   yield put({
-      type: 'CONSTRUCTION_SET',
-      data: action.data
-    })
-    // 请求获取工序流程
+    type: 'CONSTRUCTION_SET',
+    data: action.data
+  })
+  // 请求获取依赖信息
   let data = ''
   try {
-
+    // 工艺
     data = yield call(getAllTechnics)
     yield put({
-        type: 'TECHNICS_UPDATE',
-        data
-      })
-      // 关闭主目录，打开子目录
+      type: 'TECHNICS_UPDATE',
+      data
+    })
+    // 雇员
+    data = yield call(getAllEmployee)
+    yield put({
+      type: 'EMPLOYEE_UPDATE',
+      data
+    })
+
+    // 材料
+    data = yield call(getAllMaterial)
+    yield put({
+      type: 'MATERIAL_UPDATE',
+      data
+    })
+
+    // 关闭主目录，打开子目录
     yield put({
       type: 'PRODUCTION_BREAD',
       subActive: true
