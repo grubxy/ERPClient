@@ -8,6 +8,7 @@ import {
 
 const TableWithButton = ({
 	emptyMsg,
+	match,
 	table,
 	search,
 	loading,
@@ -16,6 +17,7 @@ const TableWithButton = ({
 	onInBound,
 	onComplete
 }) => {
+
 	let header = (
 		<Table.Header>
 		<Table.Row>
@@ -26,14 +28,13 @@ const TableWithButton = ({
 	 	</Table.Header>
 	)
 
-	console.log('header:' + JSON.stringify(table.headers))
-	console.log('content:' + JSON.stringify(table.constructs))
-
 	let body = (
 		<Table.Body>
 		{
 			table.constructs.map((row, i) => {
-				return (
+				console.log('row:' + JSON.stringify(row))
+				console.log('tcode:' + row.technics.tcode)
+				return (row.technics.tcode === match &&
 					<Table.Row key={i}>
 					{
 						Object.keys(table.headers).map((_, j)=>{

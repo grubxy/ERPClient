@@ -17,12 +17,13 @@ class ProductionAccordTable extends Component {
 	render = () => {
 		const {
 			table,
+			match,
 			onOpen,
 			onModify,
 			onComplete,
 			onInBound
 		} = this.props
-		return <TableWithButton table={table} onOpen={onOpen} onModify={onModify} onInBound={onInBound} onComplete={onComplete}/>
+		return <TableWithButton table={table} match={match} onOpen={onOpen} onModify={onModify} onInBound={onInBound} onComplete={onComplete}/>
 	}
 }
 
