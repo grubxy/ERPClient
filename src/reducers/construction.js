@@ -24,6 +24,12 @@ export const constructionAll = (state = {
     err_counts: {
       title: '报废数量'
     },
+    material: {
+      title:'物料'
+    },
+    technics: {
+      title:'工艺'
+    },
     button_group: {
       title: '处理'
     }

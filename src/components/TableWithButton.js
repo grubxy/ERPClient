@@ -49,7 +49,11 @@ const TableWithButton = ({
 									</Table.Cell>
 								)
 							} else {
+								if (key === 'employee' || key === 'material' || key === 'technics') {
+									return <Table.Cell key={key}>{value.name}</Table.Cell>
+								} else {
 								return <Table.Cell key={key}>{value}</Table.Cell>
+								}
 							}
 						})
 					}
