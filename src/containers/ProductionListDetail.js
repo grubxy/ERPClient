@@ -10,6 +10,8 @@ import {
 } from 'semantic-ui-react'
 import ConstructionTable from '../components/ConstructionTable'
 
+import ProductionAccordTable from '../containers/ProductionAccordTable'
+
 const item = {
 	code: "12345",
 	plan: "1000",
@@ -49,10 +51,10 @@ const tablecontent = [{
 
 const accord = [{
 	title: '工序号:line-1 工序名: 工序名1',
-	content: <ConstructionTable title={tabletitle} content={tablecontent}/>
+	content: <ProductionAccordTable/>
 }, {
 	title: '工序号:line-2 工序名: 工序名2',
-	content: <p>表格22。。。。。。。。。。。。</p>
+	content: <ProductionAccordTable/>
 }]
 
 const ProductionDetail = ({

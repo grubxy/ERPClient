@@ -23,3 +23,11 @@ export const constructionModelSelect = (name, value) => ({
 	name: name,
 	value: value
 })
+
+export const constructionTableModify = () => ({})
+
+export const constructionTableInBound = () => ({})
+
+export const constructionTableComplete = () => ({})
+
+export const constructionTableOnOpen = () => ({})

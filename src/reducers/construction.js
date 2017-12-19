@@ -1,7 +1,38 @@
-export const constructionAll = (state = {}, action) => {
+export const constructionAll = (state = {
+  headers: {
+    cid: {
+      title: '施工单号'
+    },
+    employee: {
+      title: '操作员'
+    },
+    price: {
+      title: '单价'
+    },
+    sdate: {
+      title: '开工日期'
+    },
+    edata: {
+      title: '完工日期'
+    },
+    dst_counts: {
+      title: '开工数量'
+    },
+    cmpl_counts: {
+      title: '完工数量'
+    },
+    err_counts: {
+      title: '报废数量'
+    },
+    button_group: {
+      title: '处理'
+    }
+  }
+}, action) => {
   switch (action.type) {
     case 'CONSTRUCTION_SET':
-      return { ...action.data
+      return { ...state,
+        ...action.data
       }
     default:
       return state
