@@ -25,10 +25,10 @@ export const constructionAll = (state = {
       title: '报废数量'
     },
     material: {
-      title:'物料'
+      title: '物料'
     },
     technics: {
-      title:'工艺'
+      title: '工艺'
     },
     button_group: {
       title: '处理'
@@ -39,6 +39,10 @@ export const constructionAll = (state = {
     case 'CONSTRUCTION_SET':
       return { ...state,
         ...action.data
+      }
+    case 'CONSTRUCTION_SET_CONSTRUCTS':
+      return { ...state,
+        constructs: action.data
       }
     default:
       return state
@@ -87,8 +91,10 @@ export const addConstructionModel = (state = {
         open: false
       }
     case 'CONSTRUCTION_MODEL_OPEN':
-      return {
-        open: true
+      return { ...state,
+        open: true,
+        tcode: action.tcode,
+        pid: action.pid
       }
     case 'CONSTRUCTION_MODEL_CHANGE':
       return { ...state,

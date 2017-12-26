@@ -22,7 +22,7 @@ let getEmploy = (em) => {
 		data.push({
 			'key': index,
 			'text': elem.name,
-			'value': elem.name
+			'value': elem.eid
 		})
 	}
 	return data
@@ -34,7 +34,7 @@ let getMaterial = (mt) => {
 		data.push({
 			'key': index,
 			'text': elem.name,
-			'value': elem.name
+			'value': elem.mcode
 		})
 	}
 	return data
@@ -46,7 +46,7 @@ let getTechnics = (tc) => {
 		data.push({
 			'key': index,
 			'text': elem.name,
-			'value': elem.name
+			'value': elem.tcode
 		})
 	}
 	return data
@@ -72,7 +72,6 @@ const ConstructionAdd = ({
 			    <Form.Group>
 			      <Form.Dropdown placeholder='操作员' name='employee' search selection options={employee} onChange={(e, {name, value})=>onSelect(name, value)}/>
 			      <Form.Dropdown placeholder='物料' name='material' search selection options={material} onChange={(e, {name, value})=>onSelect(name, value)}/>
-			      <Form.Dropdown placeholder='工艺' name='technics' search selection options={technics} onChange={(e, {name, value})=>onSelect(name, value)}/>
 			    </Form.Group>
 			    <Form.Group>
 			      <Form.Input label='生产数量' name='dst_counts' onChange={e=>onChange(e.target)}/>
@@ -95,7 +94,7 @@ const ConstructionAdd = ({
 
 ConstructionAdd.propTypes = {
 	data: PropTypes.shape({
-		open:PropTypes.bool.isRequired,
+		open: PropTypes.bool.isRequired,
 		emplyee: PropTypes.string,
 		material: PropTypes.string,
 		technics: PropTypes.string

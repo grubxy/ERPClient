@@ -9,7 +9,7 @@ import {
 	constructionTableModify,
 	constructionTableInBound,
 	constructionTableComplete,
-	constructionTableOnOpen
+	constructionModelOpen
 } from '../actions/construction'
 import TableWithButton from '../components/TableWithButton'
 
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-	onOpen: constructionTableOnOpen,
+	onOpen: constructionModelOpen,
 	onModify: constructionTableModify,
 	onInBound: constructionTableInBound,
 	onComplete: constructionTableComplete

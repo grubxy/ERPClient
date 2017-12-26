@@ -67,7 +67,7 @@ const TableWithButton = ({
 	let footer = (
 		<Table.Footer>
 		  <Table.HeaderCell colSpan={Object.keys(table.headers).length}>
-		      <Button floated='right' icon labelPosition='left' primary size='small' onClick={()=>onOpen()}>
+		      <Button floated='right' icon labelPosition='left' primary size='small' onClick={()=>onOpen(match, table.pid)}>
 		        <Icon name='configure' /> 新增施工单
 		      </Button>
 			</Table.HeaderCell>

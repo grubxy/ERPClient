@@ -3,8 +3,10 @@ export const constructionModelClose = () => ({
 	type: 'CONSTRUCTION_MODEL_CLOSE'
 })
 
-export const constructionModelOpen = () => ({
-	type: 'CONSTRUCTION_MODEL_OPEN'
+export const constructionModelOpen = (match, pid) => ({
+	type: 'CONSTRUCTION_MODEL_OPEN',
+	tcode: match,
+	pid: pid
 })
 
 export const constructionModelConfirm = (data) => ({

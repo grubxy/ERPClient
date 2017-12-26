@@ -20,6 +20,10 @@ import {
   addProduction
 } from '../api/production'
 
+import {
+  addConstruction,
+  getAllConstruction
+} from '../api/construction'
 
 function* fetchRecordModel(action) {
   console.log("xddfsdfsdf");
@@ -247,6 +251,23 @@ function* productionAdd(action) {
   }
 }
 
+// 新增施工单
+function* constructionAdd(action) {
+  console.log('construction:' + JSON.stringify(action.data))
+  try {
+    // 新增
+    yield call(addConstruction, action.data)
+    // 刷新列表
+    let data = yield call(getAllConstruction)
+    yield put({
+      type: 'CONSTRUCTION_SET_CONSTRUCTS',
+      data: data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 function* mySaga() {
   yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel)
   yield takeEvery("LOGIN_LOG", login)
@@ -259,6 +280,7 @@ function* mySaga() {
   yield takeEvery("MANAGE_TABLE_PAGE", materialSelect)
   yield takeEvery("PRODUCTION_TABLE_PAGE", productinoTablePage)
   yield takeEvery("PRODUCTION_MODEL_CONFIRM", productionAdd)
+  yield takeEvery("CONSTRUCTION_MODEL_CONFIRM", constructionAdd)
 }
 
 export default mySaga
