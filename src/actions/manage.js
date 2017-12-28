@@ -1,33 +1,103 @@
 // 管理页面----材料分页
 export const materialgoToPage = (table, method) => ({
-  type: 'MANAGE_TABLE_PAGE',
+  type: 'MATERIAL_TABLE_PAGE',
   table,
   method
 })
 
 export const materialDel = (data, size) => ({
-  type: 'MANAGE_TABLE_DEL',
+  type: 'MATERIAL_TABLE_DEL',
   data,
   size
 })
 
 // 材料模态框表格
 export const materialClose = () => ({
-  type: 'MANAGE_MODEL_CLOSE'
+  type: 'MATERIAL_MODEL_CLOSE'
 })
 
 export const materialOpen = () => ({
-  type: 'MANAGER_MODEL_OPEN'
+  type: 'MATERIAL_MODEL_OPEN'
 })
 
 export const materialConfirm = (data, size) => ({
-  type: 'MANAGER_MODEL_CONFIRM',
+  type: 'MATERIAL_MODEL_CONFIRM',
   data,
   size
 })
 
 export const materialInputChange = (target) => ({
-  type: 'MANAGER_FORM_CHANGE',
+  type: 'MATERIAL_FORM_CHANGE',
+  name: target.name,
+  value: target.value
+})
+
+// 管理页面-----工艺分页
+export const technicsgoToPage = (table, method) => ({
+  type: 'TECHNICS_TABLE_PAGE',
+  table,
+  method
+})
+
+export const technicsDel = (data, size) => ({
+  type: 'TECHNICS_TABLE_DEL',
+  data,
+  size
+})
+
+// 管理页面------工艺模态框 
+export const technicsClose = () => ({
+  type: 'TECHNICS_MODEL_CLOSE'
+})
+
+export const technicsOpen = () => ({
+  type: 'TECHNICS_MODEL_OPEN'
+})
+
+export const technicsConfirm = (data, size) => ({
+  type: 'TECHNICS_MODEL_CONFIRM',
+  data,
+  size
+})
+
+export const technicsInputChange = (target) => ({
+  type: 'TECHNICS_FORM_CHANGE',
+  name: target.name,
+  value: target.value
+})
+
+
+
+// 管理页面-----员工
+export const employeegoToPage = (table, method) => ({
+  type: 'EMPLOYEE_TABLE_PAGE',
+  table,
+  method
+})
+
+export const employeeDel = (data, size) => ({
+  type: 'EMPLOYEE_TABLE_DEL',
+  data,
+  size
+})
+
+// 员工 模态框
+export const employeeClose = () => ({
+  type: 'EMPLOYEE_MODEL_CLOSE'
+})
+
+export const employeeOpen = () => ({
+  type: 'EMPLOYEE_MODEL_OPEN'
+})
+
+export const employeeConfirm = (data, size) => ({
+  type: 'EMPLOYEE_MODEL_CONFIRM',
+  data,
+  size
+})
+
+export const employeeInputChange = (target) => ({
+  type: 'EMPLOYEE_FORM_CHANGE',
   name: target.name,
   value: target.value
 })

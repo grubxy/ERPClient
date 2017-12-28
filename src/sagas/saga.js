@@ -6,14 +6,19 @@ import {
 import axios from 'axios'
 import {
   getEmployee,
-  getAllEmployee
-} from '../api/pay'
+  getAllEmployee,
+  delEmployee,
+  addEmployee
+} from '../api/employee'
 import {
   addMaterial,
   delMaterial,
   getMaterial,
   getAllTechnics,
-  getAllMaterial
+  getAllMaterial,
+  getTechnics,
+  addTechnics,
+  delTechnics
 } from '../api/manage'
 import {
   getProduction,
@@ -127,6 +132,7 @@ function* payTableSelect(action) {
   }
 }
 
+// 物料分页
 function* materialSelect(action) {
   let page = action.table.number
   let size = action.table.size
@@ -162,8 +168,113 @@ function* materialSelect(action) {
 
 }
 
+// 工艺分页 
+function* technicsSelect(action) {
+  let page = action.table.number
+  let size = action.table.size
+  let totalPages = action.table.totalPages
+  let data = ''
 
-function* manageDel(action) {
+  console.log("page: " + page + " size: " + size + " method: " + action.method + ' totalPages: ' + totalPages)
+  try {
+    switch (action.method) {
+      case 'goFirst':
+        data = yield call(getTechnics, 0, size)
+        break
+      case 'goPrev':
+        data = yield call(getTechnics, Math.max(0, Math.max(0, page - 1)), size)
+        break
+      case 'goNext':
+        data = yield call(getTechnics, Math.min(page + 1, Math.max(0, totalPages - 1)), size)
+        break
+      case 'goLast':
+        data = yield call(getTechnics, Math.max(0, totalPages - 1), size)
+        break
+      default:
+        console.log("error method")
+        break
+    }
+    yield put({
+      type: 'TECHNICS_UPDATE',
+      data: data
+    })
+  } catch (error) {
+    console.log("error");
+  }
+}
+
+// 工艺 - 删除
+function* technicsDel(action) {
+  console.log("technics del:" + action.data.tcode + action.data.name)
+  let data = ''
+  try {
+    yield call(delTechnics, action.data)
+    data = yield call(getTechnics, 0, action.size)
+  } catch (error) {
+    console.log(error)
+  }
+  yield put({
+    type: 'TECHNICS_UPDATE',
+    data
+  })
+}
+
+// 工艺 - 添加
+function* technicsAdd(action) {
+  let data = ''
+  try {
+    yield call(addTechnics, action.data.name, )
+    data = yield call(getTechnics, 0, action.size)
+    yield put({
+      type: 'TECHNICS_MODEL_CLOSE'
+    })
+    yield put({
+      type: 'TECHNICS_UPDATE',
+      data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+// 雇员分页
+function* employeeSelect(action) {
+  let page = action.table.number
+  let size = action.table.size
+  let totalPages = action.table.totalPages
+  let data = ''
+
+  console.log("page: " + page + " size: " + size + " method: " + action.method + ' totalPages: ' + totalPages)
+  try {
+    switch (action.method) {
+      case 'goFirst':
+        data = yield call(getEmployee, 0, size)
+        break
+      case 'goPrev':
+        data = yield call(getEmployee, Math.max(0, Math.max(0, page - 1)), size)
+        break
+      case 'goNext':
+        data = yield call(getEmployee, Math.min(page + 1, Math.max(0, totalPages - 1)), size)
+        break
+      case 'goLast':
+        data = yield call(getEmployee, Math.max(0, totalPages - 1), size)
+        break
+      default:
+        console.log("error method")
+        break
+    }
+    yield put({
+      type: 'EMPLOYEE_UPDATE',
+      data: data
+    })
+  } catch (error) {
+    console.log("error");
+  }
+}
+
+//  物料 - 删除
+function* materialDel(action) {
   console.log("manage del:" + action.data.code + action.data.name + action.data.spec + 'size: ' + action.size)
   let data = ''
   try {
@@ -178,14 +289,15 @@ function* manageDel(action) {
   })
 }
 
-function* manageAdd(action) {
+// 物料 - 添加
+function* materialAdd(action) {
   let data = ''
   console.log("manage add:" + action.data.name + action.data.spec + 'size: ' + action.size)
   try {
     yield call(addMaterial, action.data.name, action.data.spec)
     data = yield call(getMaterial, 0, action.size)
     yield put({
-      type: 'MANAGE_MODEL_CLOSE'
+      type: 'MATERIAL_MODEL_CLOSE'
     })
     yield put({
       type: 'MATERIAL_UPDATE',
@@ -194,6 +306,41 @@ function* manageAdd(action) {
   } catch (error) {
     console.log(error)
   }
+}
+
+// 员工 - 新增
+function* employeeAdd(action) {
+  let data = ''
+  console.log("emplyee add:" + action.data.name)
+  try {
+    yield call(addEmployee, action.data.name)
+    data = yield call(getEmployee, 0, action.size)
+    yield put({
+      type: 'EMPLOYEE_MODEL_CLOSE'
+    })
+    yield put({
+      type: 'EMPLOYEE_UPDATE',
+      data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//  员工 - 删除
+function* employeeDel(action) {
+  console.log("emplyee del:" + action.data.eid + action.data.name)
+  let data = ''
+  try {
+    yield call(delEmployee, action.data)
+    data = yield call(getEmployee, 0, action.size)
+  } catch (error) {
+    console.log(error)
+  }
+  yield put({
+    type: 'EMPLOYEE_UPDATE',
+    data
+  })
 }
 
 // 生产流程
@@ -297,12 +444,18 @@ function* mySaga() {
   yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
   yield takeEvery("PRODUCTION_BREAD_SAGA", productionBread)
   yield takeEvery("PAY_TABLE_SEACH", payTableSelect)
-  yield takeEvery("MANAGE_TABLE_DEL", manageDel)
-  yield takeEvery("MANAGER_MODEL_CONFIRM", manageAdd)
-  yield takeEvery("MANAGE_TABLE_PAGE", materialSelect)
+  yield takeEvery("MATERIAL_TABLE_DEL", materialDel)
+  yield takeEvery("MATERIAL_MODEL_CONFIRM", materialAdd)
+  yield takeEvery("MATERIAL_TABLE_PAGE", materialSelect)
   yield takeEvery("PRODUCTION_TABLE_PAGE", productinoTablePage)
   yield takeEvery("PRODUCTION_MODEL_CONFIRM", productionAdd)
   yield takeEvery("CONSTRUCTION_MODEL_CONFIRM", constructionAdd)
+  yield takeEvery("TECHNICS_TABLE_PAGE", technicsSelect)
+  yield takeEvery("TECHNICS_TABLE_DEL", technicsDel)
+  yield takeEvery("TECHNICS_MODEL_CONFIRM", technicsAdd)
+  yield takeEvery("EMPLOYEE_TABLE_PAGE", employeeSelect)
+  yield takeEvery("EMPLOYEE_MODEL_CONFIRM", employeeAdd)
+  yield takeEvery("EMPLOYEE_TABLE_DEL", employeeDel)
 }
 
 export default mySaga

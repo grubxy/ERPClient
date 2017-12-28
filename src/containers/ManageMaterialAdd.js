@@ -60,7 +60,7 @@ ManageMaterialAdd.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-	data: state.manageAll.model,
+	data: state.manageAll.materialModel,
 	tableSize: state.manageAll.material.size
 })
 

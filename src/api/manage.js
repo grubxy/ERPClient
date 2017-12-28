@@ -50,7 +50,7 @@ export const getMaterial = (page, size) => {
 		})
 }
 
-export const getAllMaterial = ()=>{	
+export const getAllMaterial = () => {
 	return axios.get('/manage/materialAll')
 		.then((resp) => {
 			if (resp.status === 200) {
@@ -80,8 +80,18 @@ export const addTechnics = (name) => {
 		})
 }
 
-export const delTechnics = () => {
-
+export const delTechnics = (data) => {
+	return axios.post('/manage/technics/del', data)
+		.then((resp) => {
+			if (resp.status === 200) {
+				return resp.data
+			} else {
+				throw resp.status
+			}
+		})
+		.catch(error => {
+			throw error
+		})
 }
 
 export const getTechnics = (page, size) => {

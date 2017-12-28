@@ -17,8 +17,16 @@ import breadp from './breadp'
 import pay from './pay'
 import {
 	material,
-	model
+	materialModel
 } from './material'
+import {
+	technics,
+	technicsModel
+} from './technics'
+import {
+	employee,
+	employeeModel
+} from './employee'
 
 let productionAll = combineReducers({
 	production,
@@ -32,7 +40,11 @@ let productionAll = combineReducers({
 
 let manageAll = combineReducers({
 	material,
-	model
+	materialModel,
+	technics,
+	technicsModel,
+	employee,
+	employeeModel
 })
 
 const app = combineReducers({

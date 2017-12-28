@@ -1,14 +1,11 @@
-export const material = (state = {
+export const technics = (state = {
 	content: [],
 	headers: {
-		mcode: {
-			title: '物料代码'
+		tcode: {
+			title: '工艺号'
 		},
 		name: {
-			title: '物料名称'
-		},
-		spec: {
-			title: '规格'
+			title: '工艺名称'
 		},
 		action: {
 			title: '操作'
@@ -19,7 +16,7 @@ export const material = (state = {
 	totalPages: 0
 }, action) => {
 	switch (action.type) {
-		case 'MATERIAL_UPDATE':
+		case 'TECHNICS_UPDATE':
 			return { ...action.data,
 				headers: state.headers
 			}
@@ -28,20 +25,20 @@ export const material = (state = {
 	}
 }
 
-export const materialModel = (state = {
-		open: false
-	},
-	action) => {
+export const technicsModel = (state = {
+	open: false
+}, action) => {
 	switch (action.type) {
-		case 'MATERIAL_MODEL_CLOSE':
+		case 'TECHNICS_MODEL_CLOSE':
 			return {
 				open: false
 			}
-		case 'MATERIAL_FORM_CHANGE':
-			return { ...state,
+		case 'TECHNICS_FORM_CHANGE':
+			return {
+				...state,
 				[action.name]: action.value
 			}
-		case 'MATERIAL_MODEL_OPEN':
+		case 'TECHNICS_MODEL_OPEN':
 			return {
 				open: true
 			}

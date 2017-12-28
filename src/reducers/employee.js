@@ -1,14 +1,11 @@
-export const material = (state = {
+export const employee = (state = {
 	content: [],
 	headers: {
-		mcode: {
-			title: '物料代码'
+		eid: {
+			title: '工号'
 		},
 		name: {
-			title: '物料名称'
-		},
-		spec: {
-			title: '规格'
+			title: '姓名'
 		},
 		action: {
 			title: '操作'
@@ -19,7 +16,7 @@ export const material = (state = {
 	totalPages: 0
 }, action) => {
 	switch (action.type) {
-		case 'MATERIAL_UPDATE':
+		case 'EMPLOYEE_UPDATE':
 			return { ...action.data,
 				headers: state.headers
 			}
@@ -28,20 +25,19 @@ export const material = (state = {
 	}
 }
 
-export const materialModel = (state = {
-		open: false
-	},
-	action) => {
+export const employeeModel = (state = {
+	open: false
+}, action) => {
 	switch (action.type) {
-		case 'MATERIAL_MODEL_CLOSE':
+		case 'EMPLOYEE_MODEL_CLOSE':
 			return {
 				open: false
 			}
-		case 'MATERIAL_FORM_CHANGE':
+		case 'EMPLOYEE_FORM_CHANGE':
 			return { ...state,
 				[action.name]: action.value
 			}
-		case 'MATERIAL_MODEL_OPEN':
+		case 'EMPLOYEE_MODEL_OPEN':
 			return {
 				open: true
 			}
