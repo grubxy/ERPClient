@@ -1,7 +1,8 @@
 // 生产面包条
-export const productionBreadActive = (subActive) => ({
-  type: 'PRODUCTION_BREAD',
-  subActive
+export const productionBreadActive = (subActive, size) => ({
+  type: 'PRODUCTION_BREAD_SAGA',
+  subActive,
+  size
 })
 
 // 生产表格

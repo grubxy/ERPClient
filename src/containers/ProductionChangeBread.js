@@ -7,7 +7,8 @@ import {
 } from '../actions'
 
 const mapStateToProps = (state) => ({
-	subActive: state.breadp.subActive
+	subActive: state.breadp.subActive,
+	size: state.productionAll.production.size
 })
 
 const mapDispatchToProps = {

@@ -263,9 +263,30 @@ function* constructionAdd(action) {
       type: 'CONSTRUCTION_SET_CONSTRUCTS',
       data: data
     })
+    yield put({
+      type: 'CONSTRUCTION_MODEL_CLOSE'
+    })
   } catch (error) {
     console.log(error)
   }
+}
+
+function* productionBread(action) {
+  if (action.subActive == false) {
+    try {
+      let data = yield call(getProduction, 0, action.size)
+      yield put({
+        type: 'PRODUCTION_UPDATE',
+        data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  yield put({
+    type: 'PRODUCTION_BREAD',
+    subActive: action.subActive
+  })
 }
 
 function* mySaga() {
@@ -274,6 +295,7 @@ function* mySaga() {
   yield takeEvery("RECORD_TABLE_BACK", recordTableBack)
   yield takeEvery("RECORD_TABLE_FORWORD", recordTableForword)
   yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
+  yield takeEvery("PRODUCTION_BREAD_SAGA", productionBread)
   yield takeEvery("PAY_TABLE_SEACH", payTableSelect)
   yield takeEvery("MANAGE_TABLE_DEL", manageDel)
   yield takeEvery("MANAGER_MODEL_CONFIRM", manageAdd)
