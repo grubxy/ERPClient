@@ -13,6 +13,9 @@ import {
   Form
 } from 'semantic-ui-react'
 import TableWithAction from '../components/TableWithAction'
+import {
+  MultiTable
+} from '../components/MultiTable'
 
 const productTable = {
   content: [],
@@ -112,7 +115,7 @@ export default class BaseFlowData extends Component {
                   <Button color='blue'> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <TableWithAction table={productTable}/>
+              <MultiTable table={productTable}/>
             </Grid.Column>
             <Grid.Column width={5}>
               <Button size='small' content='工序' color='teal' icon='add'/>

@@ -6,13 +6,15 @@ import {
   Link
 } from 'react-router-dom'
 
-import Manager from '../Manager'
+
 import LoginPage from '../containers/Login'
 import BaseFlowData from '../containers/BaseFlowData'
 import Flow from '../containers/Flow'
 import Construction from '../containers/Construction'
 import StoreHouse from '../containers/StoreHouse'
 import Salary from '../containers/Salary'
+import Manage from '../containers/Manage'
+
 import {
   Menu,
   Segment,
@@ -67,7 +69,7 @@ const Routes = () => (
         <PrivateRoute path="/construction" component={Construction}/>
         <PrivateRoute path="/store" component={StoreHouse}/>
         <PrivateRoute path="/salary" component={Salary}/>
-        <PrivateRoute path="/manage" component={Manager}/>
+        <PrivateRoute path="/manage" component={Manage}/>
       </Container>
       {/*
       <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
