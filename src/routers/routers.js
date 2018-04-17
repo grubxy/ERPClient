@@ -12,6 +12,7 @@ import BaseFlowData from '../containers/BaseFlowData'
 import Flow from '../containers/Flow'
 import Construction from '../containers/Construction'
 import StoreHouse from '../containers/StoreHouse'
+import Salary from '../containers/Salary'
 import {
   Menu,
   Segment,
@@ -52,6 +53,9 @@ const Routes = () => (
             <Link to="/store">仓储管理</Link>
           </Menu.Item>
           <Menu.Item>
+            <Link to="/salary">工资总览</Link>
+          </Menu.Item>
+          <Menu.Item>
             <Link to="/manage">管理</Link>
           </Menu.Item>
         </Container>
@@ -62,6 +66,7 @@ const Routes = () => (
         <PrivateRoute path="/flow" component={Flow}/>
         <PrivateRoute path="/construction" component={Construction}/>
         <PrivateRoute path="/store" component={StoreHouse}/>
+        <PrivateRoute path="/salary" component={Salary}/>
         <PrivateRoute path="/manage" component={Manager}/>
       </Container>
       {/*
