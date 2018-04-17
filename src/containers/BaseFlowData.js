@@ -86,6 +86,7 @@ export default class BaseFlowData extends Component {
         <Header as='h3'>
           <Icon name='settings'/>
         <Header.Content>生产配置</Header.Content>
+        </Header>
         <Divider hidden/>
         <Divider clearing/>
         <Grid divided='vertically'>
@@ -152,7 +153,6 @@ export default class BaseFlowData extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        </Header>
       </Container>
     )
   }

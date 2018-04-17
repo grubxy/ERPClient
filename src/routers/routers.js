@@ -5,13 +5,13 @@ import {
   Redirect,
   Link
 } from 'react-router-dom'
-import Production from '../Production'
-import Construction from '../Construction'
-import StoreHouse from '../StoreHouse'
-import Pay from '../Pay'
+
 import Manager from '../Manager'
 import LoginPage from '../containers/Login'
 import BaseFlowData from '../containers/BaseFlowData'
+import Flow from '../containers/Flow'
+import Construction from '../containers/Construction'
+import StoreHouse from '../containers/StoreHouse'
 import {
   Menu,
   Segment,
@@ -40,7 +40,16 @@ const Routes = () => (
             百汇管理系统
           </Menu.Item>
           <Menu.Item>
-            <Link to="/production">生产配置</Link>
+            <Link to="/flow">生产流程</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/data">生产配置</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/construction">工单总览</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/store">仓储管理</Link>
           </Menu.Item>
           <Menu.Item>
             <Link to="/manage">管理</Link>
@@ -49,7 +58,10 @@ const Routes = () => (
       </Menu>
       <Route path="/login" component={LoginPage}/>
       <Container style={{ marginTop: '7em' }}>
-        <PrivateRoute path="/production" component={BaseFlowData}/>
+        <PrivateRoute path="/data" component={BaseFlowData}/>
+        <PrivateRoute path="/flow" component={Flow}/>
+        <PrivateRoute path="/construction" component={Construction}/>
+        <PrivateRoute path="/store" component={StoreHouse}/>
         <PrivateRoute path="/manage" component={Manager}/>
       </Container>
       {/*
