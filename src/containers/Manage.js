@@ -13,39 +13,45 @@ import {
   Form,
   Tab
 } from 'semantic-ui-react'
-import TableWithAction from '../components/TableWithAction'
+import {
+  MultiTable
+} from '../components/MultiTable'
 
-const staff = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '员工'
-    },
-    name: {
-      title: '电话号码'
-    },
-    status: {
-      title: '在职状态'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
+const roles = [{
+  key: 0,
+  value: 0,
+  text: '系统管理员'
+}, {
+  key: 1,
+  value: 1,
+  text: '流程管理员'
+}, {
+  key: 2,
+  value: 2,
+  text: '仓库管理员'
+}]
 
 const user = {
-  content: [],
+  content: [{
+    username: 'admin',
+    owner: '马云',
+    role: '流程管理员',
+    single_button: 'delete'
+  }],
   headers: {
-    mcode: {
+    username: {
       title: '账户名'
     },
-    name: {
+    owner: {
+      title: '所有者'
+    },
+    role: {
       title: '账户类型'
+    },
+    single_button: {
+      title: ''
     }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
+  }
 }
 
 const panes = [{
@@ -54,7 +60,26 @@ const panes = [{
     return (
       <Tab.Pane>
           <Button size='small' content='账户' color='teal' icon='add'/>
-          <TableWithAction table={user}/>
+          <Modal open={false}>
+          <Modal.Header>添加账户</Modal.Header>
+          <Modal.Content>
+            <Form size='large'>
+              <Form.Group>
+                <Form.Input label='账户名' name='username'/>
+                <Form.Input label='密码' name='password'/>
+                <Form.Dropdown label='权限' placeholder='role' search selection options={roles}/>
+              </Form.Group>
+              <Form.Group>
+                <Form.Input label='使用者' name='owner'/>
+              </Form.Group>
+            </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button> 取消 </Button>
+            <Button color='blue'> 确定 </Button>
+          </Modal.Actions>
+          </Modal>
+          <MultiTable table={user}/>
         </Tab.Pane>
     )
   }
