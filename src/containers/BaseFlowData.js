@@ -12,21 +12,29 @@ import {
   Modal,
   Form
 } from 'semantic-ui-react'
-import TableWithAction from '../components/TableWithAction'
 import {
   MultiTable
 } from '../components/MultiTable'
 
 const productTable = {
-  content: [],
+  content: [{
+    mcode: '00000001',
+    name: '小刀',
+    single_button: 'delete'
+  }],
   headers: {
     mcode: {
       title: '产品编号'
     },
     name: {
       title: '产品名称'
+    },
+    single_button: {
+      title: ''
     }
   },
+  selectable: true,
+  showFooter: true,
   number: 0,
   size: 10,
   totalPages: 0
@@ -35,10 +43,14 @@ const productTable = {
 const seqTable = {
   content: [{
     mcode: 1,
-    name: '洗'
+    name: '洗',
+    cost: 0.0002,
+    single_button: 'delete'
   }, {
     mcode: 2,
-    name: '刷'
+    name: '刷',
+    cost: 0.0001,
+    single_button: 'delete'
   }],
   headers: {
     mcode: {
@@ -47,10 +59,15 @@ const seqTable = {
     name: {
       title: '工序名'
     },
-    xxx: {
+    cost: {
       title: '制作单价'
+    },
+    single_button: {
+      title: ''
     }
   },
+  selectable: true,
+  showFooter: false,
   number: 0,
   size: 10,
   totalPages: 0
@@ -58,13 +75,19 @@ const seqTable = {
 
 const staffTable = {
   content: [{
-    mcode: '小王'
+    mcode: '小王',
+    single_button: 'delete'
   }],
   headers: {
     mcode: {
       title: '员工'
+    },
+    single_button: {
+      title: ''
     }
   },
+  selectable: true,
+  showFooter: false,
   number: 0,
   size: 10,
   totalPages: 0
@@ -134,7 +157,7 @@ export default class BaseFlowData extends Component {
                   <Button color='blue'> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <TableWithAction table={seqTable}/>
+              <MultiTable table={seqTable}/>
             </Grid.Column>
             <Grid.Column width={5}>
               <Button size='small' content='员工' color='teal' icon='add'/>
@@ -152,7 +175,7 @@ export default class BaseFlowData extends Component {
                   <Button color='blue'> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <TableWithAction table={staffTable}/>
+              <MultiTable table={staffTable}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

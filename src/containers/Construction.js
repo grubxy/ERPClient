@@ -20,6 +20,9 @@ const construction = {
     mcode: {
       title: '施工单号'
     },
+    productName: {
+      title: '产品名'
+    },
     dstCounts: {
       title: '计划'
     },

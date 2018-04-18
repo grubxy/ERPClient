@@ -12,7 +12,7 @@ import BaseFlowData from '../containers/BaseFlowData'
 import Flow from '../containers/Flow'
 import Construction from '../containers/Construction'
 import StoreHouse from '../containers/StoreHouse'
-import Salary from '../containers/Salary'
+import StaffManage from '../containers/StaffManage'
 import Manage from '../containers/Manage'
 
 import {
@@ -46,19 +46,19 @@ const Routes = () => (
             <Link to="/flow">生产流程</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/data">生产配置</Link>
+            <Link to="/construction">工单总览</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/construction">工单总览</Link>
+            <Link to="/staff">员工管理</Link>
           </Menu.Item>
           <Menu.Item>
             <Link to="/store">仓储管理</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/salary">工资总览</Link>
+            <Link to="/data">生产配置</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link to="/manage">管理</Link>
+            <Link to="/manage">系统管理</Link>
           </Menu.Item>
         </Container>
       </Menu>
@@ -68,7 +68,7 @@ const Routes = () => (
         <PrivateRoute path="/flow" component={Flow}/>
         <PrivateRoute path="/construction" component={Construction}/>
         <PrivateRoute path="/store" component={StoreHouse}/>
-        <PrivateRoute path="/salary" component={Salary}/>
+        <PrivateRoute path="/staff" component={StaffManage}/>
         <PrivateRoute path="/manage" component={Manage}/>
       </Container>
       {/*

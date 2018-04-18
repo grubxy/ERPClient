@@ -49,16 +49,6 @@ const user = {
 }
 
 const panes = [{
-  menuItem: '员工管理',
-  render: () => {
-    return (
-      <Tab.Pane>
-        <Button size='small' content='员工' color='teal' icon='add'/>
-        <TableWithAction table={staff}/>
-      </Tab.Pane>
-    )
-  }
-}, {
   menuItem: '账户管理',
   render: () => {
     return (
@@ -79,7 +69,7 @@ export default class Manage extends Component {
       <Container style={{marginTop:'3em'}}>
         <Header as='h3'>
           <Icon name='settings'/>
-        <Header.Content>管理</Header.Content>
+        <Header.Content>系统管理</Header.Content>
         </Header>
          <Divider hidden/>
         <Divider clearing/>
