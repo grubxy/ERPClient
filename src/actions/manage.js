@@ -1,3 +1,38 @@
+// 账户管理
+
+// 提交新增用户
+export const addUser = (data) => ({
+  type: 'USER_ADD',
+  data
+})
+
+// 提交删除用户
+export const delUser = (data) => ({
+  type: 'USER_DEL',
+  data
+})
+
+// 模态框操作
+export const operateUserModal = (data) => ({
+  type: 'USER_MODAL_OPERATE',
+  open: data
+})
+
+// 输入框变化
+export const changeUserInput = (target) => ({
+  type: 'USER_MODAL_CHANGE',
+  name: target.name,
+  value: target.value
+})
+
+// 下拉框变化
+export const dropdownUserInput = (name, value) => ({
+  type: 'USER_MODAL_CHANGE',
+  name: name,
+  value: value
+})
+
+
 // 管理页面----材料分页
 export const materialgoToPage = (table, method) => ({
   type: 'MATERIAL_TABLE_PAGE',

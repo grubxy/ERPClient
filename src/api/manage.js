@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 export const addMaterial = (name, spec) => {
 	return axios.post('/manage/material/add', {
 			name: name,

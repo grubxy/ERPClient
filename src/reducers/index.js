@@ -1,58 +1,18 @@
 import {
 	combineReducers
 } from 'redux'
-import loginModels from './login'
 import {
-	production,
-	productionModel
-} from './production'
-import {
-	constructionAll,
-	technicsAll,
-	employeeAll,
-	materialAll,
-	addConstructionModel
-} from './construction'
-import breadp from './breadp'
-import pay from './pay'
-import {
-	material,
-	materialModel
-} from './material'
-import {
-	technics,
-	technicsModel
-} from './technics'
-import {
-	employee,
-	employeeModel
-} from './employee'
+	userTable,
+	userModal
+} from './manage'
 
-let productionAll = combineReducers({
-	production,
-	productionModel,
-	constructionAll,
-	addConstructionModel,
-	technicsAll,
-	employeeAll,
-	materialAll
-})
-
-let manageAll = combineReducers({
-	material,
-	materialModel,
-	technics,
-	technicsModel,
-	employee,
-	employeeModel
+let manage = combineReducers({
+	userTable,
+	userModal
 })
 
 const app = combineReducers({
-	loginModels,
-	productionAll,
-	breadp,
-	pay,
-	manageAll
+	manage
 })
 
 export default app

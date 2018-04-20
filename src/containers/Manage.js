@@ -2,6 +2,10 @@ import React, {
   Component
 } from 'react'
 import {
+  connect
+} from 'react-redux'
+import PropTypes from 'prop-types'
+import {
   Grid,
   Header,
   Container,
@@ -16,18 +20,21 @@ import {
 import {
   MultiTable
 } from '../components/MultiTable'
+import {
+  changeUserInput,
+  dropdownUserInput,
+  operateUserModal,
+  addUser,
+  delUser
+} from '../actions/manage'
 
 const roles = [{
-  key: 0,
-  value: 0,
-  text: '系统管理员'
-}, {
   key: 1,
-  value: 1,
+  value: 2,
   text: '流程管理员'
 }, {
   key: 2,
-  value: 2,
+  value: 3,
   text: '仓库管理员'
 }]
 
@@ -54,42 +61,52 @@ const user = {
   }
 }
 
-const panes = [{
-  menuItem: '账户管理',
-  render: () => {
-    return (
-      <Tab.Pane>
-          <Button size='small' content='账户' color='teal' icon='add'/>
-          <Modal open={false}>
-          <Modal.Header>添加账户</Modal.Header>
-          <Modal.Content>
-            <Form size='large'>
-              <Form.Group>
-                <Form.Input label='账户名' name='username'/>
-                <Form.Input label='密码' name='password'/>
-                <Form.Dropdown label='权限' placeholder='role' search selection options={roles}/>
-              </Form.Group>
-              <Form.Group>
-                <Form.Input label='使用者' name='owner'/>
-              </Form.Group>
-            </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button> 取消 </Button>
-            <Button color='blue'> 确定 </Button>
-          </Modal.Actions>
-          </Modal>
-          <MultiTable table={user}/>
-        </Tab.Pane>
-    )
-  }
-}]
-
-
-export default class Manage extends Component {
+class Manage extends Component {
   componentWillMount = () => {}
 
   render = () => {
+
+    const {
+      onChange,
+      onSelect,
+      onModel,
+      onAdd,
+      onDel,
+      model,
+      table,
+    } = this.props
+
+    const panes = [{
+      menuItem: '账户管理',
+      render: () => {
+        return (
+          <Tab.Pane>
+            <Button size='small' content='账户' color='teal' icon='add' onClick={()=>onModel(true)}/>
+            <Modal open={model.open}>
+            <Modal.Header>添加账户</Modal.Header>
+            <Modal.Content>
+              <Form size='large'>
+                <Form.Group>
+                  <Form.Input label='账户名' name='username' onChange={(e)=>onChange(e.target)}/>
+                  <Form.Input label='密码' name='password' onChange={(e)=>onChange(e.target)}/>
+                  <Form.Dropdown label='权限' placeholder='role' name='role' search selection options={roles} onChange={(e, {name, value})=>onSelect(name, value)}/>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Input label='使用者' name='owner'onChange={(e)=>onChange(e.target)}/>
+                </Form.Group>
+              </Form>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button onClick={()=>onModel(false)}> 取消 </Button>
+              <Button color='blue' onClick={()=>onAdd(model)}> 确定 </Button>
+            </Modal.Actions>
+            </Modal>
+            <MultiTable table={table}/>
+          </Tab.Pane>
+        )
+      }
+    }]
+
     return (
       <Container style={{marginTop:'3em'}}>
         <Header as='h3'>
@@ -103,3 +120,18 @@ export default class Manage extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  model: state.manage.userModal,
+  table: state.manage.userTable
+})
+
+const mapDispatchToProps = {
+  onChange: changeUserInput,
+  onSelect: dropdownUserInput,
+  onModel: operateUserModal,
+  onAdd: addUser,
+  onDel: delUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Manage)

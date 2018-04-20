@@ -20,6 +20,12 @@ import {
   addTechnics,
   delTechnics
 } from '../api/manage'
+
+import {
+  addUserAPI,
+  getUserListAPI
+} from '../api/BaihuiServerAPI'
+
 import {
   getProduction,
   addProduction
@@ -436,26 +442,72 @@ function* productionBread(action) {
   })
 }
 
+
+function* addUser(action) {
+
+  // 角色枚举
+  let roles = [{
+    id: 2,
+    value: '流程管理员'
+  }, {
+    id: 3,
+    value: '仓库管理员'
+  }]
+
+  // 发送消息体
+  let data = {
+    username: action.data.username,
+    owner: action.data.owner,
+    password: action.data.password,
+    roles: [{
+      rid: action.data.role
+    }]
+  }
+
+
+  try {
+    // 发送请求
+    yield call(addUserAPI, data)
+    // 关闭modal
+    yield put({
+      type: 'USER_MODAL_OPERATE',
+      open: false
+    })
+    // 获取新表单
+    let result = yield call(getUserListAPI)
+
+    let userTableList = []
+
+    for (let tmp of result) {
+
+      let roleString = ''
+
+      userTableList = userTableList.push({
+        username: tmp.username,
+        owner: tmp.owner,
+        role: ''
+      })
+
+      console.log('usertable:' + userTableList)
+    }
+    // 更新表单 
+    yield put({
+      type: 'UPDATE_USER_TABLE',
+      data: {
+        content: userTableList
+      }
+    })
+  } catch (error) {
+    // 关闭modal
+    yield put({
+      type: 'USER_MODAL_OPERATE',
+      open: false
+    })
+  }
+}
+
 function* mySaga() {
-  yield takeEvery("RECORD_MODEL_CLOSE", fetchRecordModel)
-  yield takeEvery("LOGIN_LOG", login)
-  yield takeEvery("RECORD_TABLE_BACK", recordTableBack)
-  yield takeEvery("RECORD_TABLE_FORWORD", recordTableForword)
-  yield takeEvery("PRODUCTION_TABLE_SELECT", productionTableSelect)
-  yield takeEvery("PRODUCTION_BREAD_SAGA", productionBread)
-  yield takeEvery("PAY_TABLE_SEACH", payTableSelect)
-  yield takeEvery("MATERIAL_TABLE_DEL", materialDel)
-  yield takeEvery("MATERIAL_MODEL_CONFIRM", materialAdd)
-  yield takeEvery("MATERIAL_TABLE_PAGE", materialSelect)
-  yield takeEvery("PRODUCTION_TABLE_PAGE", productinoTablePage)
-  yield takeEvery("PRODUCTION_MODEL_CONFIRM", productionAdd)
-  yield takeEvery("CONSTRUCTION_MODEL_CONFIRM", constructionAdd)
-  yield takeEvery("TECHNICS_TABLE_PAGE", technicsSelect)
-  yield takeEvery("TECHNICS_TABLE_DEL", technicsDel)
-  yield takeEvery("TECHNICS_MODEL_CONFIRM", technicsAdd)
-  yield takeEvery("EMPLOYEE_TABLE_PAGE", employeeSelect)
-  yield takeEvery("EMPLOYEE_MODEL_CONFIRM", employeeAdd)
-  yield takeEvery("EMPLOYEE_TABLE_DEL", employeeDel)
+  yield takeEvery("USER_ADD", addUser)
 }
 
 export default mySaga
