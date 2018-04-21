@@ -1,5 +1,10 @@
 // 账户管理
 
+// 初始化加载
+export const initUser = () => ({
+  type: 'USER_INIT'
+})
+
 // 提交新增用户
 export const addUser = (data) => ({
   type: 'USER_ADD',

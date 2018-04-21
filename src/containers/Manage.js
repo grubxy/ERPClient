@@ -25,7 +25,8 @@ import {
   dropdownUserInput,
   operateUserModal,
   addUser,
-  delUser
+  delUser,
+  initUser
 } from '../actions/manage'
 
 const roles = [{
@@ -62,7 +63,13 @@ const user = {
 }
 
 class Manage extends Component {
-  componentWillMount = () => {}
+  componentWillMount = () => {
+    const {
+      onInit
+    } = this.props
+
+    onInit()
+  }
 
   render = () => {
 
@@ -131,7 +138,8 @@ const mapDispatchToProps = {
   onSelect: dropdownUserInput,
   onModel: operateUserModal,
   onAdd: addUser,
-  onDel: delUser
+  onDel: delUser,
+  onInit: initUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manage)

@@ -442,18 +442,45 @@ function* productionBread(action) {
   })
 }
 
+// 角色枚举
+const roles = ['流程管理员',
+  '仓库管理员'
+]
+
+function* initUser(action) {
+  try {
+    // 获取新列表
+    let result = yield call(getUserListAPI)
+    let userTableList = []
+    for (let tmp of result) {
+
+      // 显示字符转换
+      let roleString = ''
+      for (let role of tmp.roles) {
+        roleString += roles[role.rid - 1] + ' '
+      }
+      // 列表数据
+      userTableList.push({
+        username: tmp.username,
+        owner: tmp.owner,
+        role: roleString,
+        single_button: 'delete'
+      })
+    }
+    // 更新表单 
+    yield put({
+      type: 'UPDATE_USER_TABLE',
+      data: {
+        content: userTableList
+      }
+    })
+  } catch (error) {
+    // 提示 
+  }
+}
+
 
 function* addUser(action) {
-
-  // 角色枚举
-  let roles = [{
-    id: 2,
-    value: '流程管理员'
-  }, {
-    id: 3,
-    value: '仓库管理员'
-  }]
-
   // 发送消息体
   let data = {
     username: action.data.username,
@@ -463,7 +490,6 @@ function* addUser(action) {
       rid: action.data.role
     }]
   }
-
 
   try {
     // 发送请求
@@ -479,16 +505,12 @@ function* addUser(action) {
     let userTableList = []
 
     for (let tmp of result) {
-
-      let roleString = ''
-
-      userTableList = userTableList.push({
+      userTableList.push({
         username: tmp.username,
         owner: tmp.owner,
-        role: ''
+        role: roles[tmp.rid - 1],
+        single_button: 'del'
       })
-
-      console.log('usertable:' + userTableList)
     }
     // 更新表单 
     yield put({
@@ -508,6 +530,7 @@ function* addUser(action) {
 
 function* mySaga() {
   yield takeEvery("USER_ADD", addUser)
+  yield takeEvery("USER_INIT", initUser)
 }
 
 export default mySaga
