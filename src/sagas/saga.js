@@ -23,7 +23,8 @@ import {
 
 import {
   addUserAPI,
-  getUserListAPI
+  getUserListAPI,
+  delUserAPI
 } from '../api/BaihuiServerAPI'
 
 import {
@@ -443,11 +444,11 @@ function* productionBread(action) {
 }
 
 // 角色枚举
-const roles = ['流程管理员',
+const roles = ['系统管理员', '流程管理员',
   '仓库管理员'
 ]
 
-function* initUser(action) {
+function* initUser() {
   try {
     // 获取新列表
     let result = yield call(getUserListAPI)
@@ -461,6 +462,7 @@ function* initUser(action) {
       }
       // 列表数据
       userTableList.push({
+        id: tmp.uid,
         username: tmp.username,
         owner: tmp.owner,
         role: roleString,
@@ -479,6 +481,15 @@ function* initUser(action) {
   }
 }
 
+function* delUser(action) {
+  console.log(JSON.stringify(action.row))
+  try {
+    yield call(delUserAPI, action.row.id)
+    yield call(initUser)
+  } catch (error) {
+
+  }
+}
 
 function* addUser(action) {
   // 发送消息体
@@ -499,26 +510,8 @@ function* addUser(action) {
       type: 'USER_MODAL_OPERATE',
       open: false
     })
-    // 获取新表单
-    let result = yield call(getUserListAPI)
-
-    let userTableList = []
-
-    for (let tmp of result) {
-      userTableList.push({
-        username: tmp.username,
-        owner: tmp.owner,
-        role: roles[tmp.rid - 1],
-        single_button: 'del'
-      })
-    }
-    // 更新表单 
-    yield put({
-      type: 'UPDATE_USER_TABLE',
-      data: {
-        content: userTableList
-      }
-    })
+    //更新表格数据
+    yield call(initUser)
   } catch (error) {
     // 关闭modal
     yield put({
@@ -531,6 +524,7 @@ function* addUser(action) {
 function* mySaga() {
   yield takeEvery("USER_ADD", addUser)
   yield takeEvery("USER_INIT", initUser)
+  yield takeEvery("USER_DEL", delUser)
 }
 
 export default mySaga

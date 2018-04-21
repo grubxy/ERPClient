@@ -135,7 +135,7 @@ export class MultiTable extends Component {
     return (
       <Table compact='very' color='teal' size='small' selectable={table.selectable}>
         <MultiTableHeader table={table}/>
-        <MultiTableBody table={table}/>
+        <MultiTableBody table={table} onAction={onAction}/>
         <MultiTableFooter table={table}/>
       </Table>
     )

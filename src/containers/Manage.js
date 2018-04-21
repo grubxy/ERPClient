@@ -108,7 +108,7 @@ class Manage extends Component {
               <Button color='blue' onClick={()=>onAdd(model)}> 确定 </Button>
             </Modal.Actions>
             </Modal>
-            <MultiTable table={table}/>
+            <MultiTable table={table} onAction={onDel}/>
           </Tab.Pane>
         )
       }

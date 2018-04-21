@@ -12,9 +12,10 @@ export const addUser = (data) => ({
 })
 
 // 提交删除用户
-export const delUser = (data) => ({
+export const delUser = (row, size) => ({
   type: 'USER_DEL',
-  data
+  row,
+  size
 })
 
 // 模态框操作
