@@ -31,7 +31,7 @@ export function* initUser() {
 				username: tmp.username,
 				owner: tmp.owner,
 				role: roleString,
-				single_button: ['delete', 'add']
+				button_list: ['delete', 'add']
 			})
 		}
 		// 更新表单 
@@ -49,7 +49,12 @@ export function* initUser() {
 export function* delUser(action) {
 	console.log(JSON.stringify(action.row))
 	try {
-		yield call(deleteUserAPI, action.row.id)
+		if (action.row.icon === 'delete') {
+			yield call(deleteUserAPI, action.row.id)
+		} else {
+			throw '按键不对应'
+		}
+
 		yield call(initUser)
 	} catch (error) {
 

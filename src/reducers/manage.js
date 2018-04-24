@@ -10,7 +10,7 @@ export const userTable = (state = {
 		role: {
 			title: '账户类型'
 		},
-		single_button: {
+		button_list: {
 			title: ''
 		}
 	}
