@@ -33,7 +33,7 @@ const MultiTableCell = ({
       <Table.Cell>{
       Object.values(value).map((x, j) => {
         return (
-            <Button key = {j} size='tiny' color='grey' icon={x} floated='right' onClick={()=>onAction(row, x)}/>
+            <Button key = {j} size='tiny' color={x['color']} icon={x['icon']} floated='right' onClick={()=>onAction(row, x['method'])}/>
         )
       })}
       </Table.Cell>
