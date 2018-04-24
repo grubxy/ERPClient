@@ -30,14 +30,18 @@ const MultiTableCell = ({
   table,
 }) => {
   if (headkey === 'single_button') {
-    return <Table.Cell key={headkey}>
-      <Button size='tiny' color='gray' icon={value} floated='right' onClick={()=>onAction(row, table.size)}/>
-    </Table.Cell>
+    return (Object.values(value).map((x, j) => {
+      return (
+        <Table.Cell>
+            <Button size='tiny' color='grey' icon={x} floated='right' onClick={()=>onAction(row, table.size)}/>
+          </Table.Cell>
+      )
+    }))
   } else {
     return (
       <Table.Cell key={headkey}>
-          {value}
-    </Table.Cell>
+            {value}
+      </Table.Cell>
     )
   }
 }
@@ -58,7 +62,7 @@ const MultiTableBody = ({
                 Object.keys(table.headers).map((_, j)=>{
                   let key = Object.keys(table.headers)[j]
                   let value = row[key]
-                  return <MultiTableCell headkey={key} value={value} row={row} onAction={onAction} table={table}/>
+                  return <MultiTableCell key={j} headkey={key} value={value} row={row} onAction={onAction} table={table}/>
                 })
               }
               </Table.Row>
@@ -70,7 +74,7 @@ const MultiTableBody = ({
               Object.keys(table.headers).map((_, j)=>{
                 let key = Object.keys(table.headers)[j]
                 let value = row[key]
-                return <MultiTableCell headkey={key} value={value} row={row} onAction={onAction} table={table}/>
+                return <MultiTableCell key={j} headkey={key} value={value} row={row} onAction={onAction} table={table}/>
               })
             }
             </Table.Row>

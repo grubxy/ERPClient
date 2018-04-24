@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom'
 
 
-import LoginPage from '../containers/Login'
 import BaseFlowData from '../containers/BaseFlowData'
 import Flow from '../containers/Flow'
 import Construction from '../containers/Construction'
@@ -62,7 +61,9 @@ const Routes = () => (
           </Menu.Item>
         </Container>
       </Menu>
-      <Route path="/login" component={LoginPage}/>
+      {/*
+       <Route path="/login" component={LoginPage}/>
+    */}
       <Container style={{ marginTop: '7em' }}>
         <PrivateRoute path="/data" component={BaseFlowData}/>
         <PrivateRoute path="/flow" component={Flow}/>

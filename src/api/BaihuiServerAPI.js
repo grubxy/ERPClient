@@ -41,25 +41,99 @@ function fetch(url, {
 			.catch(error => {
 				throw error
 			})
+	} else if (method === 'DELETE') {
+		return axios.delete(url, {
+				params: params
+			})
+			.then((resp) => {
+				if (resp.status === 200) {
+					// 正常结果
+					return resp.data.content
+				} else if (resp.status === 400) {
+					// 用户层异常
+					throw resp.data
+				} else {
+					// 其他异常
+					throw resp.status
+				}
+			})
+			.catch(error => {
+				throw error
+			})
 	}
 }
 
-/*** 用户 ***/
+/*** 账户 ***/
 
-export const addUserAPI = (data) => {
-	return fetch('/auth/register', {
+// 添加账户 
+export const postUserAPI = (data) => {
+	return fetch('/user', {
 		data: data
 	})
 }
 
-export const getUserListAPI = () => {
-	return fetch('/userlist', {
+// 获取账户列表
+export const getUserAPI = () => {
+	return fetch('/user?page=0&size=0', {
 		method: 'GET'
 	})
 }
 
-export const delUserAPI = (id) => {
-	return fetch(`/delUser/${id}`, {
+// 删除账户列表 
+export const deleteUserAPI = (id) => {
+	return fetch(`/user/${id}`, {
+		method: 'DELETE'
+	})
+}
+
+/*** 基础数据 ***/
+
+// 增加产品
+export const postProductAPI = (data) => {
+	return fetch('/product', {
+		data
+	})
+}
+
+// 删除产品
+export const deleteProductAPI = (id) => {
+	return fetch(`/product/${id}`, {
+		method: 'DELETE'
+	})
+}
+
+// 获取产品
+export const getProductApi = (page, size) => {
+	return fetch(`/product?page=${page}&size=${size}`, {
+		method: 'GET'
+	})
+}
+
+// 给某产品添加工序
+export const postSeqByProductIdApi = (id, data) => {
+	return fetch(`/product/${id}/seq`, {
+		data
+	})
+}
+
+
+// 获取某个产品工序
+export const getSeqByProductIdApi = (id, page, size) => {
+	return fetch(`/product/${id}/seq?page=${page}&size=${size}`, {
+		method: 'GET'
+	})
+}
+
+// 给工序添加默认员工
+export const postStaffBySeqId = (id, data) => {
+	return fetch(`/seq/${id}/staff`, {
+		data
+	})
+}
+
+// 获取工序默认员工
+export const getStaffBySeqId = (id, page, size) => {
+	return fetch(`/seq/${id}/staff?page=${page}&size=${size}`, {
 		method: 'GET'
 	})
 }
