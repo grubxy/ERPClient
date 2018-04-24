@@ -2,12 +2,22 @@ import {
   takeEvery
 } from 'redux-saga/effects'
 
-
 import {
   initUser,
   delUser,
   addUser
 } from './user'
+
+import {
+  initBaseData,
+  selectBaseData,
+  addProduct,
+  addSeq,
+  addDefaultStaff,
+  productAction,
+  seqAction,
+  delDefaultStaff
+} from './basedata'
 
 // 生产流程
 // 生产单
@@ -47,9 +57,21 @@ import {
 
 
 function* mySaga() {
-  yield takeEvery("USER_ADD", addUser)
-  yield takeEvery("USER_INIT", initUser)
-  yield takeEvery("USER_DEL", delUser)
+
+  // 账户
+  yield takeEvery('USER_ADD', addUser)
+  yield takeEvery('USER_INIT', initUser)
+  yield takeEvery('USER_DEL', delUser)
+
+  // 基础 生产数据配置
+  yield takeEvery('BASEDATA_INIT', initBaseData)
+  yield takeEvery('BASEDATA_SELECT', selectBaseData)
+  yield takeEvery('PRODUCT_ADD', addProduct)
+  yield takeEvery('SEQ_ADD', addSeq)
+  yield takeEvery('DEFAULT_STAFF_ADD', addDefaultStaff)
+  yield takeEvery('PRODUCT_ACTION', productAction)
+  yield takeEvery('SEQ_ACTION', seqAction)
+  yield takeEvery('DEFAULT_STAFF_DEL', delDefaultStaff)
 }
 
 export default mySaga

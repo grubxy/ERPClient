@@ -35,10 +35,6 @@ export function* initUser() {
 					method: 'delete',
 					icon: 'delete',
 					color: 'grey'
-				}, {
-					method: 'add',
-					icon: 'add',
-					color: 'black'
 				}]
 			})
 		}

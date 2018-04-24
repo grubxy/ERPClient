@@ -2,6 +2,9 @@ import React, {
   Component
 } from 'react'
 import {
+  connect
+} from 'react-redux'
+import {
   Grid,
   Header,
   Container,
@@ -15,83 +18,18 @@ import {
 import {
   MultiTable
 } from '../components/MultiTable'
-
-const productTable = {
-  content: [{
-    mcode: '00000001',
-    name: '小刀',
-    single_button: 'delete'
-  }],
-  headers: {
-    mcode: {
-      title: '产品编号'
-    },
-    name: {
-      title: '产品名称'
-    },
-    single_button: {
-      title: ''
-    }
-  },
-  selectable: true,
-  showFooter: true,
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
-
-const seqTable = {
-  content: [{
-    mcode: 1,
-    name: '洗',
-    cost: 0.0002,
-    single_button: 'delete'
-  }, {
-    mcode: 2,
-    name: '刷',
-    cost: 0.0001,
-    single_button: 'delete'
-  }],
-  headers: {
-    mcode: {
-      title: '序号'
-    },
-    name: {
-      title: '工序名'
-    },
-    cost: {
-      title: '制作单价'
-    },
-    single_button: {
-      title: ''
-    }
-  },
-  selectable: true,
-  showFooter: false,
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
-
-const staffTable = {
-  content: [{
-    mcode: '小王',
-    single_button: 'delete'
-  }],
-  headers: {
-    mcode: {
-      title: '员工'
-    },
-    single_button: {
-      title: ''
-    }
-  },
-  selectable: true,
-  showFooter: false,
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
+import {
+  initBaseData,
+  addProduct,
+  actionProduct,
+  addSeq,
+  actionSeq,
+  addStaff,
+  delStaff,
+  operateModal,
+  changeInput,
+  onSelect
+} from '../actions/basedata'
 
 const staff = [{
   key: '1',
@@ -103,10 +41,32 @@ const staff = [{
   value: '2'
 }]
 
-export default class BaseFlowData extends Component {
-  componentWillMount = () => {}
+class BaseFlowData extends Component {
+  componentWillMount = () => {
+    const {
+      initBaseData
+    } = this.props
+
+    initBaseData()
+  }
 
   render = () => {
+
+    const {
+      modal,
+      onModal,
+      onProAdd,
+      onSelect,
+      onSeqAdd,
+      onStaffAdd,
+      onProAction,
+      onSeqAction,
+      onStaffDel,
+      productTable,
+      seqTable,
+      staffTable
+    } = this.props
+
     return (
       <Container style={{marginTop:'3em'}}>
         <Header as='h3'>
@@ -116,15 +76,17 @@ export default class BaseFlowData extends Component {
         <Divider hidden/>
         <Divider clearing/>
         <Grid divided='vertically'>
-          <Grid.Row>
+          <Grid.Row columns={6}>
             <Grid.Column>
             <Search size='mini'/>
+            </Grid.Column>
+            <Grid.Column>
+            <Button size='small' content='产品' color='teal' icon='add' onClick={()=>onModal('product',true)}/>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={6}>
-              <Button size='small' content='产品' color='teal' icon='add'/>
-              <Modal open={false}>
+              <Modal open={modal.product}>
                 <Modal.Header>添加产品</Modal.Header>
                 <Modal.Content>
                   <Form size='large'>
@@ -134,15 +96,14 @@ export default class BaseFlowData extends Component {
                   </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button> 取消 </Button>
-                  <Button color='blue'> 确定 </Button>
+                  <Button onClick={()=>onModal('product', false)}> 取消 </Button>
+                  <Button color='blue' onClick={()=>onProAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={productTable}/>
             </Grid.Column>
             <Grid.Column width={5}>
-              <Button size='small' content='工序' color='teal' icon='add'/>
-              <Modal open={false}>
+              <Modal open={modal.seq}>
                 <Modal.Header>添加工序</Modal.Header>
                 <Modal.Content>
                   <Form size='large'>
@@ -153,15 +114,14 @@ export default class BaseFlowData extends Component {
                   </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button> 取消 </Button>
-                  <Button color='blue'> 确定 </Button>
+                  <Button onClick={()=>onModal('seq', false)}> 取消 </Button>
+                  <Button color='blue' onClick={()=>onSeqAction(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={seqTable}/>
             </Grid.Column>
             <Grid.Column width={5}>
-              <Button size='small' content='员工' color='teal' icon='add'/>
-              <Modal open={false}>
+              <Modal open={modal.staff}>
                 <Modal.Header>添加默认员工</Modal.Header>
                 <Modal.Content>
                   <Form size='large'>
@@ -171,8 +131,8 @@ export default class BaseFlowData extends Component {
                   </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button> 取消 </Button>
-                  <Button color='blue'> 确定 </Button>
+                  <Button onClick={()=>onModal('staff', false)}> 取消 </Button>
+                  <Button color='blue' onClick={()=>onStaffAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={staffTable}/>
@@ -183,3 +143,26 @@ export default class BaseFlowData extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  modal: state.basedata.basedataModal,
+  productTable: state.basedata.productTable,
+  seqTable: state.basedata.seqTable,
+  staffTable: state.basedata.staffTable
+})
+
+const mapDispatchToProps = {
+  initBaseData: initBaseData,
+  onChange: changeInput,
+  onSelect: onSelect,
+  onProAdd: addProduct,
+  onProAction: actionProduct,
+  onSeqAdd: addSeq,
+  onSeqAction: actionSeq,
+  onStaffAdd: addStaff,
+  onStaffDel: delStaff,
+  onModal: operateModal
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BaseFlowData)
