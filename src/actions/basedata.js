@@ -50,10 +50,14 @@ export const onSelect = (which, row) => ({
 })
 
 // 多个模态框操作
-export const operateModal = (which, data) => ({
+export const operateModal = (data) => ({
   type: 'BASEDATA_MODAL_OPERATE',
-  which,
   data
+})
+
+// 清空模态框内容
+export const clearModal = () => ({
+  type: 'BASEDATA_MODAL_CLEAR'
 })
 
 // 输入变化框

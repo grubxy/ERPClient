@@ -1,26 +1,26 @@
-export const basedataModal = (state = {
+const defaultModal = {
   product: false,
   seq: false,
-  staff: false
-}, action) => {
+  staff: false,
+  productRow: {},
+  seqRow: {},
+  staffRow: {}
+}
+
+export const basedataModal = (state =
+  defaultModal, action) => {
   switch (action.type) {
     case 'BASEDATA_MODAL_OPERATE':
-      if (action.which === 'product') {
-        return { ...state,
-          product: action.data
-        }
-      } else if (action.which === 'seq') {
-        return { ...state,
-          seq: action.data
-        }
-      } else if (action.which === 'staff') {
-        return { ...state,
-          staff: action.data
-        }
-      } else {
-        return state
+      return {
+        ...state,
+        ...action.data
       }
-
+    case 'BASEDATA_MODAL_CLEAR':
+      return defaultModal
+    case 'BASEDATA_MODAL_CHANGE':
+      return { ...state,
+        [action.name]: action.value
+      }
     default:
       return state
   }

@@ -12,8 +12,35 @@ import {
 
 export function* initBaseData() {
 
-  //
-  let data = yield call(getProductApi, 0, 0)
+  try {
+    // 获取产品数据
+    let result = yield call(getProductApi, 0, 0)
+
+    let productTableList = []
+    for (let tmp of result) {
+      productTableList.push({
+        id: tmp.idProduct,
+        name: tmp.productName,
+        button_list: [{
+          method: 'delete',
+          icon: 'delete',
+          color: 'grey'
+        }, {
+          method: 'add',
+          icon: 'add',
+          color: 'teal'
+        }]
+      })
+    }
+
+    // 更新产品界面 
+    yield put({
+      type: 'UPDATE_PRODUCT_TABLE',
+      data: productTableList
+    })
+  } catch (error) {
+    // 提示 
+  }
 
 }
 
@@ -29,6 +56,7 @@ export function* selectBaseData(action) {
 }
 
 export function* addProduct(action) {
+
   // 组装请求体
 
   // 发送请求
@@ -42,20 +70,64 @@ export function* addProduct(action) {
 
 export function* addSeq(action) {
 
+  // 组装请求体
+
+  // 发送请求
+
+  // 更新工序
+
+  // 后一级置空 
+
 }
 
 export function* addDefaultStaff(action) {
+
+  // 组装请求体
+
+  // 发送请求
+
+  // 更新员工 
+
 
 }
 
 export function* productAction(action) {
 
+  // 判断是哪个action
+  if (action.method === 'add') {
+    // 清空模态框数据
+    yield put({
+      type: 'BASEDATA_MODAL_CLEAR'
+    })
+    //打开工序模态框
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        seq: true,
+        seqRow: action.row
+      }
+    })
+
+  } else if (action.method === 'delete') {
+
+  }
+
+  // 删除按钮 
+
+  // 添加按钮，打开模态框，并复制row数据
+
 }
 
 export function* seqAction(action) {
 
+  // 判断是哪个action
+
+  // 删除按钮 
+
+  // 添加按钮，打开模态框，并复制row数据
 }
 
 export function* delDefaultStaff(action) {
 
+  //发送请求
 }

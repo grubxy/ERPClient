@@ -64,7 +64,8 @@ class BaseFlowData extends Component {
       onStaffDel,
       productTable,
       seqTable,
-      staffTable
+      staffTable,
+      onChange
     } = this.props
 
     return (
@@ -81,7 +82,7 @@ class BaseFlowData extends Component {
             <Search size='mini'/>
             </Grid.Column>
             <Grid.Column>
-            <Button size='small' content='产品' color='teal' icon='add' onClick={()=>onModal('product',true)}/>
+            <Button size='small' content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
@@ -91,16 +92,16 @@ class BaseFlowData extends Component {
                 <Modal.Content>
                   <Form size='large'>
                     <Form.Group>
-                      <Form.Input label="产品名" name='productName'/>
+                      <Form.Input label="产品名" name='productName' onChange={(e)=>onChange(e.target)}/>
                     </Form.Group>
                   </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button onClick={()=>onModal('product', false)}> 取消 </Button>
+                  <Button onClick={()=>onModal({product:false})}> 取消 </Button>
                   <Button color='blue' onClick={()=>onProAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <MultiTable table={productTable}/>
+              <MultiTable table={productTable} onAction={onProAction}/>
             </Grid.Column>
             <Grid.Column width={5}>
               <Modal open={modal.seq}>
@@ -108,14 +109,14 @@ class BaseFlowData extends Component {
                 <Modal.Content>
                   <Form size='large'>
                     <Form.Group>
-                      <Form.Input label="工序名" name='seqName'/>
-                      <Form.Input label="工序单价" name='seqPrice'/>
+                      <Form.Input label="工序名" name='seqName' onChange={(e)=>onChange(e.target)}/>
+                      <Form.Input label="工序单价" name='seqPrice' onChange={(e)=>onChange(e.target)}/>
                     </Form.Group>
                   </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button onClick={()=>onModal('seq', false)}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onSeqAction(modal)}> 确定 </Button>
+                  <Button onClick={()=>onModal({seq:false})}> 取消 </Button>
+                  <Button color='blue' onClick={()=>onSeqAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={seqTable}/>
@@ -126,12 +127,12 @@ class BaseFlowData extends Component {
                 <Modal.Content>
                   <Form size='large'>
                     <Form.Group>
-                      <Form.Dropdown placeholder='员工' name='staffId' search selection options={staff}/>
+                      <Form.Dropdown placeholder='员工' name='staffId' search selection options={staff} onChange={(e)=>onChange(e.target)}/>
                     </Form.Group>
                   </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button onClick={()=>onModal('staff', false)}> 取消 </Button>
+                  <Button onClick={()=>onModal({staff:false})}> 取消 </Button>
                   <Button color='blue' onClick={()=>onStaffAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
