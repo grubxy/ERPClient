@@ -10,7 +10,8 @@ import {
 
 import {
   initBaseData,
-  selectBaseData,
+  selectPro,
+  selectSeq,
   addProduct,
   addSeq,
   addDefaultStaff,
@@ -65,7 +66,8 @@ function* mySaga() {
 
   // 基础 生产数据配置
   yield takeEvery('BASEDATA_INIT', initBaseData)
-  yield takeEvery('BASEDATA_SELECT', selectBaseData)
+  yield takeEvery('PRODUCT_SELECT', selectPro)
+  yield takeEvery('SEQ_SELECT', selectSeq)
   yield takeEvery('PRODUCT_ADD', addProduct)
   yield takeEvery('SEQ_ADD', addSeq)
   yield takeEvery('DEFAULT_STAFF_ADD', addDefaultStaff)

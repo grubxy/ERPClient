@@ -11,6 +11,12 @@ export const addProduct = (data) => ({
   data
 })
 
+// 选中产品
+export const selectProduct = (data) => ({
+  type: 'PRODUCT_SELECT',
+  data
+})
+
 // 产品按钮案件
 export const actionProduct = (row, method) => ({
   type: 'PRODUCT_ACTION',
@@ -21,6 +27,13 @@ export const actionProduct = (row, method) => ({
 // 提交工序
 export const addSeq = (data) => ({
   type: 'SEQ_ADD',
+  data
+})
+
+
+// 选中产品
+export const selectSeq = (data) => ({
+  type: 'SEQ_SELECT',
   data
 })
 
@@ -40,12 +53,6 @@ export const addStaff = (data) => ({
 // 员工删除
 export const delStaff = (row) => ({
   type: 'DEFAULT_STAFF_DEL',
-  row
-})
-
-export const onSelect = (which, row) => ({
-  type: 'BASEDATA_SELECT',
-  which,
   row
 })
 

@@ -44,7 +44,7 @@ export function* initBaseData() {
 
 }
 
-export function* selectBaseData(action) {
+export function* selectPro(action) {
 
   // 判断选中类型 
 
@@ -53,6 +53,10 @@ export function* selectBaseData(action) {
   // 更新后一级列表数据
 
   // 再之后几级数据置为空 
+}
+
+export function* selectSeq(action) {
+
 }
 
 export function* addProduct(action) {

@@ -28,7 +28,8 @@ import {
   delStaff,
   operateModal,
   changeInput,
-  onSelect
+  selectProduct,
+  selectSeq
 } from '../actions/basedata'
 
 const staff = [{
@@ -56,7 +57,8 @@ class BaseFlowData extends Component {
       modal,
       onModal,
       onProAdd,
-      onSelect,
+      onProSelect,
+      onSeqSelect,
       onSeqAdd,
       onStaffAdd,
       onProAction,
@@ -101,7 +103,7 @@ class BaseFlowData extends Component {
                   <Button color='blue' onClick={()=>onProAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <MultiTable table={productTable} onAction={onProAction}/>
+              <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect}/>
             </Grid.Column>
             <Grid.Column width={5}>
               <Modal open={modal.seq}>
@@ -119,7 +121,7 @@ class BaseFlowData extends Component {
                   <Button color='blue' onClick={()=>onSeqAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <MultiTable table={seqTable}/>
+              <MultiTable table={seqTable} onAction={onSeqAction} onSelect={onSeqSelect}/>
             </Grid.Column>
             <Grid.Column width={5}>
               <Modal open={modal.staff}>
@@ -155,7 +157,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   initBaseData: initBaseData,
   onChange: changeInput,
-  onSelect: onSelect,
+  onProSelect: selectProduct,
+  onSeqSelect: selectSeq,
   onProAdd: addProduct,
   onProAction: actionProduct,
   onSeqAdd: addSeq,
