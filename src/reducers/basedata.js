@@ -55,7 +55,7 @@ export const productTable = (state = {
 export const seqTable = (state = {
   content: [],
   headers: {
-    id: {
+    index: {
       title: '序号'
     },
     name: {

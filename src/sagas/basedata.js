@@ -46,11 +46,35 @@ export function* initBaseData() {
 
 export function* selectPro(action) {
 
-  // 判断选中类型 
+  // 获取对应类型数据
+  console.log('id:' + action.data.id)
 
-  // 获取对应类型数据 
+  // 获取结果
+  let result = yield call(getSeqByProductIdApi, action.data.id, 0, 0)
 
   // 更新后一级列表数据
+  let seqList = []
+  for (let tmp of result) {
+    seqList.push({
+      id: tmp.idSeq,
+      index: tmp.seqIndex,
+      name: tmp.seqName,
+      cost: tmp.seqCost,
+      button_list: [{
+        method: 'delete',
+        icon: 'delete',
+        color: 'grey'
+      }, {
+        method: 'add',
+        icon: 'add',
+        color: 'teal'
+      }]
+    })
+  }
+  yield put({
+    type: 'UPDATE_SEQ_TABLE',
+    data: seqList
+  })
 
   // 再之后几级数据置为空 
 }
