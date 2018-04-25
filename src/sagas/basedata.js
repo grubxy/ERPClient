@@ -2,8 +2,10 @@ import {
   postProductAPI,
   getProductApi,
   postSeqByProductIdApi,
+  postStaffBySeqIdApi,
   getSeqByProductIdApi,
-  getStaffBySeqId
+  getStaffBySeqIdApi,
+  getStaffDropDownApi
 } from '../api/BaihuiServerAPI'
 import {
   call,
@@ -44,15 +46,11 @@ export function* initBaseData() {
 
 }
 
-export function* selectPro(action) {
-
-  // 获取对应类型数据
-  console.log('id:' + action.data.id)
-
+export function* initSeq(id) {
   // 获取结果
-  let result = yield call(getSeqByProductIdApi, action.data.id, 0, 0)
+  let result = yield call(getSeqByProductIdApi, id, 0, 0)
 
-  // 更新后一级列表数据
+  // 更新工序列表
   let seqList = []
   for (let tmp of result) {
     seqList.push({
@@ -71,50 +69,151 @@ export function* selectPro(action) {
       }]
     })
   }
-  yield put({
-    type: 'UPDATE_SEQ_TABLE',
-    data: seqList
-  })
+  try {
+    yield put({
+      type: 'UPDATE_SEQ_TABLE',
+      data: seqList
+    })
+  } catch (error) {}
+}
 
-  // 再之后几级数据置为空 
+export function* initDefaultStaff(id) {
+  // 获取结果
+  let result = yield call(getStaffBySeqIdApi, id, 0, 0)
+
+  // 更新默认员工列表
+  let defaultStaff = []
+  for (let tmp of result) {
+    defaultStaff.push({
+      id: tmp.idStaff,
+      name: tmp.staffName,
+      button_list: [{
+        method: 'delete',
+        icon: 'delete',
+        color: 'grey'
+      }]
+    })
+  }
+  try {
+    yield put({
+      type: 'UPDATE_STAFF_TABLE',
+      data: defaultStaff
+    })
+
+  } catch (error) {
+
+  }
+}
+
+
+export function* selectPro(action) {
+
+  // 获取对应类型数据
+  console.log('id:' + action.data.id)
+
+  // 更新后一级列表数据
+  yield call(initSeq, action.data.id)
+
+  // 清空员工
+  yield put({
+    type: 'UPDATE_STAFF_TABLE',
+    data: []
+  })
 }
 
 export function* selectSeq(action) {
+
+  // 获取对应id
+  yield call(initDefaultStaff, action.data.id)
 
 }
 
 export function* addProduct(action) {
 
   // 组装请求体
+  let body = {
+    productName: action.data.productName
+  }
+  try {
+    // 发送请求
+    yield call(postProductAPI, body)
 
-  // 发送请求
+    // 关闭模态框
+    yield put({
+      type: 'BASEDATA_MODAL_CLEAR'
+    })
 
-  // 更新产品数据
+    // 更新产品数据
+    yield call(initBaseData)
 
-  // 更新产品对应工序数据(理论新增后为空)
+    // 更新产品对应工序数据(理论新增后为空)}
+    yield put({
+      type: 'UPDATE_SEQ_TABLE',
+      data: []
+    })
 
+    yield put({
+      type: 'UPDATE_STAFF_TABLE',
+      data: []
+    })
 
+  } catch (error) {
+
+  }
 }
-
 export function* addSeq(action) {
 
   // 组装请求体
+  let id = action.data.productRow.id
+  let body = {
+    seqName: action.data.seqName,
+    seqCost: action.data.seqPrice
+  }
+  try {
+    // 发送请求
+    yield call(postSeqByProductIdApi, id, body)
 
-  // 发送请求
+    // 更新工序
+    yield call(initSeq, id)
 
-  // 更新工序
+    // 关闭模态框
+    yield put({
+      type: 'BASEDATA_MODAL_CLEAR'
+    })
+    // 后一级置空
+    yield put({
+      type: 'UPDATE_STAFF_TABLE',
+      data: []
+    })
 
-  // 后一级置空 
+  } catch (error) {
 
+  }
 }
 
 export function* addDefaultStaff(action) {
 
   // 组装请求体
+  let id = action.data.seqRow.id
+  let body = {
+    idStaff: action.data.staffId
+  }
 
-  // 发送请求
+  try {
+    // 发送请求
+    yield call(postStaffBySeqIdApi, id, body)
 
-  // 更新员工 
+    // 更新员工 
+    yield call(initDefaultStaff, id)
+
+    // 关闭模态框
+    yield put({
+      type: 'BASEDATA_MODAL_CLEAR'
+    })
+
+  } catch (error) {
+
+  }
 
 
 }
@@ -132,7 +231,7 @@ export function* productAction(action) {
       type: 'BASEDATA_MODAL_OPERATE',
       data: {
         seq: true,
-        seqRow: action.row
+        productRow: action.row
       }
     })
 
@@ -149,6 +248,40 @@ export function* productAction(action) {
 export function* seqAction(action) {
 
   // 判断是哪个action
+  if (action.method === 'add') {
+    // 清空模态框数据
+    yield put({
+      type: 'BASEDATA_MODAL_CLEAR'
+    })
+    // 获取员工下拉菜单列表(在职员工)
+    let result = yield call(getStaffDropDownApi, 0, 0, 0)
+    let dropDown = []
+    for (let tmp of result) {
+      dropDown.push({
+        key: tmp.idStaff,
+        text: tmp.staffName,
+        value: tmp.idStaff
+      })
+    }
+    // 更新数据
+    yield put({
+      type: 'BASEDATA_MODAL_STAFFDROPDOWN',
+      data: {
+        dropDown: dropDown
+      }
+    })
+
+    // 打开默认员工模态框
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        staff: true,
+        seqRow: action.row
+      }
+    })
+  } else if (action.method === 'delete') {
+
+  }
 
   // 删除按钮 
 

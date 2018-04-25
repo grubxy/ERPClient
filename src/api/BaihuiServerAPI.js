@@ -125,15 +125,22 @@ export const getSeqByProductIdApi = (id, page, size) => {
 }
 
 // 给工序添加默认员工
-export const postStaffBySeqId = (id, data) => {
+export const postStaffBySeqIdApi = (id, data) => {
 	return fetch(`/seq/${id}/staff`, {
 		data
 	})
 }
 
 // 获取工序默认员工
-export const getStaffBySeqId = (id, page, size) => {
+export const getStaffBySeqIdApi = (id, page, size) => {
 	return fetch(`/seq/${id}/staff?page=${page}&size=${size}`, {
+		method: 'GET'
+	})
+}
+
+// 获取员工下拉
+export const getStaffDropDownApi = (page, size, status) => {
+	return fetch(`/staff?page=${page}&size=${size}&status=${status}`, {
 		method: 'GET'
 	})
 }

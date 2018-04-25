@@ -29,7 +29,8 @@ import {
   operateModal,
   changeInput,
   selectProduct,
-  selectSeq
+  selectSeq,
+  dropdownStaff
 } from '../actions/basedata'
 
 const staff = [{
@@ -67,7 +68,8 @@ class BaseFlowData extends Component {
       productTable,
       seqTable,
       staffTable,
-      onChange
+      onChange,
+      onDropDown
     } = this.props
 
     return (
@@ -79,12 +81,12 @@ class BaseFlowData extends Component {
         <Divider hidden/>
         <Divider clearing/>
         <Grid divided='vertically'>
-          <Grid.Row columns={6}>
-            <Grid.Column>
-            <Search size='mini'/>
-            </Grid.Column>
+          <Grid.Row columns={10}>
             <Grid.Column>
             <Button size='small' content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
+            </Grid.Column>
+            <Grid.Column>
+            <Search size='mini'/>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
@@ -129,7 +131,7 @@ class BaseFlowData extends Component {
                 <Modal.Content>
                   <Form size='large'>
                     <Form.Group>
-                      <Form.Dropdown placeholder='员工' name='staffId' search selection options={staff} onChange={(e)=>onChange(e.target)}/>
+                      <Form.Dropdown placeholder='员工' name='staffId' search selection options={modal.dropDown} onChange={(e, {name, value})=>onDropDown(name, value)}/>
                     </Form.Group>
                   </Form>
                 </Modal.Content>
@@ -165,7 +167,8 @@ const mapDispatchToProps = {
   onSeqAction: actionSeq,
   onStaffAdd: addStaff,
   onStaffDel: delStaff,
-  onModal: operateModal
+  onModal: operateModal,
+  onDropDown: dropdownStaff
 }
 
 

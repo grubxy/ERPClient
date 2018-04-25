@@ -44,6 +44,13 @@ export const actionSeq = (row, method) => ({
   method
 })
 
+// 员工下拉菜单选择
+export const dropdownStaff = (name, value) => ({
+  type: 'BASEDATA_MODAL_CHANGE',
+  name,
+  value
+})
+
 // 默认员工添加
 export const addStaff = (data) => ({
   type: 'DEFAULT_STAFF_ADD',

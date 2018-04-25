@@ -4,7 +4,8 @@ const defaultModal = {
   staff: false,
   productRow: {},
   seqRow: {},
-  staffRow: {}
+  staffRow: {},
+  dropDown: {}
 }
 
 export const basedataModal = (state =
@@ -20,6 +21,10 @@ export const basedataModal = (state =
     case 'BASEDATA_MODAL_CHANGE':
       return { ...state,
         [action.name]: action.value
+      }
+    case 'BASEDATA_MODAL_STAFFDROPDOWN':
+      return { ...state,
+        ...action.data
       }
     default:
       return state
@@ -37,10 +42,10 @@ export const productTable = (state = {
     },
     button_list: {
       title: ''
-    },
-    selectable: true,
-    showFooter: true
-  }
+    }
+  },
+  selectable: true,
+  showFooter: true
 }, action) => {
   switch (action.type) {
     case 'UPDATE_PRODUCT_TABLE':
@@ -64,9 +69,12 @@ export const seqTable = (state = {
     cost: {
       title: '制作单价'
     },
-    selectable: true,
-    showFooter: false,
-  }
+    button_list: {
+      title: ''
+    }
+  },
+  selectable: true,
+  showFooter: false,
 }, action) => {
   switch (action.type) {
     case 'UPDATE_SEQ_TABLE':
@@ -83,9 +91,12 @@ export const staffTable = (state = {
   headers: {
     name: {
       title: '员工'
+    },
+    button_list: {
+      title: ''
     }
   },
-  selectable: true,
+  selectable: false,
   showFooter: false,
 }, action) => {
   switch (action.type) {
