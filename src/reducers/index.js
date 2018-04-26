@@ -12,10 +12,15 @@ import {
   seqTable,
   staffTable
 } from './basedata'
-
 import {
   globalPortal
 } from './portal'
+import {
+  flowModal,
+  flowTable,
+  seqinfoTable,
+  constructionTable
+} from './flow'
 
 let manage = combineReducers({
   userTable,
@@ -29,9 +34,17 @@ let basedata = combineReducers({
   staffTable
 })
 
+let flow = combineReducers({
+  flowModal,
+  flowTable,
+  seqinfoTable,
+  constructionTable
+})
+
 const app = combineReducers({
   manage,
   basedata,
+  flow,
   globalPortal
 })
 
