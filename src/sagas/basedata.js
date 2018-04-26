@@ -42,6 +42,14 @@ export function* initBaseData() {
     })
   } catch (error) {
     // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data
+      }
+    })
   }
 
 }

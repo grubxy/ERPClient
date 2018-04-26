@@ -13,14 +13,14 @@ function fetch(url, {
 					return resp.data.content
 				} else if (resp.status === 400) {
 					// 用户层异常
-					throw resp.data
+					throw resp
 				} else {
 					// 其他异常
-					throw resp.status
+					throw resp
 				}
 			})
 			.catch(error => {
-				throw error
+				throw error.response
 			})
 	} else if (method === 'GET') {
 		return axios.get(url, {
@@ -32,14 +32,14 @@ function fetch(url, {
 					return resp.data.content
 				} else if (resp.status === 400) {
 					// 用户层异常
-					throw resp.data
+					throw resp
 				} else {
 					// 其他异常
-					throw resp.status
+					throw resp
 				}
 			})
 			.catch(error => {
-				throw error
+				throw error.response
 			})
 	} else if (method === 'DELETE') {
 		return axios.delete(url, {
@@ -51,14 +51,14 @@ function fetch(url, {
 					return resp.data.content
 				} else if (resp.status === 400) {
 					// 用户层异常
-					throw resp.data
+					throw resp
 				} else {
 					// 其他异常
-					throw resp.status
+					throw resp
 				}
 			})
 			.catch(error => {
-				throw error
+				throw error.response
 			})
 	}
 }

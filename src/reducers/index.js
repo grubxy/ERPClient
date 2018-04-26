@@ -13,6 +13,10 @@ import {
   staffTable
 } from './basedata'
 
+import {
+  globalPortal
+} from './portal'
+
 let manage = combineReducers({
   userTable,
   userModal
@@ -27,7 +31,8 @@ let basedata = combineReducers({
 
 const app = combineReducers({
   manage,
-  basedata
+  basedata,
+  globalPortal
 })
 
 export default app

@@ -13,6 +13,7 @@ import Construction from '../containers/Construction'
 import StoreHouse from '../containers/StoreHouse'
 import StaffManage from '../containers/StaffManage'
 import Manage from '../containers/Manage'
+import GlobalPortal from '../containers/GlobalPortal'
 
 import {
   Menu,
@@ -65,6 +66,7 @@ const Routes = () => (
        <Route path="/login" component={LoginPage}/>
     */}
       <Container style={{ marginTop: '7em' }}>
+        <GlobalPortal/>
         <PrivateRoute path="/data" component={BaseFlowData}/>
         <PrivateRoute path="/flow" component={Flow}/>
         <PrivateRoute path="/construction" component={Construction}/>
