@@ -3,6 +3,7 @@ const defaultModal = {
   construction: false,
   compl: false,
   flowRow: {},
+  constructionRow: {},
   dropDownProduct: {},
   dropDownSeq: {},
   dropDownStaff: {}
@@ -130,6 +131,12 @@ const defaultConstruction = {
     },
     status: {
       title: '工单状态'
+    },
+    stime: {
+      title: '派单时间'
+    },
+    button_list: {
+      title: ''
     }
   },
   selectable: false,

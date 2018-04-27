@@ -74,3 +74,10 @@ export const dropDown = (name, value) => ({
   name: name,
   value: value
 })
+
+// 生产流程工序下拉菜单
+export const dropDownSeq = (name, value) => ({
+  type: 'FLOW_MODAL_SEQDROPDOWN',
+  name: name,
+  value: value
+})

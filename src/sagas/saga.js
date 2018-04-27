@@ -25,7 +25,10 @@ import {
   selectFlow,
   actionFlow,
   openProductionModal,
-  addProduction
+  addProduction,
+  selectSeqDropDown,
+  actionConstruction,
+  completeConstruction
 } from './flow'
 
 // 生产流程
@@ -89,6 +92,9 @@ function* mySaga() {
   yield takeEvery('PRODUCTION_ACTION', actionFlow)
   yield takeEvery('PRODUCTION_MODAL_OPEN', openProductionModal)
   yield takeEvery('PRODUCTION_ADD', addProduction)
+  yield takeEvery('FLOW_MODAL_SEQDROPDOWN', selectSeqDropDown)
+  yield takeEvery('CONSTRUCTION_ACTION', actionConstruction)
+  yield takeEvery('CONSTRUCTION_COMPLETE', completeConstruction)
 
 }
 
