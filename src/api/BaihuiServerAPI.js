@@ -144,3 +144,54 @@ export const getStaffDropDownApi = (page, size, status) => {
 		method: 'GET'
 	})
 }
+
+/*** 生产流程 ***/
+
+// 添加生产流程
+export const postFlowApi = (data) => {
+	return fetch('/flow', {
+		data
+	})
+}
+
+// 获取生产流程
+export const getFlowApi = (page, size) => {
+	return fetch(`/flow?page=${page}&size=${size}`, {
+		method: 'GET'
+	})
+}
+
+// 获取生产流程工序详情
+export const getFlowSeqInfoApi = (id) => {
+	return fetch(`/flow/${id}/seqinfo`, {
+		method: 'GET'
+	})
+}
+
+// 获取生产流程工序
+export const getSeqByFlowIdApi = (id) => {
+	return fetch(`/flow/${id}/seq`, {
+		method: 'GET'
+	})
+}
+
+// 添加工单
+export const postConstructionByFlowIdApi = (id, data) => {
+	return fetch(`/flow/${id}/construction`, {
+		data
+	})
+}
+
+// 获取生产流程下工单
+export const getConstructionByFlowIdApi = (id) => {
+	return fetch(`/flow/${id}/construction`, {
+		method: 'GET'
+	})
+}
+
+// 设置工单状态
+export const postConstructionStatusApi = (id, data) => {
+	return fetch(`/construction/${id}`, {
+		data
+	})
+}

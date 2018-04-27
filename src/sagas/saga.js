@@ -20,6 +20,14 @@ import {
   delDefaultStaff
 } from './basedata'
 
+import {
+  initFlow,
+  selectFlow,
+  actionFlow,
+  openProductionModal,
+  addProduction
+} from './flow'
+
 // 生产流程
 // 生产单
 // function* productinoTablePage(action) {
@@ -74,6 +82,14 @@ function* mySaga() {
   yield takeEvery('PRODUCT_ACTION', productAction)
   yield takeEvery('SEQ_ACTION', seqAction)
   yield takeEvery('DEFAULT_STAFF_DEL', delDefaultStaff)
+
+  // 生产流程 
+  yield takeEvery('FLOW_INIT', initFlow)
+  yield takeEvery('PRODUCTION_SELECT', selectFlow)
+  yield takeEvery('PRODUCTION_ACTION', actionFlow)
+  yield takeEvery('PRODUCTION_MODAL_OPEN', openProductionModal)
+  yield takeEvery('PRODUCTION_ADD', addProduction)
+
 }
 
 export default mySaga

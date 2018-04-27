@@ -1,8 +1,10 @@
 const defaultModal = {
   flow: false,
   construction: false,
+  compl: false,
   flowRow: {},
   dropDownProduct: {},
+  dropDownSeq: {},
   dropDownStaff: {}
 }
 
@@ -46,6 +48,9 @@ const defaultFlowTable = {
     },
     time: {
       title: '制单时间'
+    },
+    button_list: {
+      title: ''
     }
   },
   selectable: true,

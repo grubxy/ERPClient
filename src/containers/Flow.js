@@ -1,6 +1,23 @@
 import React, {
   Component
 } from 'react'
+import {
+  connect
+} from 'react-redux'
+
+import {
+  initFlow,
+  addProduction,
+  selectProduction,
+  actionProduction,
+  addConstruction,
+  actionConstruction,
+  completeConstruction,
+  operateModal,
+  openProductionModal,
+  changeInput,
+  dropDown
+} from '../actions/flow'
 
 import {
   Container,
@@ -13,100 +30,37 @@ import {
   Modal,
   Form
 } from 'semantic-ui-react'
-import TableWithAction from '../components/TableWithAction'
+import {
+  MultiTable
+} from '../components/MultiTable'
 
-const flows = {
-  content: [],
-  headers: {
-    idProduction: {
-      title: '生产批次'
-    },
-    productName: {
-      title: '产品名称'
-    },
-    dstCounts: {
-      title: '计划数目'
-    },
-    cmplCounts: {
-      title: '完成数目'
-    },
-    errCounts: {
-      title: '次品数目'
-    },
-    managerName: {
-      title: '制单人'
-    },
-    time: {
-      title: '制单时间'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
+class Flow extends Component {
+  componentWillMount = () => {
+    const {
+      initFlow
+    } = this.props
 
-const seqInfo = {
-  content: [],
-  headers: {
-    seqIndex: {
-      title: '工序序号'
-    },
-    seqName: {
-      title: '工序名称'
-    },
-    seqCost: {
-      title: '单价'
-    },
-    dstCounts: {
-      title: '待生产'
-
-    },
-    doingCounts: {
-      title: '在生产'
-    },
-    cmplCounts: {
-      title: '完工'
-    },
-    errCounts: {
-      title: '次品'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
-
-const construction = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '施工单号'
-    },
-    dstCounts: {
-      title: '计划'
-    },
-    cmplCounts: {
-      title: '完工'
-    },
-    errCounts: {
-      title: '次品'
-    },
-    staff: {
-      title: '工人'
-    },
-    status: {
-      title: '工单状态'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
-
-export default class Flow extends Component {
-  componentWillMount = () => {}
+    initFlow()
+  }
 
   render = () => {
+    const {
+      modal,
+      flowTable,
+      seqinfoTable,
+      constructionTable,
+      addProduction,
+      selectProduction,
+      actionProduction,
+      addConstruction,
+      actionConstruction,
+      completeConstruction,
+      operateModal,
+      openProductionModal,
+      dropDown,
+      changeInput
+    } = this.props
+
     return (
       <Container style={{marginTop:'3em'}}>
 			    <Header as='h3'>
@@ -117,8 +71,23 @@ export default class Flow extends Component {
         		<Divider clearing/>
         		<Grid>
         			<Grid.Row columns={10}>
-        			    <Grid.Column>
-        					<Button size='small' content='流程' color='teal' icon='add'/>
+                <Modal open={modal.flow}>
+                <Modal.Header>添加生产流程</Modal.Header>
+                <Modal.Content>
+                  <Form size='large'>
+                    <Form.Group>
+                      <Form.Dropdown placeholder='产品' label="产品" name='productId' search selection options={modal.dropDownProduct} onChange={(e, {name, value})=>dropDown(name, value)}/>
+                      <Form.Input label="计划生产数" name='flowDst' onChange={(e)=>changeInput(e.target)}/>
+                    </Form.Group>
+                  </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button onClick={()=>operateModal({flow:false})}> 取消 </Button>
+                  <Button color='blue' onClick={()=>addProduction(modal)}> 确定 </Button>
+                </Modal.Actions>
+              </Modal>
+        			 <Grid.Column>
+        					<Button size='small' content='流程' color='teal' icon='add' onClick={()=>openProductionModal(modal)}/>
         				</Grid.Column>
         				<Grid.Column>
         					<Search size='mini'/>
@@ -126,21 +95,46 @@ export default class Flow extends Component {
         			</Grid.Row>
         				
         			<Grid.Row columns={1}>
-   						<TableWithAction table={flows}/>
-        			</Grid.Row>
-
-        			<Grid.Row columns={2}>
-        				<Grid.Column floated='right'>
-        					<Button size='small' content='工单' color='teal' icon='add'/>
-        				</Grid.Column>
+   						<MultiTable table={flowTable} onSelect={selectProduction} onAction={actionProduction}/>
         			</Grid.Row>
 
         			<Grid.Row columns={2}>
         				<Grid.Column>
-        					<TableWithAction table={seqInfo}/>
+        					<MultiTable table={seqinfoTable}/>
         				</Grid.Column>
         				<Grid.Column>
-        					<TableWithAction table={construction}/>
+                <Modal open={modal.construction}>
+                  <Modal.Header>添加施工单</Modal.Header>
+                  <Modal.Content>
+                    <Form size='large'>
+                      <Form.Group>
+                        <Form.Dropdown placeholder='工序' label="工序" name='seqId' search selection options={modal.dropDownSeq} onChange={(e, {name, value})=>dropDown(name, value)}/>
+                        <Form.Dropdown placeholder='员工' label="员工" name='staffId' search selection options={modal.dropDownStaff} onChange={(e, {name, value})=>dropDown(name, value)}/>
+                        <Form.Input label="计划生产数" name='constructionDst' onChange={(e)=>changeInput(e.target)}/>
+                      </Form.Group>
+                    </Form>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button onClick={()=>operateModal({construction:false})}> 取消 </Button>
+                    <Button color='blue' onClick={()=>addConstruction(modal)}> 确定 </Button>
+                  </Modal.Actions>
+                </Modal>
+                <Modal open={modal.compl}>
+                  <Modal.Header>完工信息</Modal.Header>
+                  <Modal.Content>
+                    <Form size='large'>
+                      <Form.Group>
+                        <Form.Input label="正品数" name='constructionCmpl' onChange={(e)=>changeInput(e.target)}/>
+                        <Form.Input label="次品数" name='constructionErr' onChange={(e)=>changeInput(e.target)}/>
+                      </Form.Group>
+                    </Form>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button onClick={()=>operateModal({compl:false})}> 取消 </Button>
+                    <Button color='blue' onClick={()=>completeConstruction(modal)}> 确定 </Button>
+                  </Modal.Actions>
+                </Modal>
+        					<MultiTable table={constructionTable} onAction={actionConstruction}/>
         				</Grid.Column>
         			</Grid.Row>
 
@@ -149,3 +143,27 @@ export default class Flow extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  modal: state.flow.flowModal,
+  flowTable: state.flow.flowTable,
+  seqinfoTable: state.flow.seqinfoTable,
+  constructionTable: state.flow.constructionTable
+})
+
+const mapDispatchToProps = {
+  initFlow: initFlow,
+  addProduction: addProduction,
+  selectProduction: selectProduction,
+  actionProduction: actionProduction,
+  addConstruction: addConstruction,
+  actionConstruction: actionConstruction,
+  completeConstruction: completeConstruction,
+  operateModal: operateModal,
+  openProductionModal: openProductionModal,
+  changeInput: changeInput,
+  dropDown: dropDown
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Flow)

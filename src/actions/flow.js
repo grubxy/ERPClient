@@ -18,6 +18,12 @@ export const selectProduction = (data) => ({
   data
 })
 
+// 打开生产流程模态框
+export const openProductionModal = (data) => ({
+  type: 'PRODUCTION_MODAL_OPEN',
+  data
+})
+
 // 生产流程按键
 export const actionProduction = (row, method) => ({
   type: 'PRODUCTION_ACTION',
@@ -31,11 +37,17 @@ export const addConstruction = (data) => ({
   data
 })
 
-// 工单完工
+// 工单完工按钮
 export const actionConstruction = (row, method) => ({
-  type: 'CONSTRUCTION_COMPLETE',
+  type: 'CONSTRUCTION_ACTION',
   row,
   method
+})
+
+// 工单完工模态框确认
+export const completeConstruction = (data) => ({
+  type: 'CONSTRUCTION_COMPLETE',
+  data
 })
 
 // 模态框操作
@@ -59,6 +71,6 @@ export const changeInput = (target) => ({
 // 产品下拉菜单
 export const dropDown = (name, value) => ({
   type: 'FLOW_MODAL_CHANGE',
-  name: target.name,
-  value: target.value
+  name: name,
+  value: value
 })
