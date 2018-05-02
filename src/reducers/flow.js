@@ -4,9 +4,9 @@ const defaultModal = {
   compl: false,
   flowRow: {},
   constructionRow: {},
-  dropDownProduct: {},
-  dropDownSeq: {},
-  dropDownStaff: {}
+  dropDownProduct: [],
+  dropDownSeq: [],
+  dropDownStaff: []
 }
 
 export const flowModal = (state = defaultModal, action) => {

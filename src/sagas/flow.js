@@ -220,7 +220,6 @@ export function* selectSeqDropDown(action) {
 		value: action.value
 	})
 	// 获取工序默认员工
-	console.log(action.value)
 	try {
 		let result = yield call(getStaffBySeqIdApi, action.value, 0, 0)
 		let dropDown = []
@@ -311,10 +310,6 @@ export function* addProduction(action) {
 // 添加施工单
 export function* addConstructionByFlowId(action) {
 
-	console.log('xxxxxxxxxxxxxx')
-
-	JSON.stringify(action)
-
 	// 组装消息体
 	let body = {
 		dstCount: action.data.constructionDst,
@@ -328,7 +323,7 @@ export function* addConstructionByFlowId(action) {
 
 	try {
 		// 添加工单
-		yield call(postConstructionByFlowIdApi, action.dataflowRow.id, body)
+		yield call(postConstructionByFlowIdApi, action.data.flowRow.id, body)
 		// 清空模态框
 		yield put({
 			type: 'FLOW_MODAL_CLEAR'
@@ -336,6 +331,6 @@ export function* addConstructionByFlowId(action) {
 		//更新施工表
 		yield call(initConstruction, action.flowRow.id)
 	} catch (error) {
-
+		console.log(error)
 	}
 }
