@@ -60,6 +60,23 @@ function fetch(url, {
 			.catch(error => {
 				throw error.response
 			})
+	} else if (method === 'PATCH') {
+		return axios.post(url, data)
+			.then((resp) => {
+				if (resp.status === 200) {
+					// 正常结果
+					return resp.data.content
+				} else if (resp.status === 400) {
+					// 用户层异常
+					throw resp
+				} else {
+					// 其他异常
+					throw resp
+				}
+			})
+			.catch(error => {
+				throw error.response
+			})
 	}
 }
 
@@ -189,9 +206,17 @@ export const getConstructionByFlowIdApi = (id) => {
 	})
 }
 
+// 获取所有工单
+export const getConstructionByStatus = (page, size, status) => {
+	return fetch(`/construction?page=${page}&size=${size}&status=${status}`, {
+		method: 'GET'
+	})
+}
+
 // 设置工单状态
 export const postConstructionStatusApi = (id, data) => {
 	return fetch(`/construction/${id}`, {
-		data
+		data,
+		method: 'PATCH'
 	})
 }

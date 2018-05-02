@@ -311,6 +311,10 @@ export function* addProduction(action) {
 // 添加施工单
 export function* addConstructionByFlowId(action) {
 
+	console.log('xxxxxxxxxxxxxx')
+
+	JSON.stringify(action)
+
 	// 组装消息体
 	let body = {
 		dstCount: action.data.constructionDst,
@@ -321,9 +325,10 @@ export function* addConstructionByFlowId(action) {
 			idStaff: action.data.staffId
 		}
 	}
+
 	try {
 		// 添加工单
-		yield call(postConstructionByFlowIdApi, action.flowRow.id, body)
+		yield call(postConstructionByFlowIdApi, action.dataflowRow.id, body)
 		// 清空模态框
 		yield put({
 			type: 'FLOW_MODAL_CLEAR'
