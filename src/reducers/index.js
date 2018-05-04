@@ -28,7 +28,16 @@ import {
 import {
   constructionAllTable
 } from './construction'
+import {
+  storeConstrTable,
+  storeConstrModal
+} from './storehouse'
 
+
+let storehouse = combineReducers({
+  storeConstrTable,
+  storeConstrModal
+})
 
 let construction = combineReducers({
   constructionAllTable
@@ -64,7 +73,8 @@ const app = combineReducers({
   flow,
   globalPortal,
   staffmanage,
-  construction
+  construction,
+  storehouse
 })
 
 export default app

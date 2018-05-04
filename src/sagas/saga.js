@@ -42,6 +42,13 @@ import {
   selectConstruction
 } from './construction'
 
+import {
+  initStoreHouse,
+  storeConstrAction,
+  storeConstrConfirm,
+  storeConstrSelect
+} from './storehouse'
+
 // 生产流程
 // 生产单
 // function* productinoTablePage(action) {
@@ -116,6 +123,11 @@ function* mySaga() {
   yield takeEvery('CONSTRUCTION_INIT', initConstruction)
   yield takeEvery('CONSTRUCTION_SELECT', selectConstruction)
 
+  // 仓库管理
+  yield takeEvery('STOREHOUSE_INIT', initStoreHouse)
+  yield takeEvery('STOREHOUSE_CONSTRUCTION_ACTION', storeConstrAction)
+  yield takeEvery('STOREHOUSE_CONSTRUCTION_CONFIRM', storeConstrConfirm)
+  yield takeEvery('STOREHOUSE_CONSTRUCTION_SELECT', storeConstrSelect)
 }
 
 export default mySaga

@@ -16,7 +16,9 @@ import {
   Form,
   Tab
 } from 'semantic-ui-react'
-import TableWithAction from '../components/TableWithAction'
+import {
+  MultiTable
+} from '../components/MultiTable'
 import {
   addStaff,
   operateStaffModal,
@@ -94,7 +96,7 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-          <TableWithAction table={construction}/>
+          <MultiTable table={construction}/>
         </Tab.Pane>
         )
       }
@@ -104,7 +106,7 @@ class StaffManage extends Component {
         return (
           <Tab.Pane>
         <Search size='mini'/>
-        <TableWithAction table={salary}/>
+        <MultiTable table={salary}/>
       </Tab.Pane>
         )
       }
@@ -129,7 +131,7 @@ class StaffManage extends Component {
                   <Button color='blue' onClick={()=>onAddStaff(staffModal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-          <TableWithAction table={staffTable}/>
+          <MultiTable table={staffTable}/>
         </Tab.Pane>
         )
       }
