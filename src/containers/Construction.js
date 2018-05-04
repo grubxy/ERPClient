@@ -2,6 +2,13 @@ import React, {
   Component
 } from 'react'
 import {
+  connect
+} from 'react-redux'
+import {
+  initConstruction,
+  selectConstruction
+} from '../actions/construction'
+import {
   Grid,
   Header,
   Container,
@@ -14,52 +21,21 @@ import {
 } from 'semantic-ui-react'
 import TableWithAction from '../components/TableWithAction'
 
-const construction = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '施工单号'
-    },
-    productName: {
-      title: '产品名'
-    },
-    dstCounts: {
-      title: '计划'
-    },
-    cmplCounts: {
-      title: '完工'
-    },
-    errCounts: {
-      title: '次品'
-    },
-    staff: {
-      title: '工人'
-    },
-    status: {
-      title: '工单状态'
-    },
-    srcMaterial: {
-      title: '需要物料'
-    },
-    dstMaterial: {
-      title: '生成物料'
-    },
-    managerName: {
-      title: '制单人'
-    },
-    time: {
-      title: '制单时间'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
+class Construction extends Component {
+  componentWillMount = () => {
+    const {
+      initConstruction
+    } = this.props
 
-export default class Construction extends Component {
-  componentWillMount = () => {}
+    initConstruction()
+  }
 
   render = () => {
+    const {
+      selectConstruction,
+      constructionTable
+    } = this.props
+
     return (
       <Container style={{marginTop:'3em'}}>
         <Header as='h3'>
@@ -68,10 +44,37 @@ export default class Construction extends Component {
         </Header>
         <Divider hidden/>
         <Divider clearing/>
-        <Search size='mini'/>
-        <TableWithAction table={construction}/>
+        <Grid>
+          <Grid.Row columns={6}>
+          <Grid.Column>
+            <Search size='mini'/>
+          </Grid.Column>
+          <Grid.Column>
+            <Button.Group>
+              <Button size='small' color='teal' onClick={()=>selectConstruction(0)}>所有</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(1)}>等待材料出库</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(2)}>制作过程中</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(3)}>完工待入库</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(4)}>入库完毕</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(5)}>审批中</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(6)}>审批完毕</Button>
+            </Button.Group>
+          </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <TableWithAction table={constructionTable}/>
       </Container>
     )
   }
-
 }
+
+const mapStateToProps = (state) => ({
+  constructionTable: state.construction.constructionAllTable
+})
+
+const mapDispatchToProps = {
+  initConstruction: initConstruction,
+  selectConstruction: selectConstruction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Construction)

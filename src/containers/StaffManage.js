@@ -2,6 +2,9 @@ import React, {
   Component
 } from 'react'
 import {
+  connect
+} from 'react-redux'
+import {
   Grid,
   Header,
   Container,
@@ -14,6 +17,12 @@ import {
   Tab
 } from 'semantic-ui-react'
 import TableWithAction from '../components/TableWithAction'
+import {
+  addStaff,
+  operateStaffModal,
+  changeInputStaff,
+  initStaffManage
+} from '../actions/staffmanage'
 
 const construction = {
   content: [],
@@ -60,59 +69,72 @@ const salary = {
   totalPages: 0
 }
 
-const staff = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '员工'
-    },
-    name: {
-      title: '电话号码'
-    },
-    status: {
-      title: '在职状态'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
 
-const panes = [{
-  menuItem: '排产查询',
-  render: () => {
-    return (
-      <Tab.Pane>
+class StaffManage extends Component {
+  componentWillMount = () => {
+    const {
+      initStaffManage
+    } = this.props
+
+    initStaffManage()
+  }
+
+  render = () => {
+
+    const {
+      staffTable,
+      staffModal,
+      onStaffModal,
+      onStaffChange,
+      onAddStaff
+    } = this.props
+
+    const panes = [{
+      menuItem: '排产查询',
+      render: () => {
+        return (
+          <Tab.Pane>
           <TableWithAction table={construction}/>
         </Tab.Pane>
-    )
-  }
-}, {
-  menuItem: '工资查询',
-  render: () => {
-    return (
-      <Tab.Pane>
+        )
+      }
+    }, {
+      menuItem: '工资查询',
+      render: () => {
+        return (
+          <Tab.Pane>
         <Search size='mini'/>
         <TableWithAction table={salary}/>
       </Tab.Pane>
-    )
-  }
-}, {
-  menuItem: '人员管理',
-  render: () => {
-    return (
-      <Tab.Pane>
-          <Button size='small' content='员工' color='teal' icon='add'/>
-          <TableWithAction table={staff}/>
+        )
+      }
+    }, {
+      menuItem: '人员管理',
+      render: () => {
+        return (
+          <Tab.Pane>
+          <Button size='small' content='员工' color='teal' icon='add' onClick={()=>onStaffModal({staff:true})}/>
+          <Modal open={staffModal.staff}>
+                <Modal.Header>添加员工</Modal.Header>
+                <Modal.Content>
+                  <Form size='large'>
+                    <Form.Group>
+                      <Form.Input label="姓名" name='staffName' onChange={(e)=>onStaffChange(e.target)}/>
+                      <Form.Input label="电话号码" name='staffPhone' onChange={(e)=>onStaffChange(e.target)}/>
+                    </Form.Group>
+                  </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button onClick={()=>onStaffModal({staff:false})}> 取消 </Button>
+                  <Button color='blue' onClick={()=>onAddStaff(staffModal)}> 确定 </Button>
+                </Modal.Actions>
+              </Modal>
+          <TableWithAction table={staffTable}/>
         </Tab.Pane>
-    )
-  }
-}]
+        )
+      }
+    }]
 
-export default class StaffManage extends Component {
-  componentWillMount = () => {}
-
-  render = () => {
     return (
       <Container style={{marginTop:'3em'}}>
         <Header as='h3'>
@@ -127,3 +149,17 @@ export default class StaffManage extends Component {
   }
 
 }
+
+const mapStateToProps = (state) => ({
+  staffModal: state.staffmanage.staffModal,
+  staffTable: state.staffmanage.staffInfoTable
+})
+
+const mapDispatchToProps = {
+  onStaffModal: operateStaffModal,
+  onAddStaff: addStaff,
+  onStaffChange: changeInputStaff,
+  initStaffManage: initStaffManage
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StaffManage)

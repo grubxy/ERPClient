@@ -32,6 +32,16 @@ import {
   addConstructionByFlowId
 } from './flow'
 
+import {
+  addStaff,
+  initStaffManage
+} from './staffmanage'
+
+import {
+  initConstruction,
+  selectConstruction
+} from './construction'
+
 // 生产流程
 // 生产单
 // function* productinoTablePage(action) {
@@ -97,6 +107,14 @@ function* mySaga() {
   yield takeEvery('CONSTRUCTION_ACTION', actionConstruction)
   yield takeEvery('CONSTRUCTION_COMPLETE', completeConstruction)
   yield takeEvery('CONSTRUCTION_ADD', addConstructionByFlowId)
+
+  // 员工管理
+  yield takeEvery('STAFF_MANAGE_INIT', initStaffManage)
+  yield takeEvery('STAFF_ADD', addStaff)
+
+  // 工单总览
+  yield takeEvery('CONSTRUCTION_INIT', initConstruction)
+  yield takeEvery('CONSTRUCTION_SELECT', selectConstruction)
 
 }
 

@@ -220,3 +220,19 @@ export const postConstructionStatusApi = (id, data) => {
 		method: 'PATCH'
 	})
 }
+
+/*** 员工管理 ***/
+
+// 新增员工
+export const postStaffApi = (data) => {
+	return fetch('/staff', {
+		data
+	})
+}
+
+// 获取员工
+export const getStaffApi = (page, size, status) => {
+	return fetch(`/staff?page=${page}&size=${size}&status=${status}`, {
+		method: 'GET'
+	})
+}

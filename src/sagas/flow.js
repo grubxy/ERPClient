@@ -78,26 +78,42 @@ export function* initSeqInfo(id) {
 // 初始化施工单
 export function* initConstruction(id) {
 
+	/***  工单状态枚举 ***/
+
+	// ALL(0, "所有状态"),
+
+	// WAITING(1, "等待材料出库"),
+
+	// WORKING(2, "制作过程中"),
+
+	// COMPLETE(3, "完工待入库"),
+
+	// STORED(4, "入库完毕"),
+
+	// APPROVING(5, "审批中"),
+
+	// APPROVED(6, "审批完成");
+
 	try {
 		// 获取生产流程对应施工单
 		let result = yield call(getConstructionByFlowIdApi, id)
 		let constructonTable = []
 		for (let tmp of result) {
 			// 判断状态选择是否可用
-			let disabled = (tmp.status === 'WORKING') ? true : false
+			let disabled = (tmp.enumConstructStatus.value === 2) ? false : true
 			constructonTable.push({
 				id: tmp.idConstruct,
 				dst: tmp.dstCount,
 				cmpl: tmp.cmpl,
 				err: tmp.errCount,
 				staff: tmp.staff.staffName,
-				status: tmp.enumConstructStatus,
+				status: tmp.enumConstructStatus.desc,
 				stime: new Date(tmp.sdate).toLocaleString(),
 				button_list: [{
 					method: 'check',
-					icon: 'checkmark',
 					color: 'teal',
-					disabled: disabled
+					disabled: disabled,
+					content: '完成'
 				}]
 			})
 		}
@@ -329,7 +345,7 @@ export function* addConstructionByFlowId(action) {
 			type: 'FLOW_MODAL_CLEAR'
 		})
 		//更新施工表
-		yield call(initConstruction, action.flowRow.id)
+		yield call(initConstruction, action.data.flowRow.id)
 	} catch (error) {
 		console.log(error)
 	}
