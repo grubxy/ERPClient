@@ -61,7 +61,7 @@ function fetch(url, {
 				throw error.response
 			})
 	} else if (method === 'PATCH') {
-		return axios.post(url, data)
+		return axios.patch(url, data)
 			.then((resp) => {
 				if (resp.status === 200) {
 					// 正常结果
@@ -207,14 +207,14 @@ export const getConstructionByFlowIdApi = (id) => {
 }
 
 // 获取所有工单
-export const getConstructionByStatus = (page, size, status) => {
+export const getConstructionByStatusApi = (page, size, status) => {
 	return fetch(`/construction?page=${page}&size=${size}&status=${status}`, {
 		method: 'GET'
 	})
 }
 
 // 设置工单状态
-export const postConstructionStatusApi = (id, data) => {
+export const patchConstructionStatusApi = (id, data) => {
 	return fetch(`/construction/${id}`, {
 		data,
 		method: 'PATCH'

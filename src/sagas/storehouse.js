@@ -3,7 +3,8 @@ import {
 	put
 } from 'redux-saga/effects'
 import {
-	getConstructionByStatus
+	getConstructionByStatusApi,
+	patchConstructionStatusApi
 } from '../api/BaihuiServerAPI'
 
 // 初始化整个页面
@@ -16,7 +17,7 @@ export function* updateStoreConstrTable(state) {
 	try {
 
 		// 获取数据
-		let result = yield call(getConstructionByStatus, 0, 0, state)
+		let result = yield call(getConstructionByStatusApi, 0, 0, state)
 
 		let constructionTable = []
 
@@ -125,11 +126,36 @@ export function* storeConstrSelect(action) {
 
 export function* storeConstrConfirm(action) {
 
-	// 判断模态框确认类型 出库 or 入库
-	if (action.method === 'in') {
-		console.log('入库')
-	} else if (action.method === 'out') {
-		console.log('出库')
+	try {
+
+		// 判断模态框确认类型 出库 or 入库
+		if (action.method === 'in') {
+			console.log('入库')
+		} else if (action.method === 'out') {
+			console.log('出库')
+			// 构造请求，设置工单状态
+			let body = {
+				status: 2, // 制作过程中
+				idHouse: 0,
+				error: 0,
+				cmpl: 0
+			}
+
+			yield call(patchConstructionStatusApi, action.data.constructionRow.cid, body)
+
+			// 更新等出库表
+			yield call(updateStoreConstrTable, 1)
+
+			// 关闭模态框
+			yield put({
+				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
+				data: {
+					constructionOut: false
+				}
+			})
+		}
+	} catch (error) {
+		console.log(error)
 	}
 	// 构造请求
 

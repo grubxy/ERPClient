@@ -1,5 +1,5 @@
 import {
-	getConstructionByStatus
+	getConstructionByStatusApi
 } from '../api/BaihuiServerAPI'
 import {
 	call,
@@ -21,7 +21,7 @@ export function* updateConstruction(state) {
 	try {
 
 		// 获取数据
-		let result = yield call(getConstructionByStatus, 0, 0, state)
+		let result = yield call(getConstructionByStatusApi, 0, 0, state)
 
 		/***  工单状态枚举 ***/
 

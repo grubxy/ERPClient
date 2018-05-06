@@ -28,7 +28,7 @@ export function* initFlow() {
 				cmp: tmp.cmplCounts,
 				err: tmp.errCounts,
 				owner: '',
-				time: '',
+				time: new Date(tmp.date).toLocaleString(),
 				button_list: [{
 					method: 'add',
 					icon: 'add',
