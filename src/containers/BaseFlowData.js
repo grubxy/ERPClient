@@ -33,16 +33,6 @@ import {
   dropdownStaff
 } from '../actions/basedata'
 
-const staff = [{
-  key: '1',
-  text: '小王',
-  value: '1'
-}, {
-  key: '2',
-  text: '小陈',
-  value: '2'
-}]
-
 class BaseFlowData extends Component {
   componentWillMount = () => {
     const {

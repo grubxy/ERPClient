@@ -236,3 +236,19 @@ export const getStaffApi = (page, size, status) => {
 		method: 'GET'
 	})
 }
+
+/*** 仓储 ***/
+
+// 新增仓库
+export const postHouseApi = (data) => {
+	return fetch('/house', {
+		data
+	})
+}
+
+// 获取仓库
+export const getHouseApi = (page, size) => {
+	return fetch(`/house?page=${page}&size=${size}`, {
+		method: 'GET'
+	})
+}

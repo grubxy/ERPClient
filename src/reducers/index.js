@@ -30,13 +30,17 @@ import {
 } from './construction'
 import {
   storeConstrTable,
-  storeConstrModal
+  storeConstrModal,
+  houseTable,
+  houseModal
 } from './storehouse'
 
 
 let storehouse = combineReducers({
   storeConstrTable,
-  storeConstrModal
+  storeConstrModal,
+  houseModal,
+  houseTable
 })
 
 let construction = combineReducers({

@@ -38,7 +38,7 @@ const defaultStaffTable = {
 
 export const staffInfoTable = (state = defaultStaffTable, action) => {
 	switch (action.type) {
-		case 'UPDATE_STAFF_TABLE':
+		case 'UPDATE_STAFFINFO_TABLE':
 			return { ...state,
 				content: action.data
 			}

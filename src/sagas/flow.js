@@ -10,7 +10,8 @@ import {
 	getSeqByFlowIdApi,
 	getStaffBySeqIdApi,
 	postConstructionByFlowIdApi,
-	getConstructionByFlowIdApi
+	getConstructionByFlowIdApi,
+	patchConstructionStatusApi
 } from '../api/BaihuiServerAPI'
 
 // 初始化生产流程表
@@ -207,23 +208,45 @@ export function* actionConstruction(action) {
 // 完成施工单
 export function* completeConstruction(action) {
 
+	try {
+		// 设置施工单状态
 
-
-	// 设置施工单状态
-
-	// 清空模态框
-	yield put({
-		type: 'FLOW_MODAL_CLEAR'
-	})
-
-	yield put({
-		type: 'GLOBAL_PORTAL',
-		data: {
-			open: true,
-			msgheader: '完工！',
-			msgbody: '工单：'
+		let body = {
+			status: 3, // 3-完工待入库
+			idHouse: 0,
+			cmpl: action.data.constructionCmpl,
+			error: action.data.constructionErr
 		}
-	})
+
+		yield call(patchConstructionStatusApi, action.data.constructionRow.id, body)
+
+
+		// 更新工程栏目
+		yield call(initConstruction, action.data.constructionRow.id)
+
+		// 清空模态框
+		yield put({
+			type: 'FLOW_MODAL_CLEAR'
+		})
+
+		yield put({
+			type: 'GLOBAL_PORTAL',
+			data: {
+				open: true,
+				msgheader: '完工！',
+				msgbody: '工单：' + action.data.constructionRow.id
+			}
+		})
+	} catch (error) {
+		yield put({
+			type: 'GLOBAL_PORTAL',
+			data: {
+				open: true,
+				msgheader: '出错',
+				msgbody: error
+			}
+		})
+	}
 
 }
 

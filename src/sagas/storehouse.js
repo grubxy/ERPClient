@@ -4,7 +4,9 @@ import {
 } from 'redux-saga/effects'
 import {
 	getConstructionByStatusApi,
-	patchConstructionStatusApi
+	patchConstructionStatusApi,
+	postHouseApi,
+	getHouseApi
 } from '../api/BaihuiServerAPI'
 
 // 初始化整个页面
@@ -63,6 +65,8 @@ export function* updateStoreConstrTable(state) {
 				status: tmp.enumConstructStatus.desc,
 				srcMaterial: tmp.seq.srcMaterial.name,
 				dstMaterial: tmp.seq.dstMaterial.name,
+				cmplCount: tmp.cmplCount,
+				errCount: tmp.errCount,
 				managerName: tmp.production.owner,
 				time: new Date(tmp.sdate).toLocaleString(),
 				button_list: [{
@@ -109,7 +113,7 @@ export function* storeConstrAction(action) {
 		yield put({
 			type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
 			data: {
-				constructionOut: true,
+				constructionIn: true,
 				constructionRow: action.row
 			}
 		})
@@ -131,6 +135,10 @@ export function* storeConstrConfirm(action) {
 		// 判断模态框确认类型 出库 or 入库
 		if (action.method === 'in') {
 			console.log('入库')
+
+			// 弹出入库选择模态框
+
+
 		} else if (action.method === 'out') {
 			console.log('出库')
 			// 构造请求，设置工单状态
@@ -165,4 +173,90 @@ export function* storeConstrConfirm(action) {
 
 	// 更新仓库表
 
+}
+
+/*** 仓库配置 ***/
+
+// 初始化
+export function* initHouseInfo() {
+	console.log('init house info')
+	yield call(updateHouseInfoTable)
+}
+
+// 更新仓库信息
+export function* updateHouseInfoTable() {
+	try {
+		// 获取数据 
+		let result = yield call(getHouseApi, 0, 0)
+
+		let houseTableList = []
+		for (let tmp of result) {
+			houseTableList.push({
+				id: tmp.idHouse,
+				name: tmp.houseName,
+				desc: tmp.houseDesc,
+				button_list: [{
+					method: 'delete',
+					icon: 'delete',
+					color: 'gray'
+				}]
+			})
+		}
+
+		// 更新表格
+		yield put({
+			type: 'STOREHOUSE_UPDATE_HOUSEINFO_TABLE',
+			data: houseTableList
+		})
+
+	} catch (error) {
+
+	}
+}
+
+// 增加
+export function* addHouseInfo(action) {
+	console.log('add house')
+	try {
+		let body = {
+			houseName: action.data.houseName,
+			houseDesc: action.data.houseDesc
+		}
+		yield call(postHouseApi, body)
+
+		// 清空模态框
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_MODAL_CLEAR'
+		})
+
+		// 更新
+		yield call(updateHouseInfoTable)
+	} catch (error) {
+
+	}
+
+}
+
+// action弹出
+export function* actionHouseInfo(action) {
+	if (action.method === 'delete') {
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_MODAL_OPERATE',
+			data: {
+				houseConfirm: true,
+				houseRow: action.row
+			}
+		})
+	}
+}
+
+// action确认
+export function* confirmHouseInfoAction(action) {
+
+	// 删除请求 
+
+	// 清空
+	yield put({
+		type: 'STOREHOUSE_HOUSEINFO_MODAL_CLEAR'
+	})
 }

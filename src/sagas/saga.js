@@ -46,7 +46,11 @@ import {
   initStoreHouse,
   storeConstrAction,
   storeConstrConfirm,
-  storeConstrSelect
+  storeConstrSelect,
+  initHouseInfo,
+  addHouseInfo,
+  actionHouseInfo,
+  confirmHouseInfoAction
 } from './storehouse'
 
 // 生产流程
@@ -128,6 +132,10 @@ function* mySaga() {
   yield takeEvery('STOREHOUSE_CONSTRUCTION_ACTION', storeConstrAction)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_CONFIRM', storeConstrConfirm)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_SELECT', storeConstrSelect)
+  yield takeEvery('STOREHOUSE_HOUSEINFO_ADD', addHouseInfo)
+  yield takeEvery('STOREHOUSE_HOUSEINFO_INIT', initHouseInfo)
+  yield takeEvery('STOREHOUSE_HOUSEINFO_CONFIRM', confirmHouseInfoAction)
+  yield takeEvery('STOREHOUSE_HOUSEINFO_ACTION', actionHouseInfo)
 }
 
 export default mySaga

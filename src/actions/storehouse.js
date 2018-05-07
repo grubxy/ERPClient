@@ -30,3 +30,40 @@ export const StoreHouseConstrConfirm = (data, method) => ({
 	data,
 	method
 })
+
+// 仓库配置
+
+export const initHouse = () => ({
+	type: 'STOREHOUSE_HOUSEINFO_INIT'
+})
+
+// 仓库模态框
+export const operateHouseInfoModal = (data) => ({
+	type: 'STOREHOUSE_HOUSEINFO_MODAL_OPERATE',
+	data
+})
+
+export const houseInfoInputChange = (target) => ({
+	type: 'STOREHOUSE_HOUSEINFO_INPUTCHANGE',
+	name: target.name,
+	value: target.value
+})
+
+// 仓库新增
+export const addHouseInfo = (data) => ({
+	type: 'STOREHOUSE_HOUSEINFO_ADD',
+	data
+})
+
+// 仓库弹框确认
+export const confirmHouseInfo = (data) => ({
+	type: 'STOREHOUSE_HOUSEINFO_CONFIRM',
+	data
+})
+
+// 仓库Action
+export const actionHouseInfo = (row, method) => ({
+	type: 'STOREHOUSE_HOUSEINFO_ACTION',
+	row,
+	method
+})

@@ -31,7 +31,7 @@ export function* initStaff() {
 		}
 
 		yield put({
-			type: 'UPDATE_STAFF_TABLE',
+			type: 'UPDATE_STAFFINFO_TABLE',
 			data: staffList
 		})
 	} catch (error) {
