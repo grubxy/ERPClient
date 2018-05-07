@@ -25,14 +25,20 @@ export const operateConstructionModal = (data) => ({
 })
 
 // 模态框确认操作
-export const StoreHouseConstrConfirm = (data, method) => ({
+export const storeHouseConstrConfirm = (data, method) => ({
 	type: 'STOREHOUSE_CONSTRUCTION_CONFIRM',
 	data,
 	method
 })
 
-// 仓库配置
+export const storeHouseConstrDropdown = (name, value) => ({
+	type: 'STOREHOUSE_CONSTRUCTION_INPUTCHANGE',
+	name,
+	value
+})
 
+
+// 仓库配置
 export const initHouse = () => ({
 	type: 'STOREHOUSE_HOUSEINFO_INIT'
 })

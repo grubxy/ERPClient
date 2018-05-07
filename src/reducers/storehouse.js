@@ -48,7 +48,8 @@ export const storeConstrTable = (state = defaultStoreConstrTable, action) => {
 const defaultStoreConstrModal = {
 	constructionIn: false,
 	constructionOut: false,
-	constructionRow: {}
+	constructionRow: {},
+	houseDropDown: {}
 }
 
 export const storeConstrModal = (state = defaultStoreConstrModal, action) => {
@@ -59,6 +60,10 @@ export const storeConstrModal = (state = defaultStoreConstrModal, action) => {
 			}
 		case 'STOREHOUSE_CONSTRUCTION_MODAL_CLEAR':
 			return defaultStoreConstrModal
+		case 'STOREHOUSE_CONSTRUCTION_INPUTCHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
 		default:
 			return state
 	}

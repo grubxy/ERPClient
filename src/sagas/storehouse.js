@@ -96,7 +96,8 @@ export function* storeConstrAction(action) {
 
 	// 判断处理类型 待入库or待出库
 	if (action.method === 'out') {
-		// 入库
+		// 出库
+
 		// 拷贝行内容并打开模态框
 		yield put({
 			type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
@@ -107,14 +108,27 @@ export function* storeConstrAction(action) {
 		})
 
 	} else if (action.method === 'in') {
-		// 出库
+		// 入库
+
+		// 仓库下拉dropdown内容设置
+		let result = yield call(getHouseApi, 0, 0)
+
+		let dropDown = []
+		for (let tmp of result) {
+			dropDown.push({
+				key: tmp.idHouse,
+				text: tmp.houseName,
+				value: tmp.idHouse
+			})
+		}
 
 		// 拷贝行内容并打开模态框
 		yield put({
 			type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
 			data: {
 				constructionIn: true,
-				constructionRow: action.row
+				constructionRow: action.row,
+				houseDropDown: dropDown
 			}
 		})
 
@@ -136,10 +150,30 @@ export function* storeConstrConfirm(action) {
 		if (action.method === 'in') {
 			console.log('入库')
 
-			// 弹出入库选择模态框
+			let body = {
+				status: 4, // 入库完毕
+				idHouse: action.data.idHouse,
+				error: 0,
+				cmpl: 0
+			}
 
+			// 发送入库请求
+			yield call(patchConstructionStatusApi, action.data.constructionRow.cid, body)
+
+			// // 更新入库表
+
+			yield call(updateStoreConstrTable, 3)
+
+			// 关闭模态框
+			yield put({
+				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
+				data: {
+					constructionIn: false
+				}
+			})
 
 		} else if (action.method === 'out') {
+
 			console.log('出库')
 			// 构造请求，设置工单状态
 			let body = {

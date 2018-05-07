@@ -13,17 +13,18 @@ import {
   Search,
   Button,
   Modal,
-  Form
+  Dropdown
 } from 'semantic-ui-react'
 import {
   MultiTable
 } from '../components/MultiTable'
 import {
   actionStoreHouseConstTable,
-  StoreHouseConstrConfirm,
+  storeHouseConstrConfirm,
   initStoreHouse,
   operateConstructionModal,
-  selectStoreHouseConstTable
+  selectStoreHouseConstTable,
+  storeHouseConstrDropdown
 } from '../actions/storehouse'
 
 const store = {
@@ -58,11 +59,12 @@ class StoreHouse extends Component {
 
     const {
       onConstructionAction,
-      StoreHouseConstrConfirm,
+      storeHouseConstrConfirm,
       constructionTable,
       operateConstructionModal,
       constructionModal,
-      selectConstruction
+      selectConstruction,
+      storeHouseConstrDropdown
     } = this.props
 
     return (
@@ -94,15 +96,20 @@ class StoreHouse extends Component {
           <Modal.Content>是否确认该工单已出库?</Modal.Content>
           <Modal.Actions>
           <Button onClick={()=>operateConstructionModal({constructionOut:false})}> 取消 </Button>
-          <Button color='blue' onClick={()=>StoreHouseConstrConfirm(constructionModal, 'out')}> 确定 </Button>
+          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'out')}> 确定 </Button>
           </Modal.Actions>
         </Modal>
         <Modal open={constructionModal.constructionIn}>
           <Modal.Header>确认已入库</Modal.Header>
+          {/*
           <Modal.Content>是否确认该工单已入库?</Modal.Content>
+        */}
+          <Modal.Content>
+              <Dropdown placeholder='入库仓库' name='idHouse' search selection options={constructionModal.houseDropDown} onChange={(e, {name, value})=>storeHouseConstrDropdown(name, value)}/>
+          </Modal.Content>
           <Modal.Actions>
           <Button onClick={()=>operateConstructionModal({constructionIn:false})}> 取消 </Button>
-          <Button color='blue' onClick={()=>StoreHouseConstrConfirm(constructionModal, 'in')}> 确定 </Button>
+          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'in')}> 确定 </Button>
           </Modal.Actions>
         </Modal>
         <MultiTable table={constructionTable} onAction={onConstructionAction}/>
@@ -139,8 +146,9 @@ const mapDispatchToProps = {
   initStoreHouse: initStoreHouse,
   selectConstruction: selectStoreHouseConstTable,
   onConstructionAction: actionStoreHouseConstTable,
-  StoreHouseConstrConfirm: StoreHouseConstrConfirm,
-  operateConstructionModal: operateConstructionModal
+  storeHouseConstrConfirm: storeHouseConstrConfirm,
+  operateConstructionModal: operateConstructionModal,
+  storeHouseConstrDropdown: storeHouseConstrDropdown
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoreHouse)

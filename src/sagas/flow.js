@@ -41,7 +41,18 @@ export function* initFlow() {
 			type: 'UPDATE_PRODUCTION_TABLE',
 			data: flowTableList
 		})
-		// 
+
+		// 置空后续表
+		yield put({
+			type: 'UPDATE_SEQINOF_TABLE',
+			data: []
+		})
+
+		yield put({
+			type: 'UPDATE_CONSTRUCTION_TABLE',
+			data: []
+		})
+
 	} catch (error) {
 
 	}
@@ -370,6 +381,10 @@ export function* addConstructionByFlowId(action) {
 		})
 		//更新施工表
 		yield call(initConstruction, action.data.flowRow.id)
+
+		// 更新工序表
+		yield call(initSeqInfo, action.data.flowRow.id)
+
 	} catch (error) {
 		console.log(error)
 	}
