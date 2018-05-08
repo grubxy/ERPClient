@@ -55,9 +55,8 @@ class Construction extends Component {
               <Button size='small' color='teal'onClick={()=>selectConstruction(1)}>等待材料出库</Button>
               <Button size='small' color='teal'onClick={()=>selectConstruction(2)}>制作过程中</Button>
               <Button size='small' color='teal'onClick={()=>selectConstruction(3)}>完工待入库</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(4)}>入库完毕</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(5)}>审批中</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(6)}>审批完毕</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(4)}>入库完毕待审批</Button>
+              <Button size='small' color='teal'onClick={()=>selectConstruction(5)}>审批完毕</Button>
             </Button.Group>
           </Grid.Column>
           </Grid.Row>
