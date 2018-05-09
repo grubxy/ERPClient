@@ -37,6 +37,55 @@ export const storeHouseConstrDropdown = (name, value) => ({
 	value
 })
 
+/*** 仓库物料 ***/
+
+// 仓库物料 初始化
+// export const initHouseOrigin = () => ({
+// 	type: 'STOREHOUSE_HOUSEORIGIN_INIT'
+// })
+
+// 仓库物料模态框处理
+export const operateHouseOriginModal = (data) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_MODAL_OPERATE',
+	data
+})
+
+// 仓库物料input框输入
+export const inputHouseOrigin = (target) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_INPUTCHANGE',
+	name: target.name,
+	value: target.value
+})
+
+// 仓库物料下拉菜单
+export const dropDownHouseOrigin = (name, value) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_INPUTCHANGE',
+	name,
+	value
+})
+
+// 仓库物料下拉选定
+export const dropDownSelectHouseOrigin = (name, value) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_DROPDOWN_SELECT',
+	name,
+	value
+})
+
+// 仓库物料出入库案件
+export const operateHouseOriginModalOpen = (method) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_MODAL_OPEN',
+	method
+})
+
+// 确认
+export const confirmHouseOriginModal = (method, data) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CONFIRM',
+	method,
+	data
+})
+
+
+/*** 仓库 ***/
 
 // 仓库配置
 export const initHouse = () => ({

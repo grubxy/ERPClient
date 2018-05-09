@@ -13,7 +13,8 @@ import {
   Search,
   Button,
   Modal,
-  Dropdown
+  Dropdown,
+  Form
 } from 'semantic-ui-react'
 import {
   MultiTable
@@ -24,26 +25,14 @@ import {
   initStoreHouse,
   operateConstructionModal,
   selectStoreHouseConstTable,
-  storeHouseConstrDropdown
+  storeHouseConstrDropdown,
+  operateHouseOriginModal,
+  inputHouseOrigin,
+  dropDownHouseOrigin,
+  dropDownSelectHouseOrigin,
+  operateHouseOriginModalOpen,
+  confirmHouseOriginModal
 } from '../actions/storehouse'
-
-const store = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '仓库名'
-    },
-    name: {
-      title: '物料名'
-    },
-    counts: {
-      title: '数量'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
 
 
 class StoreHouse extends Component {
@@ -64,7 +53,15 @@ class StoreHouse extends Component {
       operateConstructionModal,
       constructionModal,
       selectConstruction,
-      storeHouseConstrDropdown
+      storeHouseConstrDropdown,
+      houseOriginTable,
+      houseOriginModal,
+      operateHouseOriginModal,
+      inputHouseOrigin,
+      dropDownHouseOrigin,
+      dropDownSelectHouseOrigin,
+      operateHouseOriginModalOpen,
+      confirmHouseOriginModal
     } = this.props
 
     return (
@@ -124,22 +121,57 @@ class StoreHouse extends Component {
                <Search size='mini'/>
             </Grid.Column>
             <Grid.Column>
-                <Button size='small' content='入库' color='teal' icon='add'/>
-                <Button size='small' content='出库' color='orange' icon='minus'/>
+            <Button.Group>
+                <Button size='small' content='入库' color='teal' icon='add' onClick={()=>operateHouseOriginModalOpen('input')}/>
+                <Button size='small' content='出库' color='orange' icon='minus' onClick={()=>operateHouseOriginModalOpen('output')}/>
+            </Button.Group>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <MultiTable table={store}/>
+        <Modal open={houseOriginModal.input}>
+        <Modal.Header>入库</Modal.Header>
+        <Modal.Content>
+          <Form size='large'>
+            <Form.Group>
+              <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseInput' search selection onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
+              <Form.Input label="物料名称" name='materialName' onChange={(e)=>inputHouseOrigin(e.target)}/>
+              <Form.Input label="入库数量" name='inputCounts' onChange={(e)=>inputHouseOrigin(e.target)}/>
+            </Form.Group>
+          </Form>
+        </Modal.Content>
+        <Modal.Actions>
+        <Button onClick={()=>operateHouseOriginModal({input:false})}> 取消 </Button>
+        <Button color='blue' onClick={()=>confirmHouseOriginModal('input', houseOriginModal)}> 确定 </Button>
+        </Modal.Actions>
+        </Modal>
+         <Modal open={houseOriginModal.output}>
+        <Modal.Header>出库</Modal.Header>
+        <Modal.Content>
+          <Form size='large'>
+            <Form.Group>
+              <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseOutput' search selection onChange={(e, {name, value})=>dropDownSelectHouseOrigin(name, value)}/>
+              <Form.Dropdown placeholder='物料' label="物料" name='materialId' search selection onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
+              <Form.Input label="出库数量" name='outCounts'/>
+            </Form.Group>
+          </Form>
+        </Modal.Content>
+        <Modal.Actions>
+        <Button onClick={()=>operateHouseOriginModal({output:false})}> 取消 </Button>
+        <Button color='blue' onClick={()=>confirmHouseOriginModal('output', houseOriginModal)}> 确定 </Button>
+        </Modal.Actions>
+        </Modal>
+        <MultiTable table={houseOriginTable}/>
       </Container>
     )
   }
-
 }
 
 
 const mapStateToProps = (state) => ({
   constructionModal: state.storehouse.storeConstrModal,
   constructionTable: state.storehouse.storeConstrTable,
+  houseOriginTable: state.storehouse.houseOriginTable,
+  houseOriginModal: state.storehouse.houseOriginModal
 })
 
 const mapDispatchToProps = {
@@ -148,7 +180,13 @@ const mapDispatchToProps = {
   onConstructionAction: actionStoreHouseConstTable,
   storeHouseConstrConfirm: storeHouseConstrConfirm,
   operateConstructionModal: operateConstructionModal,
-  storeHouseConstrDropdown: storeHouseConstrDropdown
+  storeHouseConstrDropdown: storeHouseConstrDropdown,
+  operateHouseOriginModal: operateHouseOriginModal,
+  dropDownHouseOrigin: dropDownHouseOrigin,
+  dropDownSelectHouseOrigin: dropDownSelectHouseOrigin,
+  inputHouseOrigin: inputHouseOrigin,
+  operateHouseOriginModalOpen: operateHouseOriginModalOpen,
+  confirmHouseOriginModal: confirmHouseOriginModal
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoreHouse)

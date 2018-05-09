@@ -117,3 +117,67 @@ export const houseModal = (state = defaultHouseInfoModal, action) => {
 			return state
 	}
 }
+
+const defaultHouseOriginModal = {
+	input: true,
+	output: false
+}
+
+export const houseOriginModal = (state = defaultHouseOriginModal, action) => {
+	switch (action.type) {
+		case 'STOREHOUSE_HOUSEORIGIN_MODAL_OPERATE':
+			return { ...state,
+				...action.data
+			}
+		case 'STOREHOUSE_HOUSEORIGIN_INPUTCHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
+		case 'STOREHOUSE_HOUSEORIGIN_MODAL_CLEAR':
+			return defaultHouseOriginModal
+		default:
+			return state
+	}
+}
+
+const defaultHouseOriginTable = {
+	content: [],
+	headers: {
+		id: {
+			title: '仓库名'
+		},
+		name: {
+			title: '物料名'
+		},
+		counts: {
+			title: '数量'
+		}
+	}
+}
+
+export const houseOriginTable = (state = defaultHouseOriginTable, action) => {
+	switch (action.type) {
+		case 'STOREHOUSE_UPDATE_HOUSEORIGIN_TABLE':
+			return { ...state,
+				content: action.data
+			}
+		default:
+			return state
+	}
+}
+
+const defaultHouseDropDown = {
+	house: [],
+	origins: []
+}
+
+export const dropDowns = (state = defaultHouseDropDown, action) => {
+	switch (action.type) {
+		case 'STOREHOUSE_DROPDOWN_UPDATE':
+			return { ...state,
+				...action.data
+			}
+		default:
+			return state
+	}
+}

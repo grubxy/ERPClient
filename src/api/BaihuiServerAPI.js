@@ -252,3 +252,25 @@ export const getHouseApi = (page, size) => {
 		method: 'GET'
 	})
 }
+
+// 获取仓库物料
+export const getHouseOrigin = (id) => {
+	return fetch(`/house/${id}/`, {
+		method: 'GET'
+	})
+}
+
+// 给仓库增加物料
+export const postHouseOrigin = (id, data) => {
+	return fetch(`/house/${id}/origin`, {
+		data
+	})
+}
+
+// 删除仓库物料
+export const deleteHouseOrigin = (id, idOrigin, data) => {
+	return fetch(`/house/${id}/origin/${idOrigin}`, {
+		data,
+		method: 'DELETE'
+	})
+}

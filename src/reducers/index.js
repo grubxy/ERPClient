@@ -32,7 +32,9 @@ import {
   storeConstrTable,
   storeConstrModal,
   houseTable,
-  houseModal
+  houseModal,
+  houseOriginModal,
+  houseOriginTable
 } from './storehouse'
 
 
@@ -40,7 +42,9 @@ let storehouse = combineReducers({
   storeConstrTable,
   storeConstrModal,
   houseModal,
-  houseTable
+  houseTable,
+  houseOriginTable,
+  houseOriginModal
 })
 
 let construction = combineReducers({

@@ -294,3 +294,25 @@ export function* confirmHouseInfoAction(action) {
 		type: 'STOREHOUSE_HOUSEINFO_MODAL_CLEAR'
 	})
 }
+
+/*** 仓库物料 ***/
+
+// 初始化仓库物料
+export function* initHouseOrigin() {
+	console.log('init house origin')
+}
+
+// 打开modal
+export function* openHouseOriginModal(action) {
+	console.log('open :' + action.method)
+}
+
+// 选中
+export function* selectHouseOrigin(action) {
+	console.log('select house origin')
+}
+
+// 确认模态框
+export function* confirmHouseOrigin(action) {
+	console.log('house origin confirm:' + action.method)
+}

@@ -50,7 +50,11 @@ import {
   initHouseInfo,
   addHouseInfo,
   actionHouseInfo,
-  confirmHouseInfoAction
+  confirmHouseInfoAction,
+  initHouseOrigin,
+  openHouseOriginModal,
+  selectHouseOrigin,
+  confirmHouseOrigin
 } from './storehouse'
 
 // 生产流程
@@ -136,6 +140,10 @@ function* mySaga() {
   yield takeEvery('STOREHOUSE_HOUSEINFO_INIT', initHouseInfo)
   yield takeEvery('STOREHOUSE_HOUSEINFO_CONFIRM', confirmHouseInfoAction)
   yield takeEvery('STOREHOUSE_HOUSEINFO_ACTION', actionHouseInfo)
+  yield takeEvery('STOREHOUSE_HOUSEORIGIN_MODAL_OPEN', openHouseOriginModal)
+  yield takeEvery('STOREHOUSE_HOUSEORIGIN_DROPDOWN_SELECT', selectHouseOrigin)
+  yield takeEvery('STOREHOUSE_HOUSEORIGIN_MODAL_CONFIRM', confirmHouseOrigin)
+
 }
 
 export default mySaga
