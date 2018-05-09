@@ -34,7 +34,8 @@ import {
   houseTable,
   houseModal,
   houseOriginModal,
-  houseOriginTable
+  houseOriginTable,
+  dropDowns
 } from './storehouse'
 
 
@@ -44,7 +45,8 @@ let storehouse = combineReducers({
   houseModal,
   houseTable,
   houseOriginTable,
-  houseOriginModal
+  houseOriginModal,
+  dropDowns
 })
 
 let construction = combineReducers({

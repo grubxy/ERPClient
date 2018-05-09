@@ -269,8 +269,7 @@ export const postHouseOrigin = (id, data) => {
 
 // 删除仓库物料
 export const deleteHouseOrigin = (id, idOrigin, data) => {
-	return fetch(`/house/${id}/origin/${idOrigin}`, {
-		data,
+	return fetch(`/house/${id}/origin/${idOrigin}?counts=${data}`, {
 		method: 'DELETE'
 	})
 }

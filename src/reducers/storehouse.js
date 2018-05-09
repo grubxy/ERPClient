@@ -119,7 +119,7 @@ export const houseModal = (state = defaultHouseInfoModal, action) => {
 }
 
 const defaultHouseOriginModal = {
-	input: true,
+	input: false,
 	output: false
 }
 
@@ -143,14 +143,11 @@ export const houseOriginModal = (state = defaultHouseOriginModal, action) => {
 const defaultHouseOriginTable = {
 	content: [],
 	headers: {
-		id: {
+		hname: {
 			title: '仓库名'
 		},
-		name: {
-			title: '物料名'
-		},
-		counts: {
-			title: '数量'
+		detail: {
+			title: '物料详情'
 		}
 	}
 }

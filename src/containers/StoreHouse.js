@@ -61,7 +61,8 @@ class StoreHouse extends Component {
       dropDownHouseOrigin,
       dropDownSelectHouseOrigin,
       operateHouseOriginModalOpen,
-      confirmHouseOriginModal
+      confirmHouseOriginModal,
+      dropDowns
     } = this.props
 
     return (
@@ -133,7 +134,7 @@ class StoreHouse extends Component {
         <Modal.Content>
           <Form size='large'>
             <Form.Group>
-              <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseInput' search selection onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
+              <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseInput' search selection options={dropDowns.house} onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
               <Form.Input label="物料名称" name='materialName' onChange={(e)=>inputHouseOrigin(e.target)}/>
               <Form.Input label="入库数量" name='inputCounts' onChange={(e)=>inputHouseOrigin(e.target)}/>
             </Form.Group>
@@ -149,9 +150,9 @@ class StoreHouse extends Component {
         <Modal.Content>
           <Form size='large'>
             <Form.Group>
-              <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseOutput' search selection onChange={(e, {name, value})=>dropDownSelectHouseOrigin(name, value)}/>
-              <Form.Dropdown placeholder='物料' label="物料" name='materialId' search selection onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
-              <Form.Input label="出库数量" name='outCounts'/>
+              <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseOutput' search selection options={dropDowns.house} onChange={(e, {name, value})=>dropDownSelectHouseOrigin(name, value)}/>
+              <Form.Dropdown placeholder='物料' label="物料" name='idOrigin' search selection options={dropDowns.origins} onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
+              <Form.Input label="出库数量" name='outCounts' onChange={(e)=>inputHouseOrigin(e.target)}/>
             </Form.Group>
           </Form>
         </Modal.Content>
@@ -171,7 +172,8 @@ const mapStateToProps = (state) => ({
   constructionModal: state.storehouse.storeConstrModal,
   constructionTable: state.storehouse.storeConstrTable,
   houseOriginTable: state.storehouse.houseOriginTable,
-  houseOriginModal: state.storehouse.houseOriginModal
+  houseOriginModal: state.storehouse.houseOriginModal,
+  dropDowns: state.storehouse.dropDowns
 })
 
 const mapDispatchToProps = {

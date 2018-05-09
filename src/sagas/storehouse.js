@@ -1,3 +1,4 @@
+import React from 'react'
 import {
 	call,
 	put
@@ -6,13 +7,18 @@ import {
 	getConstructionByStatusApi,
 	patchConstructionStatusApi,
 	postHouseApi,
-	getHouseApi
+	getHouseApi,
+	getHouseOrigin,
+	postHouseOrigin,
+	deleteHouseOrigin
 } from '../api/BaihuiServerAPI'
 
 // 初始化整个页面
 export function* initStoreHouse() {
 
 	yield call(updateStoreConstrTable, 1)
+
+	yield call(initHouseOrigin)
 }
 
 export function* updateStoreConstrTable(state) {
@@ -172,6 +178,8 @@ export function* storeConstrConfirm(action) {
 				}
 			})
 
+			yield call(initHouseOrigin)
+
 		} else if (action.method === 'out') {
 
 			console.log('出库')
@@ -195,6 +203,8 @@ export function* storeConstrConfirm(action) {
 					constructionOut: false
 				}
 			})
+
+			yield call(initHouseOrigin)
 		}
 	} catch (error) {
 		console.log(error)
@@ -300,19 +310,166 @@ export function* confirmHouseInfoAction(action) {
 // 初始化仓库物料
 export function* initHouseOrigin() {
 	console.log('init house origin')
+	let houseOriginTable = []
+	try {
+		let result = yield call(getHouseApi, 0, 0)
+		for (let tmp of result) {
+			let rOrigins = yield call(getHouseOrigin, tmp.idHouse)
+			let detail = []
+			for (let tmpOrigin of rOrigins) {
+				let name = tmpOrigin.material.name
+				let counts = tmpOrigin.counts
+				// 通过 array push的方式加上<br/>渲染！！！
+				detail.push(`${name} : ${counts}`)
+				detail.push(<br />)
+			}
+			houseOriginTable.push({
+				id: tmp.idHouse,
+				hname: tmp.houseName,
+				detail: detail
+			})
+		}
+
+		yield put({
+			type: 'STOREHOUSE_UPDATE_HOUSEORIGIN_TABLE',
+			data: houseOriginTable
+		})
+
+	} catch (error) {
+		console.error(error)
+	}
 }
 
 // 打开modal
 export function* openHouseOriginModal(action) {
 	console.log('open :' + action.method)
+	try {
+		// 如果是输入框
+		if (action.method === 'input') {
+
+			// 获取仓库下拉信息 
+			let result = yield call(getHouseApi, 0, 0)
+			let dropDown = []
+			for (let tmp of result) {
+				dropDown.push({
+					key: tmp.idHouse,
+					text: tmp.houseName,
+					value: tmp.idHouse
+				})
+			}
+
+			yield put({
+				type: 'STOREHOUSE_DROPDOWN_UPDATE',
+				data: {
+					house: dropDown
+				}
+			})
+
+			yield put({
+				type: 'STOREHOUSE_HOUSEORIGIN_MODAL_OPERATE',
+				data: {
+					input: true
+				}
+			})
+
+		} else if (action.method === 'output') {
+
+			// 获取仓库下拉信息 
+			let result = yield call(getHouseApi, 0, 0)
+			let dropDown = []
+			for (let tmp of result) {
+				dropDown.push({
+					key: tmp.idHouse,
+					text: tmp.houseName,
+					value: tmp.idHouse
+				})
+			}
+
+			yield put({
+				type: 'STOREHOUSE_DROPDOWN_UPDATE',
+				data: {
+					house: dropDown
+				}
+			})
+
+			yield put({
+				type: 'STOREHOUSE_HOUSEORIGIN_MODAL_OPERATE',
+				data: {
+					output: true
+				}
+			})
+
+		} else {
+
+		}
+	} catch (error) {
+		console.log(error)
+	}
 }
 
 // 选中
 export function* selectHouseOrigin(action) {
-	console.log('select house origin')
+	console.log('select house origin:' + action.value)
+
+	try {
+		// 获取无聊
+		let result = yield call(getHouseOrigin, action.value)
+		let dropDown = []
+		for (let tmp of result) {
+			dropDown.push({
+				key: tmp.idOrigin,
+				text: tmp.material.name,
+				value: tmp.idOrigin
+			})
+		}
+
+		yield put({
+			type: 'STOREHOUSE_DROPDOWN_UPDATE',
+			data: {
+				origins: dropDown
+			}
+		})
+
+		yield put({
+			type: 'STOREHOUSE_HOUSEORIGIN_INPUTCHANGE',
+			name: 'idHouse',
+			value: action.value
+		})
+
+	} catch (error) {
+		console.log(error)
+	}
+
 }
 
 // 确认模态框
 export function* confirmHouseOrigin(action) {
-	console.log('house origin confirm:' + action.method)
+	console.log('house origin confirm:' + action.data.outCounts)
+	try {
+		if (action.method === 'input') {
+			let body = {
+				name: action.data.materialName,
+				counts: action.data.inputCounts
+			}
+			yield call(postHouseOrigin, action.data.idHouseInput, body)
+
+			yield put({
+				type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CLEAR'
+			})
+
+			yield call(initHouseOrigin)
+
+		} else if (action.method === 'output') {
+			yield call(deleteHouseOrigin, action.data.idHouse, action.data.idOrigin, action.data.outCounts)
+
+			yield put({
+				type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CLEAR'
+			})
+
+			yield call(initHouseOrigin)
+		} else {
+
+		}
+	} catch (error) {}
+
 }
