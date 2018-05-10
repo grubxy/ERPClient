@@ -26,52 +26,6 @@ import {
   initStaffManage
 } from '../actions/staffmanage'
 
-const construction = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '姓名'
-    },
-    constructionid: {
-      title: '施工单号'
-    },
-    productionid: {
-      title: '生产批次'
-    },
-    product: {
-      title: '产品名'
-    },
-    seq: {
-      title: '工序'
-    },
-    dstCounts: {
-      title: '待生产'
-    },
-    doingCounts: {
-      title: '在生产'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
-
-const salary = {
-  content: [],
-  headers: {
-    mcode: {
-      title: '姓名'
-    },
-    staff: {
-      title: '工资'
-    }
-  },
-  number: 0,
-  size: 10,
-  totalPages: 0
-}
-
-
 class StaffManage extends Component {
   componentWillMount = () => {
     const {
@@ -88,7 +42,9 @@ class StaffManage extends Component {
       staffModal,
       onStaffModal,
       onStaffChange,
-      onAddStaff
+      onAddStaff,
+      scheduleTable,
+      staffSalaryTable
     } = this.props
 
     const panes = [{
@@ -96,7 +52,7 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-          <MultiTable table={construction}/>
+          <MultiTable table={scheduleTable}/>
         </Tab.Pane>
         )
       }
@@ -106,7 +62,7 @@ class StaffManage extends Component {
         return (
           <Tab.Pane>
         <Search size='mini'/>
-        <MultiTable table={salary}/>
+        <MultiTable table={staffSalaryTable}/>
       </Tab.Pane>
         )
       }
@@ -154,7 +110,9 @@ class StaffManage extends Component {
 
 const mapStateToProps = (state) => ({
   staffModal: state.staffmanage.staffModal,
-  staffTable: state.staffmanage.staffInfoTable
+  staffTable: state.staffmanage.staffInfoTable,
+  scheduleTable: state.staffmanage.staffScheduleTable,
+  staffSalaryTable: state.staffmanage.staffSalaryTable
 })
 
 const mapDispatchToProps = {
