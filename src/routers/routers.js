@@ -18,11 +18,8 @@ import GlobalPortal from '../containers/GlobalPortal'
 
 import {
   Menu,
-  Segment,
   Container,
   Image,
-  Divider,
-  List,
   Dropdown
 } from 'semantic-ui-react'
 

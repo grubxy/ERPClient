@@ -39,29 +39,6 @@ const roles = [{
   text: '仓库管理员'
 }]
 
-const user = {
-  content: [{
-    username: 'admin',
-    owner: '马云',
-    role: '流程管理员',
-    single_button: 'delete'
-  }],
-  headers: {
-    username: {
-      title: '账户名'
-    },
-    owner: {
-      title: '所有者'
-    },
-    role: {
-      title: '账户类型'
-    },
-    single_button: {
-      title: ''
-    }
-  }
-}
-
 class Manage extends Component {
   componentWillMount = () => {
     const {

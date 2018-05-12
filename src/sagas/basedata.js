@@ -262,7 +262,7 @@ export function* seqAction(action) {
       type: 'BASEDATA_MODAL_CLEAR'
     })
     // 获取员工下拉菜单列表(在职员工)
-    let result = yield call(getStaffDropDownApi, 0, 0, 0)
+    let result = yield call(getStaffDropDownApi, 0, 0, 1)
     let dropDown = []
     for (let tmp of result) {
       dropDown.push({
