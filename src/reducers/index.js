@@ -23,7 +23,9 @@ import {
 } from './flow'
 import {
   staffModal,
-  staffInfoTable
+  staffInfoTable,
+  staffScheduleTable,
+  staffSalaryTable
 } from './staffmanage'
 import {
   constructionAllTable
@@ -59,7 +61,9 @@ let construction = combineReducers({
 
 let staffmanage = combineReducers({
   staffModal,
-  staffInfoTable
+  staffInfoTable,
+  staffScheduleTable,
+  staffSalaryTable
 })
 
 let manage = combineReducers({
