@@ -29,7 +29,6 @@ import Manage from '../containers/Manage'
 import GlobalPortal from '../containers/GlobalPortal'
 import Login from '../containers/Login'
 
-<<<<<<< HEAD
 const FixMenu = () => (
   <Menu fixed={'top'} inverted>
     <Container>
@@ -69,14 +68,6 @@ const FixMenu = () => (
     </Container>
   </Menu>
 )
-=======
-import {
-  Menu,
-  Container,
-  Image,
-  Dropdown
-} from 'semantic-ui-react'
->>>>>>> 28af28aa7a56933314114ffeddcc0f0fe4516015
 
 class Routes extends React.Component {
   componentWillMount = () => {
