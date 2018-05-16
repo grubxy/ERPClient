@@ -38,6 +38,10 @@ import {
   dropDowns
 } from './storehouse'
 
+import {
+  authentication
+} from './login'
+
 
 let storehouse = combineReducers({
   storeConstrTable,
@@ -78,6 +82,7 @@ let flow = combineReducers({
 })
 
 const app = combineReducers({
+  authentication,
   manage,
   basedata,
   flow,

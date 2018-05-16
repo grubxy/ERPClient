@@ -80,6 +80,13 @@ function fetch(url, {
 	}
 }
 
+/*** 登陆 ***/
+export const authAPI = (data) => {
+	return fetch('/auth', {
+		data
+	})
+}
+
 /*** 账户 ***/
 
 // 添加账户 

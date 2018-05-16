@@ -57,6 +57,11 @@ import {
   confirmHouseOrigin
 } from './storehouse'
 
+import {
+  login,
+  logout
+} from './login'
+
 // 生产流程
 // 生产单
 // function* productinoTablePage(action) {
@@ -95,6 +100,10 @@ import {
 
 
 function* mySaga() {
+
+  // 登陆
+  yield takeEvery('LOGIN_SUBMIT', login)
+  yield takeEvery('LOGIN_OUT', logout)
 
   // 账户
   yield takeEvery('USER_ADD', addUser)
