@@ -69,6 +69,23 @@ const FixMenu = () => (
   </Menu>
 )
 
+const Home = () => (
+  <div>
+    <FixMenu/>
+    <Container style={{ marginTop: '7em' }}>
+            <GlobalPortal/>
+            <PrivateRoute path="/data" component={BaseFlowData}/>
+            <PrivateRoute path="/flow" component={Flow}/>
+            <PrivateRoute path="/construction" component={Construction}/>
+            <PrivateRoute path="/store" component={StoreHouse}/>
+            <PrivateRoute path="/house" component={HouseInfo}/>
+            <PrivateRoute path="/staff" component={StaffManage}/>
+            <PrivateRoute path="/manage" component={Manage}/>
+    </Container>
+  </div>
+)
+
+
 class Routes extends React.Component {
   componentWillMount = () => {
 
@@ -76,14 +93,16 @@ class Routes extends React.Component {
 
   render = () => {
     const {
-      authentication
+      loggedIn
     } = this.props
 
     return (
       <Router>
          <div>
-          {authentication.loggedIn && <FixMenu/>}
           <Route path="/login" component={Login}/>
+          <PrivateRoute path="/home" component={Home}/>
+          {/*
+          <FixMenu/>
           <Container style={{ marginTop: '7em' }}>
             <GlobalPortal/>
             <PrivateRoute path="/data" component={BaseFlowData}/>
@@ -94,6 +113,7 @@ class Routes extends React.Component {
             <PrivateRoute path="/staff" component={StaffManage}/>
             <PrivateRoute path="/manage" component={Manage}/>
           </Container>
+        */}
           {/*
           <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
             <Container textAlign='center'>
@@ -134,7 +154,7 @@ component: Component,
 )
 
 const mapStateToProps = (state) => ({
-  authentication: state.authentication
+  loggedIn: state.authentication.loggedIn
 })
 
 const mapDispatchToProps = {}

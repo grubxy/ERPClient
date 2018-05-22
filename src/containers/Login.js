@@ -5,6 +5,9 @@ import {
 	connect
 } from 'react-redux'
 import {
+	Redirect
+} from "react-router-dom";
+import {
 	Button,
 	Form,
 	Grid,
@@ -27,8 +30,13 @@ class Login extends Component {
 		const {
 			onChange,
 			onLogin,
-			user
+			user,
+			redirectToReferrer
 		} = this.props
+
+		if (redirectToReferrer) {
+			return <Redirect to="/flow" />
+		}
 
 		return (
 			<div className='login-form'>
@@ -77,7 +85,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	user: state.authentication.user
+	user: state.authentication.user,
+	redirectToReferrer: state.authentication.redirectToReferrer
 })
 
 const mapDispatchToProps = {

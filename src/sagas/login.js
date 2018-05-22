@@ -27,12 +27,13 @@ export function* login(action) {
 		// 存储 token
 		console.log('result:' + JSON.stringify(result))
 
-		localStorage.setItem("token", result)
+		localStorage.setItem('token', result)
 
 		yield put({
 			type: 'LOGIN_LOGINCHANGE',
 			data: {
 				loggedIn: true,
+				redirectToReferrer: true,
 				user: action.user
 			}
 		})
@@ -40,7 +41,15 @@ export function* login(action) {
 		history.push('/')
 
 	} catch (error) {
-
+		console.log(error)
+		yield put({
+			type: 'LOGIN_LOGINCHANGE',
+			data: {
+				loggedIn: true,
+				redirectToReferrer: true,
+				user: action.user
+			}
+		})
 	}
 }
 

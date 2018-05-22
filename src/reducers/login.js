@@ -1,5 +1,6 @@
 const initialState = {
-	loggedIn: false
+	loggedIn: false,
+	redirectToReferrer: false
 }
 
 export const authentication = (state = initialState, action) => {
