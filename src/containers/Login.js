@@ -22,9 +22,7 @@ import {
 } from '../actions/login'
 
 class Login extends Component {
-	componentWillMount = () => {
-
-	}
+	componentWillMount = () => {}
 
 	render = () => {
 		const {
@@ -35,7 +33,7 @@ class Login extends Component {
 		} = this.props
 
 		if (redirectToReferrer) {
-			return <Redirect to="/flow" />
+			return <Redirect to="/home" />
 		}
 
 		return (

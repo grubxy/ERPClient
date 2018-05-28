@@ -40,17 +40,7 @@ export function* login(action) {
 
 		history.push('/')
 
-	} catch (error) {
-		console.log(error)
-		yield put({
-			type: 'LOGIN_LOGINCHANGE',
-			data: {
-				loggedIn: true,
-				redirectToReferrer: true,
-				user: action.user
-			}
-		})
-	}
+	} catch (error) {}
 }
 
 export function* logout() {

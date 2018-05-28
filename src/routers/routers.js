@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Link
+  Link,
+  Switch
 } from 'react-router-dom'
 import {
   connect
@@ -41,29 +42,29 @@ const FixMenu = () => (
         百汇管理系统
       </Menu.Item>
       <Menu.Item>
-        <Link to="/flow">生产流程</Link>
+        <Link to="/home/flow">生产流程</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/construction">工单总览</Link>
+        <Link to="/home/construction">工单总览</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/staff">员工管理</Link>
+        <Link to="/home/staff">员工管理</Link>
       </Menu.Item>
       <Dropdown item simple text='仓储管理'>
       <Dropdown.Menu>
         <Dropdown.Item>
-          <Link style={{color:'black'}} to="/store">仓储管理</Link>
+          <Link style={{color:'black'}} to="/home/store">仓储管理</Link>
         </Dropdown.Item>
         <Dropdown.Item>
-          <Link style={{color:'black'}} to="/house">仓库配置</Link>
+          <Link style={{color:'black'}} to="/home/house">仓库配置</Link>
         </Dropdown.Item>
       </Dropdown.Menu>
       </Dropdown>
       <Menu.Item>
-        <Link to="/data">生产配置</Link>
+        <Link to="/home/data">生产配置</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/manage">系统管理</Link>
+        <Link to="/home/manage">系统管理</Link>
       </Menu.Item>
     </Container>
   </Menu>
@@ -73,14 +74,14 @@ const Home = () => (
   <div>
     <FixMenu/>
     <Container style={{ marginTop: '7em' }}>
-            <GlobalPortal/>
-            <PrivateRoute path="/data" component={BaseFlowData}/>
-            <PrivateRoute path="/flow" component={Flow}/>
-            <PrivateRoute path="/construction" component={Construction}/>
-            <PrivateRoute path="/store" component={StoreHouse}/>
-            <PrivateRoute path="/house" component={HouseInfo}/>
-            <PrivateRoute path="/staff" component={StaffManage}/>
-            <PrivateRoute path="/manage" component={Manage}/>
+      <GlobalPortal/>
+      <Route path="/home/data" component={BaseFlowData}/>
+      <Route path="/home/flow" component={Flow}/>
+      <Route path="/home/construction" component={Construction}/>
+      <Route path="/home/store" component={StoreHouse}/>
+      <Route path="/home/house" component={HouseInfo}/>
+      <Route path="/home/staff" component={StaffManage}/>
+      <Route path="/home/manage" component={Manage}/>
     </Container>
   </div>
 )
@@ -99,31 +100,11 @@ class Routes extends React.Component {
     return (
       <Router>
          <div>
-          <Route path="/login" component={Login}/>
-          <PrivateRoute path="/home" component={Home}/>
-          {/*
-          <FixMenu/>
-          <Container style={{ marginTop: '7em' }}>
-            <GlobalPortal/>
-            <PrivateRoute path="/data" component={BaseFlowData}/>
-            <PrivateRoute path="/flow" component={Flow}/>
-            <PrivateRoute path="/construction" component={Construction}/>
-            <PrivateRoute path="/store" component={StoreHouse}/>
-            <PrivateRoute path="/house" component={HouseInfo}/>
-            <PrivateRoute path="/staff" component={StaffManage}/>
-            <PrivateRoute path="/manage" component={Manage}/>
-          </Container>
-        */}
-          {/*
-          <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
-            <Container textAlign='center'>
-              <Image centered size='mini' src='/logo.png'/>
-              <List horizontal inverted divided link>
-                <List.Item as='a' href='#'></List.Item>
-              </List>
-            </Container>
-          </Segment>
-          */}
+         <Switch>
+          <Route exact path="/" component={Login}/>
+          <PrivateRoute path="/home" component={Home} isLoggin={loggedIn}/>
+          <Redirect to ="/"/>
+         </Switch>
         </div>
       </Router>
     )
@@ -133,15 +114,16 @@ class Routes extends React.Component {
 
 const PrivateRoute = ({
 component: Component,
+isLoggin: isLoggin,
 ...rest
-}) => (<Route { ...rest
+}) => (<Route exact { ...rest
   }
   render = {
     props => (
-      true ? (
+      isLoggin ? (
         <Component {...props}/>): (<Redirect to = {
           {
-            pathname: '/login',
+            pathname: '/',
             state: {
               from: props.location
             }
@@ -158,6 +140,5 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {}
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routes)
