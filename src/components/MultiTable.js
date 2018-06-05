@@ -5,7 +5,8 @@ import {
   Table,
   Menu,
   Icon,
-  Button
+  Button,
+  Pagination
 } from 'semantic-ui-react'
 
 const MultiTableHeader = ({
@@ -98,21 +99,9 @@ const MultiTableFooter = ({
   } else {
     return (
       <Table.Footer>
-      <Table.HeaderCell>页:</Table.HeaderCell>
       <Table.HeaderCell colSpan={Object.keys(table.headers).length}>
         <Menu floated='right' pagination>
-          <Menu.Item as='a' onClick={()=>goToPage(table,'goFirst')} icon>
-          <Icon size='mini' name='angle double left'/>
-          </Menu.Item>
-          <Menu.Item as='a' onClick={()=>goToPage(table,'goPrev')} icon>
-          <Icon size='mini' name='angle left'/>
-          </Menu.Item>
-          <Menu.Item as='a' onClick={()=>goToPage(table,'goNext')} icon>
-          <Icon size='mini' name='angle right'/>
-          </Menu.Item>
-         <Menu.Item as='a' onClick={()=>goToPage(table, 'goLast')} icon>
-          <Icon size='mini' name='angle double right'/>
-          </Menu.Item>
+        <Pagination defaultActivePage={5}  totalPages={10}/>
         </Menu>
       </Table.HeaderCell>
     </Table.Footer>
