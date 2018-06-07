@@ -1,5 +1,5 @@
 const initialState = {
-	loggedIn: false,
+	loggedIn: true,
 	redirectToReferrer: false
 }
 

@@ -31,6 +31,12 @@ export const actionProduction = (row, method) => ({
   method
 })
 
+// 生产流程表单选择
+export const pageActiveProduction = (e, data) => ({
+  type: 'PRODUCTION_PAGING',
+  activePage: data.activePage
+})
+
 // 提交工单
 export const addConstruction = (data) => ({
   type: 'CONSTRUCTION_ADD',

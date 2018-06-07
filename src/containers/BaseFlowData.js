@@ -70,8 +70,8 @@ class BaseFlowData extends Component {
         </Header>
         <Divider hidden/>
         <Divider clearing/>
-        <Grid divided='vertically'>
-          <Grid.Row columns={10}>
+        <Grid columns={3} divided='vertically'>
+          <Grid.Row>
             <Grid.Column>
             <Button size='small' content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
             </Grid.Column>
@@ -80,7 +80,7 @@ class BaseFlowData extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column width={6}>
+            <Grid.Column>
               <Modal open={modal.product}>
                 <Modal.Header>添加产品</Modal.Header>
                 <Modal.Content>
@@ -97,7 +97,7 @@ class BaseFlowData extends Component {
               </Modal>
               <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect}/>
             </Grid.Column>
-            <Grid.Column width={5}>
+            <Grid.Column>
               <Modal open={modal.seq}>
                 <Modal.Header>添加工序</Modal.Header>
                 <Modal.Content>
@@ -115,7 +115,7 @@ class BaseFlowData extends Component {
               </Modal>
               <MultiTable table={seqTable} onAction={onSeqAction} onSelect={onSeqSelect}/>
             </Grid.Column>
-            <Grid.Column width={5}>
+            <Grid.Column>
               <Modal open={modal.staff}>
                 <Modal.Header>添加默认员工</Modal.Header>
                 <Modal.Content>

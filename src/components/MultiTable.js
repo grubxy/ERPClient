@@ -88,7 +88,7 @@ const MultiTableBody = ({
 }
 
 const MultiTableFooter = ({
-  goToPage,
+  onActivePage,
   table
 }) => {
   if (!table.showFooter) {
@@ -101,7 +101,7 @@ const MultiTableFooter = ({
       <Table.Footer>
       <Table.HeaderCell colSpan={Object.keys(table.headers).length}>
         <Menu floated='right' pagination>
-        <Pagination defaultActivePage={5}  totalPages={10}/>
+        <Pagination size='mini' boundaryRange={0} defaultActivePage={1} prevItem = {null} nextItem={null} ellipsisItem = {null} activePage={table.activePage} totalPages={table.totalPages} onPageChange={onActivePage}/>
         </Menu>
       </Table.HeaderCell>
     </Table.Footer>
@@ -120,17 +120,17 @@ export class MultiTable extends Component {
       search,
       loading,
       onSearch,
-      goToPage,
       onAction,
       onSelect,
-      showFooter
+      showFooter,
+      onActivePage
     } = this.props
 
     return (
       <Table compact='very' color='teal' size='small' selectable={table.selectable}>
         <MultiTableHeader table={table}/>
         <MultiTableBody table={table} onAction={onAction} onSelect={onSelect}/>
-        <MultiTableFooter table={table}/>
+        <MultiTableFooter table={table} onActivePage={onActivePage}/>
       </Table>
     )
   }

@@ -198,6 +198,10 @@ export function* actionFlow(action) {
 
 }
 
+export function* pageFlow(action) {
+	console.log('active' + JSON.stringify(action.activePage))
+}
+
 // 施工单action
 export function* actionConstruction(action) {
 

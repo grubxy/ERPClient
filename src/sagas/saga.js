@@ -24,6 +24,7 @@ import {
   initFlow,
   selectFlow,
   actionFlow,
+  pageFlow,
   openProductionModal,
   addProduction,
   selectSeqDropDown,
@@ -125,6 +126,7 @@ function* mySaga() {
   yield takeEvery('FLOW_INIT', initFlow)
   yield takeEvery('PRODUCTION_SELECT', selectFlow)
   yield takeEvery('PRODUCTION_ACTION', actionFlow)
+  yield takeEvery('PRODUCTION_PAGING', pageFlow)
   yield takeEvery('PRODUCTION_MODAL_OPEN', openProductionModal)
   yield takeEvery('PRODUCTION_ADD', addProduction)
   yield takeEvery('FLOW_MODAL_SEQDROPDOWN', selectSeqDropDown)

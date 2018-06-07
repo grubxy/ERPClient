@@ -17,7 +17,8 @@ import {
   openProductionModal,
   changeInput,
   dropDown,
-  dropDownSeq
+  dropDownSeq,
+  pageActiveProduction
 } from '../actions/flow'
 
 import {
@@ -60,7 +61,8 @@ class Flow extends Component {
       openProductionModal,
       dropDown,
       changeInput,
-      dropDownSeq
+      dropDownSeq,
+      onActivePage
     } = this.props
 
     return (
@@ -97,7 +99,7 @@ class Flow extends Component {
         			</Grid.Row>
         				
         			<Grid.Row columns={1}>
-   						<MultiTable table={flowTable} onSelect={selectProduction} onAction={actionProduction}/>
+   						<MultiTable table={flowTable} onSelect={selectProduction} onAction={actionProduction} onActivePage={onActivePage}/>
         			</Grid.Row>
 
         			<Grid.Row columns={2}>
@@ -165,7 +167,8 @@ const mapDispatchToProps = {
   openProductionModal: openProductionModal,
   changeInput: changeInput,
   dropDown: dropDown,
-  dropDownSeq: dropDownSeq
+  dropDownSeq: dropDownSeq,
+  onActivePage: pageActiveProduction
 }
 
 

@@ -39,7 +39,7 @@ const defaultConstructionTable = {
 		}
 	},
 	selectable: false,
-	showFooter: true,
+	showFooter: true
 }
 
 export const constructionAllTable = (state = defaultConstructionTable, action) => {
