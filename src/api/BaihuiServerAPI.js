@@ -127,10 +127,16 @@ export const deleteProductAPI = (id) => {
 }
 
 // 获取产品
-export const getProductApi = (page, size) => {
-	return fetch(`/product?page=${page}&size=${size}`, {
-		method: 'GET'
-	})
+export const getProductApi = (page, size, name) => {
+	if (name === undefined) {
+		return fetch(`/product?page=${page}&size=${size}`, {
+			method: 'GET'
+		})
+	} else {
+		return fetch(`/product?page=${page}&size=${size}&name=${name}`, {
+			method: 'GET'
+		})
+	}
 }
 
 // 给某产品添加工序

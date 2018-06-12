@@ -16,10 +16,10 @@ export function* initBaseData() {
 
   try {
     // 获取产品数据
-    let result = yield call(getProductApi, 0, 0)
+    let result = yield call(getProductApi, 0, 0, undefined)
 
     let productTableList = []
-    for (let tmp of result) {
+    for (let tmp of result.content) {
       productTableList.push({
         id: tmp.idProduct,
         name: tmp.productName,
