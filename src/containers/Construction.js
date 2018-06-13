@@ -15,9 +15,7 @@ import {
   Icon,
   Divider,
   Search,
-  Button,
-  Modal,
-  Form
+  Button
 } from 'semantic-ui-react'
 import TableWithAction from '../components/TableWithAction'
 

@@ -27,6 +27,13 @@ export const searchProduct = (target, table) => ({
   table: table
 })
 
+// 产品分页
+export const activeProductPage = (activePage, table) => ({
+  type: 'PRODUCT_ACTIVEPAGE',
+  activePage,
+  table
+})
+
 // 产品按钮案件
 export const actionProduct = (row, method) => ({
   type: 'PRODUCT_ACTION',

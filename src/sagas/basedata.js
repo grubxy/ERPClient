@@ -12,10 +12,10 @@ import {
   put
 } from 'redux-saga/effects'
 
-export function* updateProductTable(action) {
+export function* updateProductTable(result) {
   try {
     let productTableList = []
-    for (let tmp of action.content) {
+    for (let tmp of result.content) {
       productTableList.push({
         id: tmp.idProduct,
         name: tmp.productName,
@@ -40,14 +40,20 @@ export function* updateProductTable(action) {
     // 更新 page与totalsize
     yield put({
       type: 'UPDATE_PRODUCT_TABLE_CHANGE',
-      name: 'totalPage',
-      value: action.totalElements,
+      name: 'totalPages',
+      value: result.totalPages,
     })
 
     yield put({
       type: 'UPDATE_PRODUCT_TABLE_CHANGE',
-      name: 'page',
-      value: action.number
+      name: 'activePage',
+      value: result.number
+    })
+
+    yield put({
+      type: 'UPDATE_PRODUCT_TABLE_CHANGE',
+      name: 'size',
+      value: result.size
     })
 
   } catch (error) {
@@ -203,14 +209,16 @@ export function* searchProduct(action) {
   try {
     // 更新表信息
     yield put({
-      type: 'UPDATE_PRODUCT_TABLE_CHANGE',
+      type: 'UPDATE_PRODUCT_TABLE_SEARCH_CHANGE',
       name: action.name,
       value: action.value
     })
 
-    let searchParam = { ...searchParam,
+    let searchParam = {
       [action.name]: action.value,
-      page: action.table.page,
+      //page: action.table.activePage,
+      // 搜索项目 page 默认为0
+      page: 0,
       size: action.table.size
     }
     // 获取产品表格
@@ -224,6 +232,22 @@ export function* searchProduct(action) {
 
   }
 
+}
+
+export function* activePageProduct(action) {
+  try {
+
+    let searchParam = { ...action.table.search,
+      page: action.activePage,
+      size: action.table.size
+    }
+    console.log(searchParam)
+    let result = yield call(getProductApi, searchParam)
+    yield call(updateProductTable, result)
+
+  } catch (error) {
+
+  }
 }
 
 export function* addSeq(action) {

@@ -10,7 +10,6 @@ import {
   Container,
   Icon,
   Divider,
-  Search,
   Button,
   Modal,
   Form,
@@ -23,6 +22,7 @@ import {
   initBaseData,
   addProduct,
   searchProduct,
+  activeProductPage,
   actionProduct,
   addSeq,
   actionSeq,
@@ -57,13 +57,13 @@ class BaseFlowData extends Component {
       onStaffAdd,
       onProAction,
       onSeqAction,
-      onStaffDel,
       productTable,
       seqTable,
       staffTable,
       onChange,
       onDropDown,
-      onSearch
+      onSearch,
+      onActivePage
     } = this.props
 
     return (
@@ -95,7 +95,7 @@ class BaseFlowData extends Component {
                   <Button color='blue' onClick={()=>onProAdd(modal, productTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect}/>
+              <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect} onActivePage={onActivePage}/>
             </Grid.Column>
             <Grid.Column>
               <Modal open={modal.seq}>
@@ -149,6 +149,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   initBaseData: initBaseData,
   onSearch: searchProduct,
+  onActivePage: activeProductPage,
   onChange: changeInput,
   onProSelect: selectProduct,
   onSeqSelect: selectSeq,

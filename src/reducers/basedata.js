@@ -46,9 +46,10 @@ export const productTable = (state = {
   },
   selectable: true,
   showFooter: true,
-  totalPage: 0,
-  page: 0,
-  size: 1
+  search: {},
+  totalPages: 0,
+  activePage: 0,
+  size: 2
 }, action) => {
   switch (action.type) {
     case 'UPDATE_PRODUCT_TABLE':
@@ -58,6 +59,12 @@ export const productTable = (state = {
     case 'UPDATE_PRODUCT_TABLE_CHANGE':
       return { ...state,
         [action.name]: action.value
+      }
+    case 'UPDATE_PRODUCT_TABLE_SEARCH_CHANGE':
+      return { ...state,
+        search: {
+          [action.name]: action.value
+        }
       }
     default:
       return state
