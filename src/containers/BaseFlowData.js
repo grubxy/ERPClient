@@ -13,7 +13,8 @@ import {
   Search,
   Button,
   Modal,
-  Form
+  Form,
+  Input
 } from 'semantic-ui-react'
 import {
   MultiTable
@@ -21,6 +22,7 @@ import {
 import {
   initBaseData,
   addProduct,
+  searchProduct,
   actionProduct,
   addSeq,
   actionSeq,
@@ -36,10 +38,11 @@ import {
 class BaseFlowData extends Component {
   componentWillMount = () => {
     const {
-      initBaseData
+      initBaseData,
+      productTable
     } = this.props
 
-    initBaseData()
+    initBaseData(productTable.size)
   }
 
   render = () => {
@@ -59,7 +62,8 @@ class BaseFlowData extends Component {
       seqTable,
       staffTable,
       onChange,
-      onDropDown
+      onDropDown,
+      onSearch
     } = this.props
 
     return (
@@ -72,12 +76,8 @@ class BaseFlowData extends Component {
         <Divider clearing/>
         <Grid columns={3} divided='vertically'>
           <Grid.Row>
-            <Grid.Column>
-            <Button size='small' content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
-            </Grid.Column>
-            <Grid.Column>
-            <Search size='mini'/>
-            </Grid.Column>
+            <Button content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
+            <Input icon={<Icon name='search' color='teal' inverted circular link />} placeholder='产品名' name='name' onChange={(e)=>onSearch(e.target, productTable)}/>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
@@ -92,7 +92,7 @@ class BaseFlowData extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onModal({product:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onProAdd(modal)}> 确定 </Button>
+                  <Button color='blue' onClick={()=>onProAdd(modal, productTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect}/>
@@ -148,6 +148,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   initBaseData: initBaseData,
+  onSearch: searchProduct,
   onChange: changeInput,
   onProSelect: selectProduct,
   onSeqSelect: selectSeq,

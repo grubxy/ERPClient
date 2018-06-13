@@ -45,12 +45,19 @@ export const productTable = (state = {
     }
   },
   selectable: true,
-  showFooter: true
+  showFooter: true,
+  totalPage: 0,
+  page: 0,
+  size: 1
 }, action) => {
   switch (action.type) {
     case 'UPDATE_PRODUCT_TABLE':
       return { ...state,
         content: action.data
+      }
+    case 'UPDATE_PRODUCT_TABLE_CHANGE':
+      return { ...state,
+        [action.name]: action.value
       }
     default:
       return state

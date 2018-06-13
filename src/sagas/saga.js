@@ -10,6 +10,7 @@ import {
 
 import {
   initBaseData,
+  searchProduct,
   selectPro,
   selectSeq,
   addProduct,
@@ -113,6 +114,7 @@ function* mySaga() {
 
   // 基础 生产数据配置
   yield takeEvery('BASEDATA_INIT', initBaseData)
+  yield takeEvery('PRODUCT_SEARCH', searchProduct)
   yield takeEvery('PRODUCT_SELECT', selectPro)
   yield takeEvery('SEQ_SELECT', selectSeq)
   yield takeEvery('PRODUCT_ADD', addProduct)

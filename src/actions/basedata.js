@@ -1,20 +1,30 @@
 // 基础数据管理
 
 // 初始化整体界面
-export const initBaseData = () => ({
-  type: 'BASEDATA_INIT'
+export const initBaseData = (size) => ({
+  type: 'BASEDATA_INIT',
+  size: size
 })
 
 // 提交产品
-export const addProduct = (data) => ({
+export const addProduct = (data, table) => ({
   type: 'PRODUCT_ADD',
-  data
+  data,
+  table
 })
 
 // 选中产品
 export const selectProduct = (data) => ({
   type: 'PRODUCT_SELECT',
   data
+})
+
+// 产品搜索按钮变化
+export const searchProduct = (target, table) => ({
+  type: 'PRODUCT_SEARCH',
+  name: target.name,
+  value: target.value,
+  table: table
 })
 
 // 产品按钮案件

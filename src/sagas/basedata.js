@@ -12,14 +12,10 @@ import {
   put
 } from 'redux-saga/effects'
 
-export function* initBaseData() {
-
+export function* updateProductTable(action) {
   try {
-    // 获取产品数据
-    let result = yield call(getProductApi, 0, 0, undefined)
-
     let productTableList = []
-    for (let tmp of result.content) {
+    for (let tmp of action.content) {
       productTableList.push({
         id: tmp.idProduct,
         name: tmp.productName,
@@ -40,6 +36,36 @@ export function* initBaseData() {
       type: 'UPDATE_PRODUCT_TABLE',
       data: productTableList
     })
+
+    // 更新 page与totalsize
+    yield put({
+      type: 'UPDATE_PRODUCT_TABLE_CHANGE',
+      name: 'totalPage',
+      value: action.totalElements,
+    })
+
+    yield put({
+      type: 'UPDATE_PRODUCT_TABLE_CHANGE',
+      name: 'page',
+      value: action.number
+    })
+
+  } catch (error) {
+
+  }
+}
+
+export function* initBaseData(action) {
+
+  try {
+    // 获取产品数据
+    let result = yield call(getProductApi, {
+      page: 0,
+      size: action.size
+    })
+    // 更新产品表格
+    yield call(updateProductTable, result)
+
   } catch (error) {
     // 提示 
     yield put({
@@ -152,7 +178,9 @@ export function* addProduct(action) {
     })
 
     // 更新产品数据
-    yield call(initBaseData)
+    yield call(initBaseData, {
+      size: action.table.size
+    })
 
     // 更新产品对应工序数据(理论新增后为空)}
     yield put({
@@ -169,6 +197,35 @@ export function* addProduct(action) {
 
   }
 }
+
+export function* searchProduct(action) {
+  console.log('search')
+  try {
+    // 更新表信息
+    yield put({
+      type: 'UPDATE_PRODUCT_TABLE_CHANGE',
+      name: action.name,
+      value: action.value
+    })
+
+    let searchParam = { ...searchParam,
+      [action.name]: action.value,
+      page: action.table.page,
+      size: action.table.size
+    }
+    // 获取产品表格
+    let result = yield call(getProductApi, searchParam)
+
+    yield call(updateProductTable, result)
+
+    console.log(searchParam)
+
+  } catch (error) {
+
+  }
+
+}
+
 export function* addSeq(action) {
 
   // 组装请求体
