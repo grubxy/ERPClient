@@ -101,7 +101,7 @@ const MultiTableFooter = ({
       <Table.Footer>
       <Table.HeaderCell colSpan={Object.keys(table.headers).length}>
         <Menu floated='right' pagination>
-        <Pagination size='mini' boundaryRange={0} defaultActivePage={1} prevItem = {null} nextItem={null} ellipsisItem = {null} activePage={table.activePage} totalPages={table.totalPages} onPageChange={onActivePage}/>
+        <Pagination size='mini' boundaryRange={0} defaultActivePage={1} prevItem = {null} nextItem={null} ellipsisItem = {null} activePage={table.activePage} totalPages={table.totalPages} onPageChange={()=>onActivePage(table)}/>
         </Menu>
       </Table.HeaderCell>
     </Table.Footer>
