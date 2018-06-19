@@ -29,7 +29,6 @@ import {
   Icon,
   Button,
   Divider,
-  Search,
   Modal,
   Input,
   Form
@@ -39,7 +38,7 @@ import {
 } from '../components/MultiTable'
 
 class Flow extends Component {
-  componentWillMount = () => {
+  componentDidMount = () => {
     const {
       initFlow,
       flowTable
@@ -66,14 +65,13 @@ class Flow extends Component {
       openProductionModal,
       dropDown,
       changeInput,
-      dropDownSeq,
-      onActivePage
+      dropDownSeq
     } = this.props
 
     return (
       <Container style={{marginTop:'3em'}}>
 			    <Header as='h3'>
-          			<Icon name='settings'/>
+          	<Icon name='settings'/>
         		<Header.Content>生产流程</Header.Content>
         		</Header>
         		<Divider hidden/>
@@ -105,7 +103,7 @@ class Flow extends Component {
         					 <Input placeholder='生产批次' name='id' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>
         			    </Form.Field>
                   <Form.Field>
-                    <Input icon='search' iconPosition='right' placeholder='产品名称' name='name' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>
+                    <Input icon='search' placeholder='产品名称' name='name' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>
                   </Form.Field>
                 </Form.Group>
               </Form>

@@ -36,7 +36,7 @@ import {
 } from '../actions/basedata'
 
 class BaseFlowData extends Component {
-  componentWillMount = () => {
+  componentDidMount = () => {
     const {
       initBaseData,
       productTable
@@ -74,12 +74,14 @@ class BaseFlowData extends Component {
         </Header>
         <Divider hidden/>
         <Divider clearing/>
-        <Grid columns={3} divided='vertically'>
+        <Grid divided='vertically'>
           <Grid.Row>
+          <Grid.Column>
             <Button content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
             <Input icon={<Icon name='search' color='teal' inverted circular link />} placeholder='产品名' name='name' onChange={(e)=>onSearch(e.target, productTable)}/>
+          </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
+          <Grid.Row columns={3}>
             <Grid.Column>
               <Modal open={modal.product}>
                 <Modal.Header>添加产品</Modal.Header>

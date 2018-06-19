@@ -43,7 +43,9 @@ import {
 
 import {
   initConstruction,
-  selectConstruction
+  selectConstruction,
+  searchConstruction,
+  activePageConstruction
 } from './construction'
 
 import {
@@ -55,7 +57,6 @@ import {
   addHouseInfo,
   actionHouseInfo,
   confirmHouseInfoAction,
-  initHouseOrigin,
   openHouseOriginModal,
   selectHouseOrigin,
   confirmHouseOrigin
@@ -147,6 +148,8 @@ function* mySaga() {
   // 工单总览
   yield takeEvery('CONSTRUCTION_INIT', initConstruction)
   yield takeEvery('CONSTRUCTION_SELECT', selectConstruction)
+  yield takeEvery('CONSTRUCTION_SEARCH', searchConstruction)
+  yield takeEvery('CONSTRUCTION_ACTIVEPAGE', activePageConstruction)
 
   // 仓库管理
   yield takeEvery('STOREHOUSE_INIT', initStoreHouse)

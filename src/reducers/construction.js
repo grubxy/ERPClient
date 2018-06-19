@@ -39,7 +39,11 @@ const defaultConstructionTable = {
 		}
 	},
 	selectable: false,
-	showFooter: true
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const constructionAllTable = (state = defaultConstructionTable, action) => {
@@ -47,6 +51,16 @@ export const constructionAllTable = (state = defaultConstructionTable, action) =
 		case 'CONSTRUCTION_UPDATE_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'CONSTRUCTION_UPDATE_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
+		case 'CONSTRUCTION_UPDATE_SEARCH_CHANGE':
+			return { ...state,
+				search: { ...state.search,
+					[action.name]: action.value
+				}
 			}
 		default:
 			return state
