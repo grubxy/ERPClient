@@ -12,7 +12,7 @@ import {
   put
 } from 'redux-saga/effects'
 
-export function* updateProductTable(result) {
+function* updateProductTable(result) {
   try {
     let productTableList = []
     for (let tmp of result.content) {
@@ -41,7 +41,7 @@ export function* updateProductTable(result) {
     yield put({
       type: 'UPDATE_PRODUCT_TABLE_CHANGE',
       name: 'totalPages',
-      value: result.totalPages,
+      value: result.totalPages
     })
 
     yield put({
@@ -215,6 +215,7 @@ export function* searchProduct(action) {
     })
 
     let searchParam = {
+      ...action.table.search,
       [action.name]: action.value,
       //page: action.table.activePage,
       // 搜索项目 page 默认为0

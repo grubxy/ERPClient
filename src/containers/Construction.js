@@ -43,18 +43,20 @@ class Construction extends Component {
         <Divider hidden/>
         <Divider clearing/>
         <Grid>
-          <Grid.Row columns={6}>
+          <Grid.Row>
           <Grid.Column>
-            <Search size='mini'/>
+            <Search/>
           </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
           <Grid.Column>
             <Button.Group>
-              <Button size='small' color='teal' onClick={()=>selectConstruction(0)}>所有</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(1)}>等待材料出库</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(2)}>制作过程中</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(3)}>完工待入库</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(4)}>入库完毕待审批</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(5)}>审批完毕</Button>
+              <Button color='teal' onClick={()=>selectConstruction(0)}>所有</Button>
+              <Button color='teal'onClick={()=>selectConstruction(1)}>等待材料出库</Button>
+              <Button color='teal'onClick={()=>selectConstruction(2)}>制作过程中</Button>
+              <Button color='teal'onClick={()=>selectConstruction(3)}>完工待入库</Button>
+              <Button color='teal'onClick={()=>selectConstruction(4)}>入库完毕待审批</Button>
+              <Button color='teal'onClick={()=>selectConstruction(5)}>审批完毕</Button>
             </Button.Group>
           </Grid.Column>
           </Grid.Row>

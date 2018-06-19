@@ -56,7 +56,10 @@ const defaultFlowTable = {
   },
   selectable: true,
   showFooter: true,
-  totalPages: 1
+  search: {},
+  totalPages: 0,
+  activePage: 0,
+  size: 2
 }
 
 export const flowTable = (state = defaultFlowTable, action) => {
@@ -68,6 +71,12 @@ export const flowTable = (state = defaultFlowTable, action) => {
     case 'UPDATE_PRODUCTION_TABLE_CHANGE':
       return { ...state,
         [action.name]: action.value
+      }
+    case 'UPDATE_PRODUCTION_TABLE_SEARCH_CHANGE':
+      return { ...state,
+        search: { ...state.search,
+          [action.name]: action.value
+        }
       }
     default:
       return state

@@ -24,7 +24,7 @@ export const searchProduct = (target, table) => ({
   type: 'PRODUCT_SEARCH',
   name: target.name,
   value: target.value,
-  table: table
+  table
 })
 
 // 产品分页

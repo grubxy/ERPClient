@@ -2,20 +2,30 @@
 
 
 // 初始化界面
-export const initFlow = () => ({
-  type: 'FLOW_INIT'
+export const initFlow = (size) => ({
+  type: 'FLOW_INIT',
+  size
 })
 
 // 添加生产流程
-export const addProduction = (data) => ({
+export const addProduction = (data, table) => ({
   type: 'PRODUCTION_ADD',
-  data
+  data,
+  table
 })
 
 // 选中某个生产流程
 export const selectProduction = (data) => ({
   type: 'PRODUCTION_SELECT',
   data
+})
+
+// 产品搜索按钮变化
+export const searchProduction = (target, table) => ({
+  type: 'PRODUCTION_SEARCH',
+  name: target.name,
+  value: target.value,
+  table
 })
 
 // 打开生产流程模态框
@@ -32,9 +42,10 @@ export const actionProduction = (row, method) => ({
 })
 
 // 生产流程表单选择
-export const pageActiveProduction = (e, data) => ({
-  type: 'PRODUCTION_PAGING',
-  activePage: data.activePage
+export const activeProductionPage = (activePage, table) => ({
+  type: 'PRODUCTION_ACTIVEPAGE',
+  activePage,
+  table
 })
 
 // 提交工单

@@ -18,7 +18,8 @@ import {
   changeInput,
   dropDown,
   dropDownSeq,
-  pageActiveProduction
+  activeProductionPage,
+  searchProduction
 } from '../actions/flow'
 
 import {
@@ -30,6 +31,7 @@ import {
   Divider,
   Search,
   Modal,
+  Input,
   Form
 } from 'semantic-ui-react'
 import {
@@ -39,10 +41,11 @@ import {
 class Flow extends Component {
   componentWillMount = () => {
     const {
-      initFlow
+      initFlow,
+      flowTable
     } = this.props
 
-    initFlow()
+    initFlow(flowTable.size)
   }
 
   render = () => {
@@ -54,6 +57,8 @@ class Flow extends Component {
       addProduction,
       selectProduction,
       actionProduction,
+      onSearchProduction,
+      onActivePageProduction,
       addConstruction,
       actionConstruction,
       completeConstruction,
@@ -74,7 +79,8 @@ class Flow extends Component {
         		<Divider hidden/>
         		<Divider clearing/>
         		<Grid>
-        			<Grid.Row columns={10}>
+        			<Grid.Row>
+              <Grid.Column>
                 <Modal open={modal.flow}>
                 <Modal.Header>添加生产流程</Modal.Header>
                 <Modal.Content>
@@ -87,20 +93,30 @@ class Flow extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>operateModal({flow:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>addProduction(modal)}> 确定 </Button>
+                  <Button color='blue' onClick={()=>addProduction(modal, flowTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-        			 <Grid.Column>
-        					<Button size='small' content='流程' color='teal' icon='add' onClick={()=>openProductionModal(modal)}/>
-        				</Grid.Column>
-        				<Grid.Column>
-        					<Search size='mini'/>
-        				</Grid.Column>
-        			</Grid.Row>
+              <Form>
+                <Form.Group inline>
+                  <Form.Field>
+                    <Button content='流程' color='teal' icon='add' onClick={()=>openProductionModal(modal)}/>
+                  </Form.Field>
+                  <Form.Field>
+        					 <Input placeholder='生产批次' name='id' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>
+        			    </Form.Field>
+                  <Form.Field>
+                    <Input icon='search' iconPosition='right' placeholder='产品名称' name='name' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>
+                  </Form.Field>
+                </Form.Group>
+              </Form>
+              </Grid.Column>
+              </Grid.Row>
         				
-        			<Grid.Row columns={1}>
-   						<MultiTable table={flowTable} onSelect={selectProduction} onAction={actionProduction} onActivePage={onActivePage}/>
-        			</Grid.Row>
+        			<Grid.Row>
+              <Grid.Column>
+   						<MultiTable table={flowTable} onSelect={selectProduction} onAction={actionProduction} onActivePage={onActivePageProduction}/>
+        			</Grid.Column>
+              </Grid.Row>
 
         			<Grid.Row columns={2}>
         				<Grid.Column>
@@ -160,6 +176,7 @@ const mapDispatchToProps = {
   addProduction: addProduction,
   selectProduction: selectProduction,
   actionProduction: actionProduction,
+  onSearchProduction: searchProduction,
   addConstruction: addConstruction,
   actionConstruction: actionConstruction,
   completeConstruction: completeConstruction,
@@ -168,7 +185,7 @@ const mapDispatchToProps = {
   changeInput: changeInput,
   dropDown: dropDown,
   dropDownSeq: dropDownSeq,
-  onActivePage: pageActiveProduction
+  onActivePageProduction: activeProductionPage,
 }
 
 

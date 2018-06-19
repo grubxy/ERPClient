@@ -62,7 +62,7 @@ export const productTable = (state = {
       }
     case 'UPDATE_PRODUCT_TABLE_SEARCH_CHANGE':
       return { ...state,
-        search: {
+        search: { ...state.search,
           [action.name]: action.value
         }
       }

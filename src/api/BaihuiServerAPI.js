@@ -183,9 +183,11 @@ export const postFlowApi = (data) => {
 }
 
 // 获取生产流程
-export const getFlowApi = (page, size) => {
-	return fetch(`/flow?page=${page}&size=${size}`, {
-		method: 'GET'
+export const getFlowApi = (param) => {
+	return fetch('/flow', {
+		method: 'GET',
+		params: param
+
 	})
 }
 

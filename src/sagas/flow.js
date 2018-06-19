@@ -14,14 +14,11 @@ import {
 	patchConstructionStatusApi
 } from '../api/BaihuiServerAPI'
 
-// 初始化生产流程表
-export function* initFlow() {
+// 更新生产流程表格
+function* updateFlowTable(result) {
 	try {
-		// 获取生产流程
-		let result = yield call(getFlowApi, 0, 0)
-		// 更新生产流程表
 		let flowTableList = []
-		for (let tmp of result) {
+		for (let tmp of result.content) {
 			flowTableList.push({
 				id: tmp.idProduction,
 				name: tmp.product.productName,
@@ -37,10 +34,48 @@ export function* initFlow() {
 				}]
 			})
 		}
+
+		// 更新表格
 		yield put({
 			type: 'UPDATE_PRODUCTION_TABLE',
 			data: flowTableList
 		})
+
+		// 更新page 和 totalsize, size
+		yield put({
+			type: 'UPDATE_PRODUCTION_TABLE_CHANGE',
+			name: 'totalPages',
+			value: result.totalPages
+		})
+
+		yield put({
+			type: 'UPDATE_PRODUCTION_TABLE_CHANGE',
+			name: 'activePage',
+			value: result.number
+		})
+
+		yield put({
+			type: 'UPDATE_PRODUCTION_TABLE_CHANGE',
+			name: 'size',
+			value: result.size
+		})
+
+	} catch (error) {
+
+	}
+}
+
+// 初始化生产流程表
+export function* initFlow(action) {
+	try {
+		// 获取生产流程
+		let result = yield call(getFlowApi, {
+			page: 0,
+			size: action.size
+		})
+
+		// 更新生产流程表
+		yield call(updateFlowTable, result)
 
 		// 置空后续表
 		yield put({
@@ -198,9 +233,53 @@ export function* actionFlow(action) {
 
 }
 
-export function* pageFlow(action) {
-	console.log('active' + JSON.stringify(action.activePage))
+// 输入搜索变量
+export function* searchFlow(action) {
+	console.log('search...')
+	try {
+		// 更新表信息
+		yield put({
+			type: 'UPDATE_PRODUCTION_TABLE_SEARCH_CHANGE',
+			name: action.name,
+			value: action.value
+		})
+
+
+		let searchParam = {
+			...action.table.search,
+			[action.name]: action.value,
+			page: 0,
+			size: action.table.size
+		}
+
+		let result = yield call(getFlowApi, searchParam)
+
+		yield call(updateFlowTable, result)
+
+		console.log(searchParam)
+	} catch (error) {
+
+	}
 }
+
+// 分页点击
+export function* activePageFlow(action) {
+	try {
+
+		let searchParam = { ...action.table.search,
+			page: action.activePage,
+			size: action.table.size
+		}
+
+		console.log(searchParam)
+		let result = yield call(getFlowApi, searchParam)
+		yield call(updateFlowTable, result)
+
+	} catch (error) {
+
+	}
+}
+
 
 // 施工单action
 export function* actionConstruction(action) {
@@ -300,9 +379,13 @@ export function* openProductionModal(action) {
 
 	// 获取所有产品列表
 	try {
-		let result = yield call(getProductApi, 0, 0)
+		let param = {
+			page: 0,
+			size: 0
+		}
+		let result = yield call(getProductApi, param)
 		let dropDown = []
-		for (let tmp of result) {
+		for (let tmp of result.content) {
 			dropDown.push({
 				key: tmp.idProduct,
 				text: tmp.productName,
@@ -344,7 +427,10 @@ export function* addProduction(action) {
 		})
 
 		// 更新生产工序表单
-		yield call(initFlow)
+		yield call(initFlow, {
+			page: 0,
+			size: action.table.size
+		})
 
 		// 置空后续关联表单
 		yield put({
