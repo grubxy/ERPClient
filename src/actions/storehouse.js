@@ -1,14 +1,16 @@
 // 仓储管理
 
 // 初始化
-export const initStoreHouse = () => ({
-	type: 'STOREHOUSE_INIT'
+export const initStoreHouse = (size) => ({
+	type: 'STOREHOUSE_INIT',
+	size
 })
 
 // 选择筛选按钮
-export const selectStoreHouseConstTable = (data) => ({
+export const selectStoreHouseConstTable = (status, table) => ({
 	type: 'STOREHOUSE_CONSTRUCTION_SELECT',
-	data
+	status,
+	table
 })
 
 // 施工单操作
@@ -22,6 +24,21 @@ export const actionStoreHouseConstTable = (row, method) => ({
 export const operateConstructionModal = (data) => ({
 	type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
 	data
+})
+
+// 工单分页
+export const activeStoreHouseConstPage = (activePage, table) => ({
+	type: 'STOREHOUSE_CONSTRUCTION_ACTIVEPAGE',
+	activePage,
+	table
+})
+
+// 工单搜索
+export const searchStoreHouseConst = (target, table) => ({
+	type: 'STOREHOUSE_CONSTRUCTION_SEARCH',
+	name: target.name,
+	value: target.value,
+	table
 })
 
 // 模态框确认操作

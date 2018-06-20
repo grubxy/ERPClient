@@ -31,7 +31,13 @@ const defaultStoreConstrTable = {
 		button_list: {
 			title: ''
 		}
-	}
+	},
+	selectable: false,
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const storeConstrTable = (state = defaultStoreConstrTable, action) => {
@@ -39,6 +45,17 @@ export const storeConstrTable = (state = defaultStoreConstrTable, action) => {
 		case 'STORE_UPDATE_CONSTRUCTION_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'STORE_UPDATE_CONSTRUCTION_TABLE_CHANGE':
+			return {
+				...state,
+				[action.name]: action.value
+			}
+		case 'STORE_UPDATE_CONSTRUCTION_TABLE_SEARCH_CHANGE':
+			return { ...state,
+				search: { ...state.search,
+					[action.name]: action.value
+				}
 			}
 		default:
 			return state

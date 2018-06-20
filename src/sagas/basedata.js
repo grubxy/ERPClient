@@ -5,7 +5,7 @@ import {
   postStaffBySeqIdApi,
   getSeqByProductIdApi,
   getStaffBySeqIdApi,
-  getStaffDropDownApi
+  getStaffApi
 } from '../api/BaihuiServerAPI'
 import {
   call,
@@ -344,9 +344,13 @@ export function* seqAction(action) {
       type: 'BASEDATA_MODAL_CLEAR'
     })
     // 获取员工下拉菜单列表(在职员工)
-    let result = yield call(getStaffDropDownApi, 0, 0, 1)
+    let result = yield call(getStaffApi, {
+      page: 0,
+      size: 0,
+      status: 1
+    })
     let dropDown = []
-    for (let tmp of result) {
+    for (let tmp of result.content) {
       dropDown.push({
         key: tmp.idStaff,
         text: tmp.staffName,

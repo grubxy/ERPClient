@@ -55,7 +55,9 @@ import {
   initStoreHouse,
   storeConstrAction,
   storeConstrConfirm,
-  storeConstrSelect,
+  selectStoreHouseConstr,
+  searchStoreHouseConst,
+  activePageStoreHouseConst,
   initHouseInfo,
   addHouseInfo,
   actionHouseInfo,
@@ -124,7 +126,9 @@ function* mySaga() {
   yield takeEvery('STOREHOUSE_INIT', initStoreHouse)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_ACTION', storeConstrAction)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_CONFIRM', storeConstrConfirm)
-  yield takeEvery('STOREHOUSE_CONSTRUCTION_SELECT', storeConstrSelect)
+  yield takeEvery('STOREHOUSE_CONSTRUCTION_SELECT', selectStoreHouseConstr)
+  yield takeEvery('STOREHOUSE_CONSTRUCTION_ACTIVEPAGE', activePageStoreHouseConst)
+  yield takeEvery('STOREHOUSE_CONSTRUCTION_SEARCH', searchStoreHouseConst)
   yield takeEvery('STOREHOUSE_HOUSEINFO_ADD', addHouseInfo)
   yield takeEvery('STOREHOUSE_HOUSEINFO_INIT', initHouseInfo)
   yield takeEvery('STOREHOUSE_HOUSEINFO_CONFIRM', confirmHouseInfoAction)

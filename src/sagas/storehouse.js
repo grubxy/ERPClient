@@ -13,39 +13,29 @@ import {
 	deleteHouseOrigin
 } from '../api/BaihuiServerAPI'
 
-// 初始化整个页面
-export function* initStoreHouse() {
 
-	yield call(updateStoreConstrTable, 1)
+/***  工单状态枚举 ***/
 
-	yield call(initHouseOrigin)
-}
+// ALL(0, "所有状态"),
 
-export function* updateStoreConstrTable(state) {
+// WAITING(1, "等待材料出库"),
+
+// WORKING(2, "制作过程中"),
+
+// COMPLETE(3, "完工待入库"),
+
+// STORED(4, "入库完毕"),
+
+// APPROVING(5, "审批中"),
+
+// APPROVED(6, "审批完成");
+
+function* updateStoreConstrTable(result) {
+
 	try {
-
-		// 获取数据
-		let result = yield call(getConstructionByStatusApi, 0, 0, state)
-
 		let constructionTable = []
 
-		/***  工单状态枚举 ***/
-
-		// ALL(0, "所有状态"),
-
-		// WAITING(1, "等待材料出库"),
-
-		// WORKING(2, "制作过程中"),
-
-		// COMPLETE(3, "完工待入库"),
-
-		// STORED(4, "入库完毕"),
-
-		// APPROVING(5, "审批中"),
-
-		// APPROVED(6, "审批完成");
-
-		for (let tmp of result) {
+		for (let tmp of result.content) {
 
 			let method = ''
 			let content = ''
@@ -61,7 +51,7 @@ export function* updateStoreConstrTable(state) {
 				content = '入库'
 
 			} else {
-				throw "类型不匹配"
+				// error
 			}
 
 			constructionTable.push({
@@ -82,15 +72,111 @@ export function* updateStoreConstrTable(state) {
 				}]
 			})
 		}
+
+		// 更新表单
 		yield put({
 			type: 'STORE_UPDATE_CONSTRUCTION_TABLE',
 			data: constructionTable
 		})
 
-	} catch (error) {
-		console.log(error)
-	}
+		// 更新activepage total size
+		yield put({
+			type: 'STORE_UPDATE_CONSTRUCTION_TABLE_CHANGE',
+			name: 'totalPages',
+			value: result.totalPages
+		})
 
+		yield put({
+			type: 'STORE_UPDATE_CONSTRUCTION_TABLE_CHANGE',
+			name: 'activePage',
+			value: result.number
+		})
+
+		yield put({
+			type: 'STORE_UPDATE_CONSTRUCTION_TABLE_CHANGE',
+			name: 'size',
+			value: result.size
+		})
+
+
+	} catch (error) {}
+}
+
+// 初始化整个页面
+export function* initStoreHouse(action) {
+
+	try {
+		let param = {
+			page: 0,
+			status: 1,
+			size: action.size
+		}
+
+		console.log(JSON.stringify(action))
+
+		let result = yield call(getConstructionByStatusApi, param)
+
+		yield call(updateStoreConstrTable, result)
+
+		yield call(initHouseOrigin)
+
+	} catch (error) {}
+
+}
+
+// 工单搜索
+export function* searchStoreHouseConst(action) {
+	try {
+		// 更新表单信息
+		yield put({
+			type: 'STORE_UPDATE_CONSTRUCTION_TABLE_SEARCH_CHANGE',
+			name: action.name,
+			value: action.value
+		})
+
+		let param = { ...action.table.search,
+			[action.name]: action.value,
+			page: 0,
+			size: action.table.size
+		}
+
+		let result = yield call(getConstructionByStatusApi, param)
+
+		yield call(updateStoreConstrTable, result)
+
+	} catch (error) {}
+}
+
+// 工单状态选择
+export function* selectStoreHouseConstr(action) {
+	try {
+		let param = { ...action.table.search,
+			status: action.status,
+			page: 0,
+			size: action.table.size
+		}
+
+		let result = yield call(getConstructionByStatusApi, param)
+
+		yield call(updateStoreConstrTable, result)
+
+	} catch (error) {}
+}
+
+// 工单分页
+export function* activePageStoreHouseConst(action) {
+	try {
+		let param = { ...action.table.search,
+			page: action.activePage,
+			size: action.table.size
+		}
+		let result = yield call(getConstructionByStatusApi, param)
+
+		yield call(updateStoreConstrTable, result)
+
+	} catch (error) {
+
+	}
 }
 
 export function* storeConstrAction(action) {

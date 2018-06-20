@@ -10,11 +10,11 @@ import {
   Container,
   Icon,
   Divider,
-  Search,
   Button,
   Modal,
   Dropdown,
-  Form
+  Form,
+  Input
 } from 'semantic-ui-react'
 import {
   MultiTable
@@ -22,6 +22,8 @@ import {
 import {
   actionStoreHouseConstTable,
   storeHouseConstrConfirm,
+  activeStoreHouseConstPage,
+  searchStoreHouseConst,
   initStoreHouse,
   operateConstructionModal,
   selectStoreHouseConstTable,
@@ -36,12 +38,13 @@ import {
 
 
 class StoreHouse extends Component {
-  componentWillMount = () => {
+  componentDidMount = () => {
     const {
-      initStoreHouse
+      initStoreHouse,
+      constructionTable
     } = this.props
 
-    initStoreHouse()
+    initStoreHouse(constructionTable.size)
   }
 
   render = () => {
@@ -62,7 +65,9 @@ class StoreHouse extends Component {
       dropDownSelectHouseOrigin,
       operateHouseOriginModalOpen,
       confirmHouseOriginModal,
-      dropDowns
+      dropDowns,
+      onActiveStoreHouseConstPage,
+      onSearchStoreHouseConst
     } = this.props
 
     return (
@@ -77,15 +82,27 @@ class StoreHouse extends Component {
         <Header.Content>待处理工单</Header.Content>
         </Header>
         <Grid>
-          <Grid.Row columns={6}>
+          <Grid.Row>
           <Grid.Column>
-            <Search size='mini'/>
-          </Grid.Column>
-          <Grid.Column>
+          <Form>
+            <Form.Group inline>
+            <Form.Field>
+              <Input placeholder='施工单号' name='id' onChange={(e)=>onSearchStoreHouseConst(e.target, constructionTable)}/>
+            </Form.Field>
+            <Form.Field>
+              <Input placeholder='产品名' name='name' onChange={(e)=>onSearchStoreHouseConst(e.target, constructionTable)}/>
+              </Form.Field>
+              <Form.Field>
+              <Input placeholder='工人' icon='search' name='staff' onChange={(e)=>onSearchStoreHouseConst(e.target, constructionTable)}/>
+            </Form.Field>
+            <Form.Field>
             <Button.Group>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(1)}>等待材料出库</Button>
-              <Button size='small' color='teal'onClick={()=>selectConstruction(3)}>完工待入库</Button>
+              <Button color='teal'onClick={()=>selectConstruction(1, constructionTable)}>等待材料出库</Button>
+              <Button color='teal'onClick={()=>selectConstruction(3, constructionTable)}>完工待入库</Button>
             </Button.Group>
+            </Form.Field>
+            </Form.Group>
+          </Form>
           </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -110,23 +127,29 @@ class StoreHouse extends Component {
           <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'in')}> 确定 </Button>
           </Modal.Actions>
         </Modal>
-        <MultiTable table={constructionTable} onAction={onConstructionAction}/>
+        <MultiTable table={constructionTable} onAction={onConstructionAction} onActivePage={onActiveStoreHouseConstPage}/>
         <Divider hidden/>
         <Divider clearing/>
         <Header as='h4'>
           <Header.Content>仓储详情</Header.Content>
         </Header>
         <Grid>
-          <Grid.Row columns={4}>
+          <Grid.Row>
             <Grid.Column>
-               <Search size='mini'/>
-            </Grid.Column>
-            <Grid.Column>
+            <Form>
+            <Form.Group inline>
+            <Form.Field>
+               <Input placeholder='仓库名' icon='search' />
+            </Form.Field>
+               <Form.Field>
             <Button.Group>
-                <Button size='small' content='入库' color='teal' icon='add' onClick={()=>operateHouseOriginModalOpen('input')}/>
-                <Button size='small' content='出库' color='orange' icon='minus' onClick={()=>operateHouseOriginModalOpen('output')}/>
+                <Button content='入库' color='teal' icon='add' onClick={()=>operateHouseOriginModalOpen('input')}/>
+                <Button content='出库' color='orange' icon='minus' onClick={()=>operateHouseOriginModalOpen('output')}/>
             </Button.Group>
-            </Grid.Column>
+            </Form.Field>
+            </Form.Group>
+            </Form>
+          </Grid.Column>
           </Grid.Row>
         </Grid>
         <Modal open={houseOriginModal.input}>
@@ -148,7 +171,7 @@ class StoreHouse extends Component {
          <Modal open={houseOriginModal.output}>
         <Modal.Header>出库</Modal.Header>
         <Modal.Content>
-          <Form size='large'>
+          <Form>
             <Form.Group>
               <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseOutput' search selection options={dropDowns.house} onChange={(e, {name, value})=>dropDownSelectHouseOrigin(name, value)}/>
               <Form.Dropdown placeholder='物料' label="物料" name='idOrigin' search selection options={dropDowns.origins} onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>
@@ -180,6 +203,8 @@ const mapDispatchToProps = {
   initStoreHouse: initStoreHouse,
   selectConstruction: selectStoreHouseConstTable,
   onConstructionAction: actionStoreHouseConstTable,
+  onActiveStoreHouseConstPage: activeStoreHouseConstPage,
+  onSearchStoreHouseConst: searchStoreHouseConst,
   storeHouseConstrConfirm: storeHouseConstrConfirm,
   operateConstructionModal: operateConstructionModal,
   storeHouseConstrDropdown: storeHouseConstrDropdown,
