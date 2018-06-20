@@ -1,20 +1,31 @@
 // 账户管理
 
 // 初始化加载
-export const initUser = () => ({
-  type: 'USER_INIT'
+export const initUser = (size) => ({
+  type: 'USER_INIT',
+  size
 })
 
 // 提交新增用户
-export const addUser = (data) => ({
+export const addUser = (data, table) => ({
   type: 'USER_ADD',
-  data
+  data,
+  table
 })
 
 // 提交删除用户
-export const delUser = (row) => ({
+export const delUser = (row, method, table) => ({
   type: 'USER_DEL',
-  row
+  method,
+  row,
+  table
+})
+
+// 分页
+export const activeUserPage = (activePage, table) => ({
+  type: 'USER_ACTIVEPAGE',
+  activePage,
+  table
 })
 
 // 模态框操作

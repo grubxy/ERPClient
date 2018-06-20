@@ -33,7 +33,11 @@ const defaultStaffTable = {
 		}
 	},
 	selectable: false,
-	showFooter: true
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const staffInfoTable = (state = defaultStaffTable, action) => {
@@ -41,6 +45,16 @@ export const staffInfoTable = (state = defaultStaffTable, action) => {
 		case 'UPDATE_STAFFINFO_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'UPDATE_STAFFINFO_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
+		case 'UPDATE_STAFFINFO_SEARCH_CHANGE':
+			return { ...state,
+				search: { ...state.search,
+					[action.name]: action.value
+				}
 			}
 		default:
 			return state

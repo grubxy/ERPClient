@@ -97,9 +97,10 @@ export const postUserAPI = (data) => {
 }
 
 // 获取账户列表
-export const getUserAPI = () => {
-	return fetch('/user?page=0&size=0', {
-		method: 'GET'
+export const getUserAPI = (param) => {
+	return fetch('/user', {
+		method: 'GET',
+		params: param
 	})
 }
 
@@ -246,9 +247,10 @@ export const postStaffApi = (data) => {
 }
 
 // 获取员工
-export const getStaffApi = (page, size, status) => {
-	return fetch(`/staff?page=${page}&size=${size}&status=${status}`, {
-		method: 'GET'
+export const getStaffApi = (param) => {
+	return fetch('/staff', {
+		method: 'GET',
+		params: param
 	})
 }
 

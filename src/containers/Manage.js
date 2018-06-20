@@ -26,7 +26,8 @@ import {
   operateUserModal,
   addUser,
   delUser,
-  initUser
+  initUser,
+  activeUserPage
 } from '../actions/manage'
 
 const roles = [{
@@ -40,12 +41,13 @@ const roles = [{
 }]
 
 class Manage extends Component {
-  componentWillMount = () => {
+  componentDidMount = () => {
     const {
-      onInit
+      onInit,
+      table
     } = this.props
 
-    onInit()
+    onInit(table.size)
   }
 
   render = () => {
@@ -58,6 +60,7 @@ class Manage extends Component {
       onDel,
       model,
       table,
+      onActiveUserPage
     } = this.props
 
     const panes = [{
@@ -82,10 +85,10 @@ class Manage extends Component {
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={()=>onModel(false)}> 取消 </Button>
-              <Button color='blue' onClick={()=>onAdd(model)}> 确定 </Button>
+              <Button color='blue' onClick={()=>onAdd(model, table)}> 确定 </Button>
             </Modal.Actions>
             </Modal>
-            <MultiTable table={table} onAction={onDel}/>
+            <MultiTable table={table} onAction={onDel} onActivePage={onActiveUserPage}/>
           </Tab.Pane>
         )
       }
@@ -116,7 +119,8 @@ const mapDispatchToProps = {
   onModel: operateUserModal,
   onAdd: addUser,
   onDel: delUser,
-  onInit: initUser
+  onInit: initUser,
+  onActiveUserPage: activeUserPage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manage)

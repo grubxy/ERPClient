@@ -14,7 +14,8 @@ import {
   Button,
   Modal,
   Form,
-  Tab
+  Tab,
+  Input
 } from 'semantic-ui-react'
 import {
   MultiTable
@@ -23,16 +24,19 @@ import {
   addStaff,
   operateStaffModal,
   changeInputStaff,
-  initStaffManage
+  initStaffManage,
+  activeStaffPage,
+  searchStaff
 } from '../actions/staffmanage'
 
 class StaffManage extends Component {
   componentWillMount = () => {
     const {
-      initStaffManage
+      initStaffManage,
+      staffTable
     } = this.props
 
-    initStaffManage()
+    initStaffManage(staffTable.size)
   }
 
   render = () => {
@@ -44,7 +48,9 @@ class StaffManage extends Component {
       onStaffChange,
       onAddStaff,
       scheduleTable,
-      staffSalaryTable
+      staffSalaryTable,
+      onActiveStaffPage,
+      onSearchStaff
     } = this.props
 
     const panes = [{
@@ -71,7 +77,16 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-          <Button size='small' content='员工' color='teal' icon='add' onClick={()=>onStaffModal({staff:true})}/>
+          <Form size='large'>
+          <Form.Group inline>
+            <Form.Field>
+            <Button content='员工' color='teal' icon='add' onClick={()=>onStaffModal({staff:true})}/>
+            </Form.Field>
+            <Form.Field>
+            <Input placeholder='姓名' icon='search' name='name' onChange={(e)=>onSearchStaff(e.target, staffTable)}/>
+            </Form.Field>
+          </Form.Group>
+          </Form>
           <Modal open={staffModal.staff}>
                 <Modal.Header>添加员工</Modal.Header>
                 <Modal.Content>
@@ -84,10 +99,10 @@ class StaffManage extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onStaffModal({staff:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onAddStaff(staffModal)}> 确定 </Button>
+                  <Button color='blue' onClick={()=>onAddStaff(staffModal, staffTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-          <MultiTable table={staffTable}/>
+          <MultiTable table={staffTable} onActivePage={onActiveStaffPage}/>
         </Tab.Pane>
         )
       }
@@ -119,7 +134,9 @@ const mapDispatchToProps = {
   onStaffModal: operateStaffModal,
   onAddStaff: addStaff,
   onStaffChange: changeInputStaff,
-  initStaffManage: initStaffManage
+  initStaffManage: initStaffManage,
+  onActiveStaffPage: activeStaffPage,
+  onSearchStaff: searchStaff
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffManage)

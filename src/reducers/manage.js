@@ -13,13 +13,22 @@ export const userTable = (state = {
 		button_list: {
 			title: ''
 		}
-	}
+	},
+	selectable: false,
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }, action) => {
 	switch (action.type) {
 		case 'UPDATE_USER_TABLE':
-			// 将后端返回值转成表格需求数据
-			return { ...action.data,
-				headers: state.headers
+			return { ...state,
+				content: action.data
+			}
+		case 'UPDATE_USER_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
 			}
 		default:
 			return state
