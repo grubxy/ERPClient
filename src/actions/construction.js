@@ -1,14 +1,15 @@
 // 施工单
 
 // 界面初始化
-export const initConstruction = () => ({
-  type: 'CONSTRUCTION_INIT'
+export const initConstruction = (size) => ({
+  type: 'CONSTRUCTION_INIT',
+  size
 })
 
 // 查看
-export const selectConstruction = (data, table) => ({
+export const selectConstruction = (status, table) => ({
   type: 'CONSTRUCTION_SELECT',
-  data,
+  status,
   table
 })
 

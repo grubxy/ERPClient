@@ -27,10 +27,11 @@ import {
 class Construction extends Component {
   componentDidMount = () => {
     const {
-      initConstruction
+      initConstruction,
+      constructionTable
     } = this.props
 
-    initConstruction()
+    initConstruction(constructionTable.size)
   }
 
   render = () => {

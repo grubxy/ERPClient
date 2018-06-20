@@ -55,43 +55,56 @@ function* updateConstructionTable(result) {
 }
 
 
-export function* initConstruction() {
-	yield call(updateConstruction, 0)
-}
+/***  工单状态枚举 ***/
 
-export function* selectConstruction(action) {
-	yield call(updateConstruction, action.data)
-}
+// ALL(0, "所有状态"),
 
+// WAITING(1, "等待材料出库"),
 
-export function* updateConstruction(state) {
+// WORKING(2, "制作过程中"),
+
+// COMPLETE(3, "完工待入库"),
+
+// STORED(4, "入库完毕"),
+
+// APPROVING(5, "审批中"),
+
+// APPROVED(6, "审批完成");
+
+// 加载初始化
+export function* initConstruction(action) {
 
 	try {
-
-		// 获取数据
-		let result = yield call(getConstructionByStatusApi, 0, 0, state)
-
-		/***  工单状态枚举 ***/
-
-		// ALL(0, "所有状态"),
-
-		// WAITING(1, "等待材料出库"),
-
-		// WORKING(2, "制作过程中"),
-
-		// COMPLETE(3, "完工待入库"),
-
-		// STORED(4, "入库完毕"),
-
-		// APPROVING(5, "审批中"),
-
-		// APPROVED(6, "审批完成");
+		let param = {
+			page: 0,
+			status: 0,
+			size: action.size
+		}
+		let result = yield call(getConstructionByStatusApi, param)
 
 		yield call(updateConstructionTable, result)
 
-	} catch (error) {
-		console.log(error)
-	}
+	} catch (error) {}
+}
+
+// 选择状态 
+export function* selectConstruction(action) {
+	try {
+
+		let param = { ...action.table.search,
+			status: action.status,
+			// 默认第0页开始 
+			page: 0,
+			size: action.table.size
+		}
+
+		console.log(param)
+
+		let result = yield call(getConstructionByStatusApi, param)
+
+		yield call(updateConstructionTable, result)
+
+	} catch (error) {}
 }
 
 // 搜索
@@ -111,7 +124,7 @@ export function* searchConstruction(action) {
 		}
 
 		// 调用api
-		let result = {}
+		let result = yield call(getConstructionByStatusApi, searchParam)
 
 		yield call(updateConstructionTable, result)
 
@@ -126,7 +139,7 @@ export function* activePageConstruction(action) {
 			size: action.table.size
 		}
 
-		let result = []
+		let result = yield call(getConstructionByStatusApi, searchParam)
 
 		yield call(updateConstructionTable, result)
 

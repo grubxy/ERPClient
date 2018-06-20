@@ -220,9 +220,11 @@ export const getConstructionByFlowIdApi = (id) => {
 }
 
 // 获取所有工单
-export const getConstructionByStatusApi = (page, size, status) => {
-	return fetch(`/construction?page=${page}&size=${size}&status=${status}`, {
-		method: 'GET'
+export const getConstructionByStatusApi = (param) => {
+	return fetch('/construction', {
+		method: 'GET',
+		params: param
+
 	})
 }
 
