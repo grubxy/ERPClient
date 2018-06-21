@@ -30,7 +30,7 @@ import {
 } from '../actions/staffmanage'
 
 class StaffManage extends Component {
-  componentWillMount = () => {
+  componentDidMount = () => {
     const {
       initStaffManage,
       staffTable

@@ -105,8 +105,15 @@ export const confirmHouseOriginModal = (method, data) => ({
 /*** 仓库 ***/
 
 // 仓库配置
-export const initHouse = () => ({
-	type: 'STOREHOUSE_HOUSEINFO_INIT'
+export const initHouse = (size) => ({
+	type: 'STOREHOUSE_HOUSEINFO_INIT',
+	size
+})
+
+export const activeHouseInfoPage = (activePage, table) => ({
+	type: 'STOREHOUSE_HOUSEINFO_ACTIVEPAGE',
+	activePage,
+	table
 })
 
 // 仓库模态框
@@ -122,9 +129,10 @@ export const houseInfoInputChange = (target) => ({
 })
 
 // 仓库新增
-export const addHouseInfo = (data) => ({
+export const addHouseInfo = (data, table) => ({
 	type: 'STOREHOUSE_HOUSEINFO_ADD',
-	data
+	data,
+	table
 })
 
 // 仓库弹框确认

@@ -98,7 +98,13 @@ const defaultHouseInfo = {
 		button_list: {
 			title: ''
 		}
-	}
+	},
+	selectable: false,
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const houseTable = (state = defaultHouseInfo, action) => {
@@ -106,6 +112,10 @@ export const houseTable = (state = defaultHouseInfo, action) => {
 		case 'STOREHOUSE_UPDATE_HOUSEINFO_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
 			}
 		default:
 			return state

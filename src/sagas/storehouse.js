@@ -307,41 +307,78 @@ export function* storeConstrConfirm(action) {
 
 /*** 仓库配置 ***/
 
-// 初始化
-export function* initHouseInfo() {
-	console.log('init house info')
-	yield call(updateHouseInfoTable)
+function* updateHouseInfoTable(result) {
+
+	let houseTableList = []
+	for (let tmp of result.content) {
+		houseTableList.push({
+			id: tmp.idHouse,
+			name: tmp.houseName,
+			desc: tmp.houseDesc,
+			button_list: [{
+				method: 'delete',
+				icon: 'delete',
+				color: 'gray'
+			}]
+		})
+	}
+
+	// 更新表格
+	yield put({
+		type: 'STOREHOUSE_UPDATE_HOUSEINFO_TABLE',
+		data: houseTableList
+	})
+
+	// 更新activepage total size
+	yield put({
+		type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+		name: 'totalPages',
+		value: result.totalPages
+	})
+
+	yield put({
+		type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+		name: 'activePage',
+		value: result.number
+	})
+
+	yield put({
+		type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+		name: 'size',
+		value: result.size
+	})
+
 }
 
-// 更新仓库信息
-export function* updateHouseInfoTable() {
+// 初始化
+export function* initHouseInfo(action) {
 	try {
-		// 获取数据 
-		let result = yield call(getHouseApi, 0, 0)
-
-		let houseTableList = []
-		for (let tmp of result) {
-			houseTableList.push({
-				id: tmp.idHouse,
-				name: tmp.houseName,
-				desc: tmp.houseDesc,
-				button_list: [{
-					method: 'delete',
-					icon: 'delete',
-					color: 'gray'
-				}]
-			})
-		}
-
-		// 更新表格
-		yield put({
-			type: 'STOREHOUSE_UPDATE_HOUSEINFO_TABLE',
-			data: houseTableList
+		let result = yield call(getHouseApi, {
+			page: 0,
+			size: action.size
 		})
+
+		yield call(updateHouseInfoTable, result)
 
 	} catch (error) {
 
 	}
+}
+
+// 分页
+export function* activeHouseInfoPage(action) {
+	try {
+		let param = { ...action.table.search,
+			page: action.activePage,
+			size: action.table.size
+		}
+
+		let result = yield call(getHouseApi, param)
+
+		yield call(updateHouseInfoTable, result)
+
+	} catch (error) {}
+
 }
 
 // 增加
@@ -359,8 +396,13 @@ export function* addHouseInfo(action) {
 			type: 'STOREHOUSE_HOUSEINFO_MODAL_CLEAR'
 		})
 
-		// 更新
-		yield call(updateHouseInfoTable)
+		let result = yield call(getHouseApi, {
+			page: 0,
+			size: action.table.size
+		})
+
+		yield call(updateHouseInfoTable, result)
+
 	} catch (error) {
 
 	}

@@ -264,9 +264,10 @@ export const postHouseApi = (data) => {
 }
 
 // 获取仓库
-export const getHouseApi = (page, size) => {
-	return fetch(`/house?page=${page}&size=${size}`, {
-		method: 'GET'
+export const getHouseApi = (param) => {
+	return fetch('/house', {
+		method: 'GET',
+		params: param
 	})
 }
 
