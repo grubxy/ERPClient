@@ -65,7 +65,8 @@ import {
   openHouseOriginModal,
   selectHouseOrigin,
   confirmHouseOrigin,
-  activeHouseInfoPage
+  activeHouseInfoPage,
+  activeHouseOriginPage
 } from './storehouse'
 
 import {
@@ -129,6 +130,7 @@ function* mySaga() {
   yield takeEvery('STOREHOUSE_CONSTRUCTION_CONFIRM', storeConstrConfirm)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_SELECT', selectStoreHouseConstr)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_ACTIVEPAGE', activePageStoreHouseConst)
+  yield takeEvery('STOREHOUSE_HOUSEORIGIN_ACTIVEPAGE', activeHouseOriginPage)
   yield takeEvery('STOREHOUSE_CONSTRUCTION_SEARCH', searchStoreHouseConst)
   yield takeEvery('STOREHOUSE_HOUSEINFO_ADD', addHouseInfo)
   yield takeEvery('STOREHOUSE_HOUSEINFO_INIT', initHouseInfo)

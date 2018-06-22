@@ -1,9 +1,10 @@
 // 仓储管理
 
 // 初始化
-export const initStoreHouse = (size) => ({
+export const initStoreHouse = (sizeC, sizeO) => ({
 	type: 'STOREHOUSE_INIT',
-	size
+	sizeC,
+	sizeO
 })
 
 // 选择筛选按钮
@@ -42,10 +43,12 @@ export const searchStoreHouseConst = (target, table) => ({
 })
 
 // 模态框确认操作
-export const storeHouseConstrConfirm = (data, method) => ({
+export const storeHouseConstrConfirm = (data, method, tableO, tableC) => ({
 	type: 'STOREHOUSE_CONSTRUCTION_CONFIRM',
 	data,
-	method
+	method,
+	tableO,
+	tableC
 })
 
 export const storeHouseConstrDropdown = (name, value) => ({
@@ -74,6 +77,13 @@ export const inputHouseOrigin = (target) => ({
 	value: target.value
 })
 
+// 仓库分页
+export const activeHouseOriginPage = (activePage, table) => ({
+	type: 'STOREHOUSE_HOUSEORIGIN_ACTIVEPAGE',
+	activePage,
+	table
+})
+
 // 仓库物料下拉菜单
 export const dropDownHouseOrigin = (name, value) => ({
 	type: 'STOREHOUSE_HOUSEORIGIN_INPUTCHANGE',
@@ -95,10 +105,12 @@ export const operateHouseOriginModalOpen = (method) => ({
 })
 
 // 确认
-export const confirmHouseOriginModal = (method, data) => ({
+export const confirmHouseOriginModal = (method, data, tableO, tableC) => ({
 	type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CONFIRM',
 	method,
-	data
+	data,
+	tableO,
+	tableC
 })
 
 

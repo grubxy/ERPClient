@@ -33,7 +33,8 @@ import {
   dropDownHouseOrigin,
   dropDownSelectHouseOrigin,
   operateHouseOriginModalOpen,
-  confirmHouseOriginModal
+  confirmHouseOriginModal,
+  activeHouseOriginPage
 } from '../actions/storehouse'
 
 
@@ -41,10 +42,11 @@ class StoreHouse extends Component {
   componentDidMount = () => {
     const {
       initStoreHouse,
-      constructionTable
+      constructionTable,
+      houseOriginTable
     } = this.props
 
-    initStoreHouse(constructionTable.size)
+    initStoreHouse(constructionTable.size, houseOriginTable.size)
   }
 
   render = () => {
@@ -67,7 +69,8 @@ class StoreHouse extends Component {
       confirmHouseOriginModal,
       dropDowns,
       onActiveStoreHouseConstPage,
-      onSearchStoreHouseConst
+      onSearchStoreHouseConst,
+      onActiveHouseOriginPage
     } = this.props
 
     return (
@@ -111,7 +114,7 @@ class StoreHouse extends Component {
           <Modal.Content>是否确认该工单已出库?</Modal.Content>
           <Modal.Actions>
           <Button onClick={()=>operateConstructionModal({constructionOut:false})}> 取消 </Button>
-          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'out')}> 确定 </Button>
+          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'out', houseOriginTable, constructionTable)}> 确定 </Button>
           </Modal.Actions>
         </Modal>
         <Modal open={constructionModal.constructionIn}>
@@ -124,7 +127,7 @@ class StoreHouse extends Component {
           </Modal.Content>
           <Modal.Actions>
           <Button onClick={()=>operateConstructionModal({constructionIn:false})}> 取消 </Button>
-          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'in')}> 确定 </Button>
+          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'in', houseOriginTable, constructionTable)}> 确定 </Button>
           </Modal.Actions>
         </Modal>
         <MultiTable table={constructionTable} onAction={onConstructionAction} onActivePage={onActiveStoreHouseConstPage}/>
@@ -165,7 +168,7 @@ class StoreHouse extends Component {
         </Modal.Content>
         <Modal.Actions>
         <Button onClick={()=>operateHouseOriginModal({input:false})}> 取消 </Button>
-        <Button color='blue' onClick={()=>confirmHouseOriginModal('input', houseOriginModal)}> 确定 </Button>
+        <Button color='blue' onClick={()=>confirmHouseOriginModal('input', houseOriginModal, houseOriginTable, constructionTable)}> 确定 </Button>
         </Modal.Actions>
         </Modal>
          <Modal open={houseOriginModal.output}>
@@ -181,10 +184,10 @@ class StoreHouse extends Component {
         </Modal.Content>
         <Modal.Actions>
         <Button onClick={()=>operateHouseOriginModal({output:false})}> 取消 </Button>
-        <Button color='blue' onClick={()=>confirmHouseOriginModal('output', houseOriginModal)}> 确定 </Button>
+        <Button color='blue' onClick={()=>confirmHouseOriginModal('output', houseOriginModal, houseOriginTable, constructionTable)}> 确定 </Button>
         </Modal.Actions>
         </Modal>
-        <MultiTable table={houseOriginTable}/>
+        <MultiTable table={houseOriginTable} onActivePage={onActiveHouseOriginPage}/>
       </Container>
     )
   }
@@ -213,7 +216,8 @@ const mapDispatchToProps = {
   dropDownSelectHouseOrigin: dropDownSelectHouseOrigin,
   inputHouseOrigin: inputHouseOrigin,
   operateHouseOriginModalOpen: operateHouseOriginModalOpen,
-  confirmHouseOriginModal: confirmHouseOriginModal
+  confirmHouseOriginModal: confirmHouseOriginModal,
+  onActiveHouseOriginPage: activeHouseOriginPage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoreHouse)

@@ -66,7 +66,7 @@ const defaultStoreConstrModal = {
 	constructionIn: false,
 	constructionOut: false,
 	constructionRow: {},
-	houseDropDown: {}
+	houseDropDown: []
 }
 
 export const storeConstrModal = (state = defaultStoreConstrModal, action) => {
@@ -176,7 +176,13 @@ const defaultHouseOriginTable = {
 		detail: {
 			title: '物料详情'
 		}
-	}
+	},
+	selectable: false,
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const houseOriginTable = (state = defaultHouseOriginTable, action) => {
@@ -184,6 +190,10 @@ export const houseOriginTable = (state = defaultHouseOriginTable, action) => {
 		case 'STOREHOUSE_UPDATE_HOUSEORIGIN_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'STOREHOUSE_UPDATE_HOUSEORIGIN_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
 			}
 		default:
 			return state

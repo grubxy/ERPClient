@@ -109,7 +109,7 @@ export function* initStoreHouse(action) {
 		let param = {
 			page: 0,
 			status: 1,
-			size: action.size
+			size: action.sizeC
 		}
 
 		console.log(JSON.stringify(action))
@@ -118,7 +118,12 @@ export function* initStoreHouse(action) {
 
 		yield call(updateStoreConstrTable, result)
 
-		yield call(initHouseOrigin)
+		result = yield call(getHouseApi, {
+			page: 0,
+			size: action.sizeO
+		})
+
+		yield call(updateHouseOriginTable, result)
 
 	} catch (error) {}
 
@@ -203,10 +208,13 @@ export function* storeConstrAction(action) {
 		// 入库
 
 		// 仓库下拉dropdown内容设置
-		let result = yield call(getHouseApi, 0, 0)
+		let result = yield call(getHouseApi, {
+			page: 0,
+			size: 0
+		})
 
 		let dropDown = []
-		for (let tmp of result) {
+		for (let tmp of result.content) {
 			dropDown.push({
 				key: tmp.idHouse,
 				text: tmp.houseName,
@@ -242,6 +250,14 @@ export function* storeConstrConfirm(action) {
 		if (action.method === 'in') {
 			console.log('入库')
 
+			// 关闭模态框
+			yield put({
+				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
+				data: {
+					constructionIn: false
+				}
+			})
+
 			let body = {
 				status: 4, // 入库完毕
 				idHouse: action.data.idHouse,
@@ -252,23 +268,27 @@ export function* storeConstrConfirm(action) {
 			// 发送入库请求
 			yield call(patchConstructionStatusApi, action.data.constructionRow.cid, body)
 
-			// // 更新入库表
+			// 更新入库表
+			let result = yield call(getConstructionByStatusApi, { ...action.tableC.search,
+				status: 3,
+				page: 0,
+				size: action.tableC.size
+			})
 
-			yield call(updateStoreConstrTable, 3)
+			yield call(updateStoreConstrTable, result)
+
+		} else if (action.method === 'out') {
+
+			console.log('出库')
 
 			// 关闭模态框
 			yield put({
 				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
 				data: {
-					constructionIn: false
+					constructionOut: false
 				}
 			})
 
-			yield call(initHouseOrigin)
-
-		} else if (action.method === 'out') {
-
-			console.log('出库')
 			// 构造请求，设置工单状态
 			let body = {
 				status: 2, // 制作过程中
@@ -280,18 +300,22 @@ export function* storeConstrConfirm(action) {
 			yield call(patchConstructionStatusApi, action.data.constructionRow.cid, body)
 
 			// 更新等出库表
-			yield call(updateStoreConstrTable, 1)
-
-			// 关闭模态框
-			yield put({
-				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
-				data: {
-					constructionOut: false
-				}
+			let result = yield call(getConstructionByStatusApi, { ...action.tableC.search,
+				page: 0,
+				size: action.tableC.size,
+				status: 1
 			})
-
-			yield call(initHouseOrigin)
+			yield call(updateStoreConstrTable, result)
 		}
+
+		let result = yield call(getHouseApi, {
+			page: 0,
+			size: action.tableO.size
+		})
+
+		yield call(updateHouseOriginTable, result)
+
+
 	} catch (error) {
 		console.log(error)
 	}
@@ -434,14 +458,12 @@ export function* confirmHouseInfoAction(action) {
 }
 
 /*** 仓库物料 ***/
+function* updateHouseOriginTable(result) {
 
-// 初始化仓库物料
-export function* initHouseOrigin() {
-	console.log('init house origin')
-	let houseOriginTable = []
 	try {
-		let result = yield call(getHouseApi, 0, 0)
-		for (let tmp of result) {
+		let houseOriginTable = []
+
+		for (let tmp of result.content) {
 			let rOrigins = yield call(getHouseOrigin, tmp.idHouse)
 			let detail = []
 			for (let tmpOrigin of rOrigins) {
@@ -458,15 +480,39 @@ export function* initHouseOrigin() {
 			})
 		}
 
+		// 更新表格
 		yield put({
 			type: 'STOREHOUSE_UPDATE_HOUSEORIGIN_TABLE',
 			data: houseOriginTable
 		})
 
+		// 更新activepage total size
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+			name: 'totalPages',
+			value: result.totalPages
+		})
+
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+			name: 'activePage',
+			value: result.number
+		})
+
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+			name: 'size',
+			value: result.size
+		})
 	} catch (error) {
-		console.error(error)
+
 	}
 }
+
+
+// 分页
+export function* activeHouseOriginPage(action) {}
+
 
 // 打开modal
 export function* openHouseOriginModal(action) {
@@ -476,9 +522,12 @@ export function* openHouseOriginModal(action) {
 		if (action.method === 'input') {
 
 			// 获取仓库下拉信息 
-			let result = yield call(getHouseApi, 0, 0)
+			let result = yield call(getHouseApi, {
+				page: 0,
+				size: 0
+			})
 			let dropDown = []
-			for (let tmp of result) {
+			for (let tmp of result.content) {
 				dropDown.push({
 					key: tmp.idHouse,
 					text: tmp.houseName,
@@ -503,9 +552,12 @@ export function* openHouseOriginModal(action) {
 		} else if (action.method === 'output') {
 
 			// 获取仓库下拉信息 
-			let result = yield call(getHouseApi, 0, 0)
+			let result = yield call(getHouseApi, {
+				page: 0,
+				size: 0
+			})
 			let dropDown = []
-			for (let tmp of result) {
+			for (let tmp of result.content) {
 				dropDown.push({
 					key: tmp.idHouse,
 					text: tmp.houseName,
@@ -581,23 +633,19 @@ export function* confirmHouseOrigin(action) {
 			}
 			yield call(postHouseOrigin, action.data.idHouseInput, body)
 
-			yield put({
-				type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CLEAR'
-			})
-
-			yield call(initHouseOrigin)
-
 		} else if (action.method === 'output') {
 			yield call(deleteHouseOrigin, action.data.idHouse, action.data.idOrigin, action.data.outCounts)
-
-			yield put({
-				type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CLEAR'
-			})
-
-			yield call(initHouseOrigin)
-		} else {
-
 		}
+		yield put({
+			type: 'STOREHOUSE_HOUSEORIGIN_MODAL_CLEAR'
+		})
+
+		let result = yield call(getHouseApi, {
+			page: 0,
+			size: action.tableO.size
+		})
+
+		yield call(updateHouseOriginTable, result)
 	} catch (error) {}
 
 }
