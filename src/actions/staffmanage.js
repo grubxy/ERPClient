@@ -1,9 +1,10 @@
 // 员工管理
 
 // 初始化
-export const initStaffManage = (size) => ({
+export const initStaffManage = (size, sizeSchedule) => ({
 	type: 'STAFF_MANAGE_INIT',
-	size
+	size,
+	sizeSchedule
 })
 
 // 添加员工信息
@@ -39,4 +40,19 @@ export const changeInputStaff = (target) => ({
 	type: 'STAFF_MODAL_CHANGE',
 	name: target.name,
 	value: target.value
+})
+
+// 搜索
+export const searchSchedule = (target, table) => ({
+	type: 'SCHEDULE_SEARCH',
+	name: target.name,
+	value: target.value,
+	table
+})
+
+// 分页
+export const activeSchedulePage = (activePage, table) => ({
+	type: 'SCHEDULE_ACTIVEPAGE',
+	activePage,
+	table
 })

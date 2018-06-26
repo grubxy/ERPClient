@@ -5,12 +5,10 @@ import {
   connect
 } from 'react-redux'
 import {
-  Grid,
   Header,
   Container,
   Icon,
   Divider,
-  Search,
   Button,
   Modal,
   Form,
@@ -26,17 +24,20 @@ import {
   changeInputStaff,
   initStaffManage,
   activeStaffPage,
-  searchStaff
+  searchStaff,
+  searchSchedule,
+  activeSchedulePage
 } from '../actions/staffmanage'
 
 class StaffManage extends Component {
   componentDidMount = () => {
     const {
       initStaffManage,
-      staffTable
+      staffTable,
+      scheduleTable
     } = this.props
 
-    initStaffManage(staffTable.size)
+    initStaffManage(staffTable.size, scheduleTable.size)
   }
 
   render = () => {
@@ -50,7 +51,9 @@ class StaffManage extends Component {
       scheduleTable,
       staffSalaryTable,
       onActiveStaffPage,
-      onSearchStaff
+      onSearchStaff,
+      onSearchSchedule,
+      onActiveSchedulePage
     } = this.props
 
     const panes = [{
@@ -58,7 +61,8 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-          <MultiTable table={scheduleTable}/>
+          <Input placeholder="员工" name="staff" icon='search' onChange={(e)=>onSearchSchedule(e.target, scheduleTable)}/>
+          <MultiTable table={scheduleTable} onActivePage={onActiveSchedulePage}/>
         </Tab.Pane>
         )
       }
@@ -67,9 +71,8 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-        <Search size='mini'/>
-        <MultiTable table={staffSalaryTable}/>
-      </Tab.Pane>
+            <MultiTable table={staffSalaryTable}/>
+          </Tab.Pane>
         )
       }
     }, {
@@ -136,7 +139,9 @@ const mapDispatchToProps = {
   onStaffChange: changeInputStaff,
   initStaffManage: initStaffManage,
   onActiveStaffPage: activeStaffPage,
-  onSearchStaff: searchStaff
+  onSearchStaff: searchStaff,
+  onSearchSchedule: searchSchedule,
+  onActiveSchedulePage: activeSchedulePage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffManage)

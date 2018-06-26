@@ -55,22 +55,22 @@ function* updateStaffInfoTable(result) {
 
 export function* initStaffManage(action) {
 	try {
-		yield call(initStaff, action)
-		yield call(initStaffSchedule)
+		yield call(initStaff, action.size)
+		yield call(initStaffSchedule, action.sizeSchedule)
 	} catch (error) {
 		console.log(error)
 	}
 }
 
 
-export function* initStaff(action) {
+export function* initStaff(size) {
 
 	try {
 
 		// 获取结果
 		let result = yield call(getStaffApi, {
 			page: 0,
-			size: action.size
+			size: size
 		})
 
 		yield call(updateStaffInfoTable, result)
@@ -109,30 +109,60 @@ export function* addStaff(action) {
 	}
 }
 
-function* initStaffSchedule() {
-	// 等待材料出库，制作中 两种状态
-	let status = [1, 2]
+function* updateScheduleTable(result) {
 	try {
 		let staffScheduleList = []
-		for (let tmp of status) {
-			let result = yield call(getConstructionByStatusApi, 0, 0, tmp)
-			for (let tmpList of result) {
-				staffScheduleList.push({
-					staffName: tmpList.staff.staffName,
-					idConstr: tmpList.idConstruct,
-					stateConstr: tmpList.enumConstructStatus.desc,
-					dstConstr: tmpList.dstCount,
-					idProduction: tmpList.production.idProduction,
-					productName: tmpList.production.product.productName,
-					dstProduct: tmpList.production.dstCounts
-				})
-			}
+		for (let tmpList of result.content) {
+			staffScheduleList.push({
+				staffName: tmpList.staff.staffName,
+				idConstr: tmpList.idConstruct,
+				stateConstr: tmpList.enumConstructStatus.desc,
+				dstConstr: tmpList.dstCount,
+				idProduction: tmpList.production.idProduction,
+				productName: tmpList.production.product.productName,
+				dstProduct: tmpList.production.dstCounts
+			})
 		}
+
 		// 更新
 		yield put({
 			type: 'UPDATE_STAFFSCHEDULE_TABLE',
 			data: staffScheduleList
 		})
+
+		// 更新 page与totalsize
+		yield put({
+			type: 'UPDATE_STAFFSCHEDULE_TABLE_CHANGE',
+			name: 'totalPages',
+			value: result.totalPages
+		})
+
+		yield put({
+			type: 'UPDATE_STAFFSCHEDULE_TABLE_CHANGE',
+			name: 'activePage',
+			value: result.number
+		})
+
+		yield put({
+			type: 'UPDATE_STAFFSCHEDULE_TABLE_CHANGE',
+			name: 'size',
+			value: result.size
+		})
+
+	} catch (error) {}
+}
+
+function* initStaffSchedule(size) {
+	// 等待材料出库，制作中 两种状态
+	try {
+
+		let result = yield call(getConstructionByStatusApi, {
+			page: 0,
+			size: size,
+			status: 6
+		})
+
+		yield call(updateScheduleTable, result)
 
 	} catch (error) {
 		console.log(error)
@@ -174,4 +204,40 @@ export function* activePageStaff(action) {
 		yield call(updateStaffInfoTable, result)
 
 	} catch (error) {}
+}
+
+//搜索
+export function* searchSchedule(action) {
+	try {
+		yield put({
+			type: 'UPDATE_STAFFSCHEDULE_SEARCH_CHANGE',
+			name: action.name,
+			value: action.value
+		})
+
+		let result = yield call(getConstructionByStatusApi, { ...action.table.search,
+			[action.name]: action.value,
+			page: 0,
+			size: action.table.size,
+			status: 6
+		})
+
+		yield call(updateScheduleTable, result)
+
+	} catch (error) {}
+}
+
+// 分页
+export function* activePageSchedule(action) {
+	try {
+		let result = yield call(getConstructionByStatusApi, { ...action.table.search,
+			page: action.activePage,
+			size: action.table.size,
+			status: 6
+		})
+
+		yield call(updateScheduleTable, result)
+
+	} catch (error) {}
+
 }

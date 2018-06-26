@@ -91,6 +91,13 @@ export function* initConstruction(action) {
 export function* selectConstruction(action) {
 	try {
 
+		// 更新表搜索信息
+		yield put({
+			type: 'CONSTRUCTION_UPDATE_SEARCH_CHANGE',
+			name: 'status',
+			value: action.status
+		})
+
 		let param = { ...action.table.search,
 			status: action.status,
 			// 默认第0页开始 
@@ -136,7 +143,8 @@ export function* activePageConstruction(action) {
 	try {
 		let searchParam = { ...action.table.search,
 			page: action.activePage,
-			size: action.table.size
+			size: action.table.size,
+			status: action.table.search.status
 		}
 
 		let result = yield call(getConstructionByStatusApi, searchParam)

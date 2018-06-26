@@ -88,7 +88,11 @@ const defaultSchedule = {
 
 	},
 	selectable: false,
-	showFooter: false
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const staffScheduleTable = (state = defaultSchedule, action) => {
@@ -96,6 +100,16 @@ export const staffScheduleTable = (state = defaultSchedule, action) => {
 		case 'UPDATE_STAFFSCHEDULE_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'UPDATE_STAFFSCHEDULE_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
+		case 'UPDATE_STAFFSCHEDULE_SEARCH_CHANGE':
+			return { ...state,
+				search: { ...state.search,
+					[action.name]: action.value
+				}
 			}
 		default:
 			return state

@@ -41,7 +41,9 @@ import {
   addStaff,
   initStaffManage,
   activePageStaff,
-  searchStaff
+  searchStaff,
+  searchSchedule,
+  activePageSchedule
 } from './staffmanage'
 
 import {
@@ -117,6 +119,8 @@ function* mySaga() {
   yield takeEvery('STAFF_ADD', addStaff)
   yield takeEvery('STAFF_ACTIVEPAGE', activePageStaff)
   yield takeEvery('STAFF_SEARCH', searchStaff)
+  yield takeEvery('SCHEDULE_SEARCH', searchSchedule)
+  yield takeEvery('SCHEDULE_ACTIVEPAGE', activePageSchedule)
 
   // 工单总览
   yield takeEvery('CONSTRUCTION_INIT', initConstruction)
