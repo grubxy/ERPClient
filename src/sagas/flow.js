@@ -30,7 +30,8 @@ function* updateFlowTable(result) {
 				button_list: [{
 					method: 'add',
 					icon: 'add',
-					color: 'teal'
+					color: 'teal',
+					content: '新建施工单'
 				}]
 			})
 		}
