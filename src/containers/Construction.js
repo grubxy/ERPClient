@@ -43,7 +43,7 @@ class Construction extends Component {
     } = this.props
 
     return (
-      <Container style={{marginTop:'3em'}}>
+      <Container fluid style={{marginTop:'3em',padding:'0em 3em 1em 3em'}}>
         <Header as='h3'>
           <Icon name='settings'/>
         <Header.Content>工单总览</Header.Content>

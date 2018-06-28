@@ -29,7 +29,7 @@ import Login from '../containers/Login'
 
 const FixMenu = () => (
   <Menu fixed={'top'} inverted>
-    <Container>
+    <Container fluid>
       <Menu.Item as='a' header>
         <Image
         size='mini'
@@ -70,7 +70,7 @@ const FixMenu = () => (
 const Home = () => (
   <div>
     <FixMenu/>
-    <Container style={{ marginTop: '7em' }}>
+    <Container fluid style={{ marginTop: '7em',padding:'0em 3em 1em 3em' }}>
       <GlobalPortal/>
       <Route path="/home/data" component={BaseFlowData}/>
       <Route path="/home/flow" component={Flow}/>
