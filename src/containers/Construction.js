@@ -23,6 +23,9 @@ import {
 import {
   MultiTable
 } from '../components/MultiTable'
+import {
+  Calendar
+} from '../components/Calendar'
 
 class Construction extends Component {
   componentDidMount = () => {
@@ -63,6 +66,9 @@ class Construction extends Component {
                   </Form.Field>
                   <Form.Field>
                     <Input icon='search' placeholder='工人' name='staff' onChange={(e)=>onSearch(e.target, constructionTable)}/>
+                  </Form.Field>
+                   <Form.Field>
+                    <Calendar />
                   </Form.Field>
                 </Form.Group>
               </Form>
