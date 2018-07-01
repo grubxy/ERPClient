@@ -1,14 +1,9 @@
 import React, {
 	Component
 } from 'react'
-import ReactDOM from 'react-dom'
-import {
-	Input
-} from 'semantic-ui-react'
 import Picker from 'rc-calendar/lib/Picker'
 import RangeCalendar from 'rc-calendar/lib/RangeCalendar'
 import zhCN from 'rc-calendar/lib/locale/zh_CN'
-import enUS from 'rc-calendar/lib/locale/en_US'
 import TimePickerPanel from 'rc-time-picker/lib/Panel'
 import 'rc-calendar/assets/index.css'
 import 'rc-time-picker/assets/index.css'
@@ -107,28 +102,30 @@ export class Calendar extends Component {
 
 		const {
 			onChange,
-			moment
+			moment,
+			data
 		} = this.props
 
 		const calendar = (
 			<RangeCalendar
 	        showWeekNumber={false}
-	        dateInputPlaceholder={['start', 'end']}
+	        dateInputPlaceholder={['开始日期', '结束日期']}
 	        defaultValue={[now, now.clone().add(1, 'months')]}
 	        locale={zhCN}
+	        showClear
 	        disabledTime={disabledTime}
 	        timePicker={timePickerElement}
 	      />
 		)
 
 		return (
-			<Picker calendar={calendar}  animation="slide-up" onChange={(value)=>onChange(value)}>
+			<Picker value={moment} calendar={calendar}  animation="slide-up" onChange={(value)=>onChange(value, data)}>
 		    {
 		    	({value})=>{
 					return (
 						<span>
 						<input placeholder='选择时间' 
-						style={{ width: 350 }}
+						style={{ width: 200 }}
 						readOnly 
 						className="ant-calendar-picker-input ant-input" 
 						value={isValidRange(value) && `${format(value[0])} - ${format(value[1])}` || ''}

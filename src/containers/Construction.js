@@ -8,7 +8,8 @@ import {
   initConstruction,
   selectConstruction,
   activeConstructionPage,
-  searchConstruction
+  searchConstruction,
+  searchTime
 } from '../actions/construction'
 import {
   Grid,
@@ -42,7 +43,8 @@ class Construction extends Component {
       selectConstruction,
       onActivePage,
       onSearch,
-      constructionTable
+      constructionTable,
+      onSearchTime
     } = this.props
 
     return (
@@ -68,7 +70,7 @@ class Construction extends Component {
                     <Input icon='search' placeholder='工人' name='staff' onChange={(e)=>onSearch(e.target, constructionTable)}/>
                   </Form.Field>
                    <Form.Field>
-                    <Calendar />
+                    <Calendar onChange={onSearchTime} moment={constructionTable.search.moment} data={constructionTable}/>
                   </Form.Field>
                 </Form.Group>
               </Form>
@@ -101,7 +103,8 @@ const mapDispatchToProps = {
   initConstruction: initConstruction,
   selectConstruction: selectConstruction,
   onActivePage: activeConstructionPage,
-  onSearch: searchConstruction
+  onSearch: searchConstruction,
+  onSearchTime: searchTime
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Construction)

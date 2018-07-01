@@ -50,7 +50,8 @@ import {
   initConstruction,
   selectConstruction,
   searchConstruction,
-  activePageConstruction
+  activePageConstruction,
+  timeConstruction
 } from './construction'
 
 import {
@@ -127,6 +128,7 @@ function* mySaga() {
   yield takeEvery('CONSTRUCTION_SELECT', selectConstruction)
   yield takeEvery('CONSTRUCTION_SEARCH', searchConstruction)
   yield takeEvery('CONSTRUCTION_ACTIVEPAGE', activePageConstruction)
+  yield takeEvery('CONSTRUCTION_TIME', timeConstruction)
 
   // 仓库管理
   yield takeEvery('STOREHOUSE_INIT', initStoreHouse)

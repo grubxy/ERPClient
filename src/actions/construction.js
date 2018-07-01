@@ -27,3 +27,10 @@ export const activeConstructionPage = (activePage, table) => ({
   activePage,
   table
 })
+
+// 设置时间
+export const searchTime = (moment, data) => ({
+  type: 'CONSTRUCTION_TIME',
+  moment,
+  data
+})

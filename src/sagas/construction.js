@@ -152,5 +152,35 @@ export function* activePageConstruction(action) {
 		yield call(updateConstructionTable, result)
 
 	} catch (error) {}
+}
+
+// 搜索时间
+export function* timeConstruction(action) {
+	console.log('time:' + JSON.stringify(action.moment[0]))
+	console.log('search:' + JSON.stringify(action.data.search))
+
+	try {
+
+		// 更新表信息
+		yield put({
+			type: 'CONSTRUCTION_UPDATE_SEARCH_CHANGE',
+			name: 'moment',
+			value: action.moment
+		})
+
+		let param = { ...action.data.search,
+			moment: action.moment,
+			page: 0,
+			size: action.data.size
+		}
+
+		let result = yield call(getConstructionByStatusApi, param)
+
+		yield call(updateConstructionTable, result)
+
+	} catch (error) {
+		console.log(error)
+	}
+
 
 }
