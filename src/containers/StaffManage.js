@@ -112,7 +112,7 @@ class StaffManage extends Component {
     }]
 
     return (
-      <Container fluid style={{marginTop:'3em', padding:'0em 3em 1em 3em'}}>
+      <Container fluid style={{marginTop:'3em'}}>
         <Header as='h3'>
           <Icon name='settings'/>
         <Header.Content>员工管理</Header.Content>
