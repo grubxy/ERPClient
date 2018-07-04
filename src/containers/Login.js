@@ -22,7 +22,7 @@ import {
 } from '../actions/login'
 
 class Login extends Component {
-	componentWillMount = () => {}
+	componentDidMount = () => {}
 
 	render = () => {
 		const {

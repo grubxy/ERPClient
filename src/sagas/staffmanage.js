@@ -5,7 +5,8 @@ import {
 import {
 	postStaffApi,
 	getStaffApi,
-	getConstructionByStatusApi
+	getConstructionByStatusApi,
+	getStaffSalaryApi
 } from '../api/BaihuiServerAPI'
 
 
@@ -55,8 +56,18 @@ function* updateStaffInfoTable(result) {
 
 export function* initStaffManage(action) {
 	try {
+
 		yield call(initStaff, action.size)
+
 		yield call(initStaffSchedule, action.sizeSchedule)
+
+		let result = yield call(getStaffSalaryApi, {
+			page: 0,
+			size: action.sizeSalary
+		})
+
+		yield call(updateSalaryTable, result)
+
 	} catch (error) {
 		console.log(error)
 	}
@@ -237,6 +248,113 @@ export function* activePageSchedule(action) {
 		})
 
 		yield call(updateScheduleTable, result)
+
+	} catch (error) {}
+}
+
+// 
+function* updateSalaryTable(result) {
+	try {
+		let salaryTable = []
+		for (let tmp of result.content) {
+			salaryTable.push({
+				name: tmp.name,
+				pay: tmp.sumCost
+			})
+		}
+		// 更新表格
+		yield put({
+			type: 'UPDATE_STAFFSALARY_TABLE',
+			data: salaryTable
+		})
+
+		// 更新 page与totalsize
+		yield put({
+			type: 'UPDATE_STAFFSALARY_TABLE_CHANGE',
+			name: 'totalPages',
+			value: result.totalPages
+		})
+
+		yield put({
+			type: 'UPDATE_STAFFSALARY_TABLE_CHANGE',
+			name: 'activePage',
+			value: result.number
+		})
+
+		yield put({
+			type: 'UPDATE_STAFFSALARY_TABLE_CHANGE',
+			name: 'size',
+			value: result.size
+		})
+
+	} catch (error) {
+
+	}
+}
+
+// 工资搜索
+export function* searchSalary(action) {
+	try {
+		// 更新表格信息
+		yield put({
+			type: 'UPDATE_STAFFSALARY_SEARCH_CHANGE',
+			name: action.name,
+			value: action.value
+		})
+
+		let param = { ...action.table.search,
+			[action.name]: action.value,
+			page: 0,
+			size: action.table.size
+		}
+
+		let result = yield call(getStaffSalaryApi, param)
+
+		yield call(updateSalaryTable, result)
+
+	} catch (error) {
+
+	}
+}
+
+// 工资分页
+export function* activePageSalary(action) {
+
+	try {
+		let param = { ...action.table.search,
+			page: action.activePage,
+			size: action.table.size
+		}
+
+		let result = yield call(getStaffSalaryApi, param)
+
+		yield call(updateSalaryTable, result)
+
+	} catch (error) {
+
+	}
+
+}
+
+// 工资时间
+export function* timeSalary(action) {
+	try {
+		// 更新表信息
+		yield put({
+			type: 'UPDATE_STAFFSALARY_SEARCH_CHANGE',
+			name: 'moment',
+			value: action.moment
+		})
+
+		let param = { ...action.data.search,
+			moment: action.moment,
+			page: 0,
+			size: action.data.size
+		}
+
+		let result = yield call(getStaffSalaryApi, param)
+
+		yield call(updateSalaryTable, result)
 
 	} catch (error) {}
 

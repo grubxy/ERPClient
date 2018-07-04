@@ -127,7 +127,11 @@ const defaultSalary = {
 		}
 	},
 	selectable: false,
-	showFooter: false
+	showFooter: true,
+	search: {},
+	totalPages: 0,
+	activePage: 0,
+	size: 2
 }
 
 export const staffSalaryTable = (state = defaultSalary, action) => {
@@ -135,6 +139,17 @@ export const staffSalaryTable = (state = defaultSalary, action) => {
 		case 'UPDATE_STAFFSALARY_TABLE':
 			return { ...state,
 				content: action.data
+			}
+		case 'UPDATE_STAFFSALARY_TABLE_CHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
+		case 'UPDATE_STAFFSALARY_SEARCH_CHANGE':
+			return {
+				...state,
+				search: { ...state.search,
+					[action.name]: action.value
+				}
 			}
 		default:
 			return state

@@ -1,10 +1,11 @@
 // 员工管理
 
 // 初始化
-export const initStaffManage = (size, sizeSchedule) => ({
+export const initStaffManage = (size, sizeSchedule, sizeSalary) => ({
 	type: 'STAFF_MANAGE_INIT',
 	size,
-	sizeSchedule
+	sizeSchedule,
+	sizeSalary
 })
 
 // 添加员工信息
@@ -50,9 +51,31 @@ export const searchSchedule = (target, table) => ({
 	table
 })
 
-// 分页
+// 排厂分页
 export const activeSchedulePage = (activePage, table) => ({
 	type: 'SCHEDULE_ACTIVEPAGE',
 	activePage,
+	table
+})
+
+// 工资日历搜索
+export const searchTimeSalary = (moment, data) => ({
+	type: 'STAFF_SALARY_SEARCH_TIME',
+	moment,
+	data
+})
+
+// 工资分页
+export const activePageSalary = (activePage, table) => ({
+	type: 'STAFF_SALARY_ACTIVEPAGE',
+	activePage,
+	table
+})
+
+// 工资搜索
+export const searchStaffSalary = (target, table) => ({
+	type: 'STAFF_SALARY_SEARCH',
+	name: target.name,
+	value: target.value,
 	table
 })

@@ -19,6 +19,9 @@ import {
   MultiTable
 } from '../components/MultiTable'
 import {
+  Calendar
+} from '../components/Calendar'
+import {
   addStaff,
   operateStaffModal,
   changeInputStaff,
@@ -26,7 +29,10 @@ import {
   activeStaffPage,
   searchStaff,
   searchSchedule,
-  activeSchedulePage
+  activeSchedulePage,
+  searchTimeSalary,
+  searchStaffSalary,
+  activePageSalary
 } from '../actions/staffmanage'
 
 class StaffManage extends Component {
@@ -34,10 +40,11 @@ class StaffManage extends Component {
     const {
       initStaffManage,
       staffTable,
-      scheduleTable
+      scheduleTable,
+      staffSalaryTable
     } = this.props
 
-    initStaffManage(staffTable.size, scheduleTable.size)
+    initStaffManage(staffTable.size, scheduleTable.size, staffSalaryTable.size)
   }
 
   render = () => {
@@ -53,7 +60,10 @@ class StaffManage extends Component {
       onActiveStaffPage,
       onSearchStaff,
       onSearchSchedule,
-      onActiveSchedulePage
+      onActiveSchedulePage,
+      onStaffSalarySearchTime,
+      onSalarySearch,
+      onActiveSalaryPage
     } = this.props
 
     const panes = [{
@@ -61,7 +71,7 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-          <Input placeholder="员工" name="staff" icon='search' onChange={(e)=>onSearchSchedule(e.target, scheduleTable)}/>
+            <Input placeholder="员工" name='staff' icon='search' onChange={(e)=>onSearchSchedule(e.target, scheduleTable)}/>
           <MultiTable table={scheduleTable} onActivePage={onActiveSchedulePage}/>
         </Tab.Pane>
         )
@@ -71,7 +81,17 @@ class StaffManage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-            <MultiTable table={staffSalaryTable}/>
+            <Form size='large'>
+              <Form.Group>
+                <Form.Field>
+                    <Input placeholder='姓名' name='name' icon='search' onChange={(e)=>onSalarySearch(e.target, staffSalaryTable)}/>
+                </Form.Field>
+                <Form.Field>
+                  <Calendar onChange={onStaffSalarySearchTime} moment={staffSalaryTable.search.moment} data={staffSalaryTable}/>
+                </Form.Field>
+            </Form.Group>
+          </Form>
+            <MultiTable table={staffSalaryTable} onActivePage={onActiveSalaryPage}/>
           </Tab.Pane>
         )
       }
@@ -81,17 +101,17 @@ class StaffManage extends Component {
         return (
           <Tab.Pane>
           <Form size='large'>
-          <Form.Group inline>
-            <Form.Field>
-            <Button content='员工' color='teal' icon='add' onClick={()=>onStaffModal({staff:true})}/>
-            </Form.Field>
-            <Form.Field>
-            <Input placeholder='姓名' icon='search' name='name' onChange={(e)=>onSearchStaff(e.target, staffTable)}/>
-            </Form.Field>
-          </Form.Group>
+            <Form.Group inline>
+              <Form.Field>
+                <Button content='员工' color='teal' icon='add' onClick={()=>onStaffModal({staff:true})}/>
+              </Form.Field>
+              <Form.Field>
+                <Input placeholder='姓名' icon='search' name='name' onChange={(e)=>onSearchStaff(e.target, staffTable)}/>
+              </Form.Field>
+            </Form.Group>
           </Form>
           <Modal open={staffModal.staff}>
-                <Modal.Header>添加员工</Modal.Header>
+            <Modal.Header>添加员工</Modal.Header>
                 <Modal.Content>
                   <Form size='large'>
                     <Form.Group>
@@ -141,7 +161,10 @@ const mapDispatchToProps = {
   onActiveStaffPage: activeStaffPage,
   onSearchStaff: searchStaff,
   onSearchSchedule: searchSchedule,
-  onActiveSchedulePage: activeSchedulePage
+  onActiveSchedulePage: activeSchedulePage,
+  onStaffSalarySearchTime: searchTimeSalary,
+  onSalarySearch: searchStaffSalary,
+  onActiveSalaryPage: activePageSalary
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffManage)

@@ -254,6 +254,15 @@ export const getStaffApi = (param) => {
 	})
 }
 
+/*** 薪酬管理 ***/
+export const getStaffSalaryApi = (param) => {
+	return fetch('/salary', {
+		method: 'GET',
+		params: param
+	})
+}
+
+
 /*** 仓储 ***/
 
 // 新增仓库
