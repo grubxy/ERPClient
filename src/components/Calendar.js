@@ -125,7 +125,7 @@ export class Calendar extends Component {
 					return (
 						<span>
 						<input placeholder='选择时间' 
-						style={{ width: 200 }}
+						style={{ width: 300 }}
 						readOnly 
 						className="ant-calendar-picker-input ant-input" 
 						value={isValidRange(value) && `${format(value[0])} - ${format(value[1])}` || ''}
