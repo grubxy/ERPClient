@@ -118,9 +118,6 @@ class Flow extends Component {
 
         			<Grid.Row columns={2}>
         				<Grid.Column>
-        					<MultiTable table={seqinfoTable}/>
-        				</Grid.Column>
-        				<Grid.Column>
                 <Modal open={modal.construction}>
                   <Modal.Header>添加施工单</Modal.Header>
                   <Modal.Content>
@@ -154,8 +151,10 @@ class Flow extends Component {
                 </Modal>
         					<MultiTable table={constructionTable} onAction={actionConstruction}/>
         				</Grid.Column>
+                <Grid.Column>
+                  <MultiTable table={seqinfoTable}/>
+                </Grid.Column>
         			</Grid.Row>
-
         		</Grid>
 			</Container>
     )

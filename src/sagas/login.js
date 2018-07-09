@@ -25,8 +25,6 @@ export function* login(action) {
 		let result = yield call(authAPI, body);
 
 		// 存储 token
-		console.log('result:' + JSON.stringify(result))
-
 		localStorage.setItem('token', result)
 
 		yield put({

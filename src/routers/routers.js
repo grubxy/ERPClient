@@ -90,16 +90,12 @@ class Routes extends React.Component {
   }
 
   render = () => {
-    const {
-      loggedIn
-    } = this.props
-
     return (
       <Router>
          <div>
          <Switch>
           <Route exact path="/" component={Login}/>
-          <PrivateRoute path="/home" component={Home} isLoggin={loggedIn}/>
+          <PrivateRoute path="/home" component={Home}/>
           <Redirect to ="/"/>
          </Switch>
         </div>
@@ -111,13 +107,12 @@ class Routes extends React.Component {
 
 const PrivateRoute = ({
 component: Component,
-isLoggin: isLoggin,
 ...rest
 }) => (<Route exact { ...rest
   }
   render = {
     props => (
-      isLoggin ? (
+       localStorage.getItem('token') ? (
         <Component {...props}/>): (<Redirect to = {
           {
             pathname: '/',
