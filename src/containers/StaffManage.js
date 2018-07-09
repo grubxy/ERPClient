@@ -122,7 +122,7 @@ class StaffManage extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onStaffModal({staff:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onAddStaff(staffModal, staffTable)}> 确定 </Button>
+                  <Button color='teal' onClick={()=>onAddStaff(staffModal, staffTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
           <MultiTable table={staffTable} onActivePage={onActiveStaffPage}/>
@@ -138,7 +138,6 @@ class StaffManage extends Component {
         <Header.Content>员工管理</Header.Content>
         </Header>
         <Divider hidden/>
-        <Divider clearing/>
         <Tab panes={panes}/>
       </Container>
     )

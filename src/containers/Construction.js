@@ -54,7 +54,6 @@ class Construction extends Component {
         <Header.Content>工单总览</Header.Content>
         </Header>
         <Divider hidden/>
-        <Divider clearing/>
         <Grid>
           <Grid.Row>
             <Grid.Column>
@@ -76,7 +75,7 @@ class Construction extends Component {
               </Form>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
+          <Grid.Row >
             <Grid.Column>
               <Button.Group>
                 <Button color='orange' onClick={()=>selectConstruction(0, constructionTable)}>所有</Button>

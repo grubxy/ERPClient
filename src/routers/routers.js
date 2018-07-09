@@ -14,8 +14,14 @@ import {
   Menu,
   Container,
   Image,
-  Dropdown
+  Dropdown,
+  Button
 } from 'semantic-ui-react'
+
+import {
+  logOut
+} from '../actions/login'
+
 
 import BaseFlowData from '../containers/BaseFlowData'
 import Flow from '../containers/Flow'
@@ -29,39 +35,42 @@ import Login from '../containers/Login'
 
 const FixMenu = () => (
   <Menu fixed={'top'} inverted>
-    <Container fluid>
+    <Container fluid style={{padding:'0em 3em 0em 3em'}}>
       <Menu.Item as='a' header>
         <Image
-        size='mini'
+        size = 'mini'
         src='/logo.png'
         style={{ marginRight: '1.5em' }}
         />
         百汇管理系统
       </Menu.Item>
       <Menu.Item>
-        <Link to="/home/flow">生产流程</Link>
+        <Link to="/flow">生产流程</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/home/construction">工单总览</Link>
+        <Link to="/construction">工单总览</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/home/staff">员工管理</Link>
+        <Link to="/staff">员工管理</Link>
       </Menu.Item>
       <Dropdown item simple text='仓储管理'>
       <Dropdown.Menu>
         <Dropdown.Item>
-          <Link style={{color:'black'}} to="/home/store">仓储管理</Link>
+          <Link style={{color:'black'}} to="/store">仓储管理</Link>
         </Dropdown.Item>
         <Dropdown.Item>
-          <Link style={{color:'black'}} to="/home/house">仓库配置</Link>
+          <Link style={{color:'black'}} to="/house">仓库配置</Link>
         </Dropdown.Item>
       </Dropdown.Menu>
       </Dropdown>
       <Menu.Item>
-        <Link to="/home/data">生产配置</Link>
+        <Link to="/data">生产配置</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/home/manage">系统管理</Link>
+        <Link to="/manage">系统管理</Link>
+      </Menu.Item>
+      <Menu.Item position='right'>
+        <Link to ='/login'>退出</Link>
       </Menu.Item>
     </Container>
   </Menu>
@@ -72,20 +81,20 @@ const Home = () => (
     <FixMenu/>
     <Container fluid style={{ marginTop: '7em',padding:'0em 3em 1em 3em' }}>
       <GlobalPortal/>
-      <Route path="/home/data" component={BaseFlowData}/>
-      <Route path="/home/flow" component={Flow}/>
-      <Route path="/home/construction" component={Construction}/>
-      <Route path="/home/store" component={StoreHouse}/>
-      <Route path="/home/house" component={HouseInfo}/>
-      <Route path="/home/staff" component={StaffManage}/>
-      <Route path="/home/manage" component={Manage}/>
+      <Route path="/data" component={BaseFlowData}/>
+      <Route path="/flow" component={Flow}/>
+      <Route path="/construction" component={Construction}/>
+      <Route path="/store" component={StoreHouse}/>
+      <Route path="/house" component={HouseInfo}/>
+      <Route path="/staff" component={StaffManage}/>
+      <Route path="/manage" component={Manage}/>
     </Container>
   </div>
 )
 
 
 class Routes extends React.Component {
-  componentWillMount = () => {
+  componentDidMount = () => {
 
   }
 
@@ -94,9 +103,8 @@ class Routes extends React.Component {
       <Router>
          <div>
          <Switch>
-          <Route exact path="/" component={Login}/>
-          <PrivateRoute path="/home" component={Home}/>
-          <Redirect to ="/"/>
+          <Route path="/login" component={Login}/>
+          <PrivateRoute path="/" component={Home}/>
          </Switch>
         </div>
       </Router>
@@ -115,7 +123,7 @@ component: Component,
        localStorage.getItem('token') ? (
         <Component {...props}/>): (<Redirect to = {
           {
-            pathname: '/',
+            pathname: '/login',
             state: {
               from: props.location
             }

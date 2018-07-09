@@ -80,7 +80,6 @@ class StoreHouse extends Component {
         <Header.Content>仓储管理</Header.Content>
         </Header>
         <Divider hidden/>
-        <Divider clearing/>
         <Header as='h4'>
         <Header.Content>待处理工单</Header.Content>
         </Header>
@@ -114,7 +113,7 @@ class StoreHouse extends Component {
           <Modal.Content>是否确认该工单已出库?</Modal.Content>
           <Modal.Actions>
           <Button onClick={()=>operateConstructionModal({constructionOut:false})}> 取消 </Button>
-          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'out', houseOriginTable, constructionTable)}> 确定 </Button>
+          <Button color='teal' onClick={()=>storeHouseConstrConfirm(constructionModal, 'out', houseOriginTable, constructionTable)}> 确定 </Button>
           </Modal.Actions>
         </Modal>
         <Modal open={constructionModal.constructionIn}>
@@ -168,7 +167,7 @@ class StoreHouse extends Component {
         </Modal.Content>
         <Modal.Actions>
         <Button onClick={()=>operateHouseOriginModal({input:false})}> 取消 </Button>
-        <Button color='blue' onClick={()=>confirmHouseOriginModal('input', houseOriginModal, houseOriginTable, constructionTable)}> 确定 </Button>
+        <Button color='teal' onClick={()=>confirmHouseOriginModal('input', houseOriginModal, houseOriginTable, constructionTable)}> 确定 </Button>
         </Modal.Actions>
         </Modal>
          <Modal open={houseOriginModal.output}>
@@ -184,7 +183,7 @@ class StoreHouse extends Component {
         </Modal.Content>
         <Modal.Actions>
         <Button onClick={()=>operateHouseOriginModal({output:false})}> 取消 </Button>
-        <Button color='blue' onClick={()=>confirmHouseOriginModal('output', houseOriginModal, houseOriginTable, constructionTable)}> 确定 </Button>
+        <Button color='teal' onClick={()=>confirmHouseOriginModal('output', houseOriginModal, houseOriginTable, constructionTable)}> 确定 </Button>
         </Modal.Actions>
         </Modal>
         <MultiTable table={houseOriginTable} onActivePage={onActiveHouseOriginPage}/>

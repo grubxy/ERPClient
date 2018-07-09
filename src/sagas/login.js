@@ -41,6 +41,16 @@ export function* login(action) {
 	} catch (error) {}
 }
 
+
 export function* logout() {
+
 	localStorage.removeItem('token')
+
+	yield put({
+		type: 'LOGIN_LOGINCHANGE',
+		data: {
+			loggedIn: false,
+			redirectToReferrer: false,
+		}
+	})
 }

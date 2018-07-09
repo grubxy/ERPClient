@@ -75,7 +75,6 @@ class Flow extends Component {
         		<Header.Content>生产流程</Header.Content>
         		</Header>
         		<Divider hidden/>
-        		<Divider clearing/>
         		<Grid>
         			<Grid.Row>
               <Grid.Column>
@@ -91,7 +90,7 @@ class Flow extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>operateModal({flow:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>addProduction(modal, flowTable)}> 确定 </Button>
+                  <Button color='teal' onClick={()=>addProduction(modal, flowTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <Form>
@@ -131,7 +130,7 @@ class Flow extends Component {
                   </Modal.Content>
                   <Modal.Actions>
                     <Button onClick={()=>operateModal({construction:false})}> 取消 </Button>
-                    <Button color='blue' onClick={()=>addConstruction(modal)}> 确定 </Button>
+                    <Button color='teal' onClick={()=>addConstruction(modal)}> 确定 </Button>
                   </Modal.Actions>
                 </Modal>
                 <Modal open={modal.compl}>
@@ -146,7 +145,7 @@ class Flow extends Component {
                   </Modal.Content>
                   <Modal.Actions>
                     <Button onClick={()=>operateModal({compl:false})}> 取消 </Button>
-                    <Button color='blue' onClick={()=>completeConstruction(modal)}> 确定 </Button>
+                    <Button color='teal' onClick={()=>completeConstruction(modal)}> 确定 </Button>
                   </Modal.Actions>
                 </Modal>
         					<MultiTable table={constructionTable} onAction={actionConstruction}/>

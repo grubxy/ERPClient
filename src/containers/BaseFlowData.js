@@ -73,12 +73,11 @@ class BaseFlowData extends Component {
         <Header.Content>生产配置</Header.Content>
         </Header>
         <Divider hidden/>
-        <Divider clearing/>
         <Grid divided='vertically'>
           <Grid.Row>
           <Grid.Column>
             <Button content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
-            <Input icon={<Icon name='search' color='teal' inverted circular link />} placeholder='产品名' name='name' onChange={(e)=>onSearch(e.target, productTable)}/>
+            <Input placeholder='产品名' name='name' onChange={(e)=>onSearch(e.target, productTable)}/>
           </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={3}>
@@ -94,7 +93,7 @@ class BaseFlowData extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onModal({product:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onProAdd(modal, productTable)}> 确定 </Button>
+                  <Button color='teal' onClick={()=>onProAdd(modal, productTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect} onActivePage={onActivePage}/>
@@ -112,7 +111,7 @@ class BaseFlowData extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onModal({seq:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onSeqAdd(modal)}> 确定 </Button>
+                  <Button color='teal' onClick={()=>onSeqAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={seqTable} onAction={onSeqAction} onSelect={onSeqSelect}/>
@@ -129,7 +128,7 @@ class BaseFlowData extends Component {
                 </Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onModal({staff:false})}> 取消 </Button>
-                  <Button color='blue' onClick={()=>onStaffAdd(modal)}> 确定 </Button>
+                  <Button color='teal' onClick={()=>onStaffAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={staffTable}/>

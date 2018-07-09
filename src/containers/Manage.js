@@ -68,7 +68,7 @@ class Manage extends Component {
       render: () => {
         return (
           <Tab.Pane>
-            <Button size='small' content='账户' color='teal' icon='add' onClick={()=>onModel(true)}/>
+            <Button content='账户' color='teal' icon='add' onClick={()=>onModel(true)}/>
             <Modal open={model.open}>
             <Modal.Header>添加账户</Modal.Header>
             <Modal.Content>
@@ -85,7 +85,7 @@ class Manage extends Component {
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={()=>onModel(false)}> 取消 </Button>
-              <Button color='blue' onClick={()=>onAdd(model, table)}> 确定 </Button>
+              <Button color='teal' onClick={()=>onAdd(model, table)}> 确定 </Button>
             </Modal.Actions>
             </Modal>
             <MultiTable table={table} onAction={onDel} onActivePage={onActiveUserPage}/>
@@ -101,7 +101,6 @@ class Manage extends Component {
         <Header.Content>系统管理</Header.Content>
         </Header>
          <Divider hidden/>
-        <Divider clearing/>
         <Tab panes={panes}/>
       </Container>
     )

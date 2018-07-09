@@ -12,17 +12,25 @@ import {
 	Form,
 	Grid,
 	Header,
-	Image,
-	Message,
 	Segment
 } from 'semantic-ui-react'
 import {
 	loginChanged,
-	loginSubmit
+	loginSubmit,
+	logOut
 } from '../actions/login'
 
 class Login extends Component {
-	componentDidMount = () => {}
+	componentDidMount = () => {
+
+		const {
+			onLogOut
+		} = this.props
+
+		// 清空token
+		onLogOut();
+
+	}
 
 	render = () => {
 		const {
@@ -33,7 +41,7 @@ class Login extends Component {
 		} = this.props
 
 		if (redirectToReferrer) {
-			return <Redirect to="/home" />
+			return <Redirect to="/flow" />
 		}
 
 		return (
@@ -60,7 +68,7 @@ class Login extends Component {
 	            fluid
 	            icon='user'
 	            iconPosition='left'
-	            placeholder='E-mail address'
+	            placeholder='账户名'
 	            name='username'
 	            onChange={e => onChange(e.target)}
 	          />
@@ -68,7 +76,7 @@ class Login extends Component {
 	            fluid
 	            icon='lock'
 	            iconPosition='left'
-	            placeholder='Password'
+	            placeholder='密码'
 	            type='password'
 	            name='password'
 	            onChange={e => onChange(e.target)}
@@ -89,7 +97,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
 	onChange: loginChanged,
-	onLogin: loginSubmit
+	onLogin: loginSubmit,
+	onLogOut: logOut
 }
 
 
