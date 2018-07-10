@@ -6,7 +6,11 @@ function fetch(url, {
 	method = 'POST'
 }) {
 	if (method === 'POST') {
-		return axios.post(url, data)
+		return axios.post(url, data, {
+				headers: {
+					'Authorization': 'Bearer ' + localStorage.getItem('token')
+				}
+			})
 			.then((resp) => {
 				if (resp.status === 200) {
 					// 正常结果
@@ -24,7 +28,10 @@ function fetch(url, {
 			})
 	} else if (method === 'GET') {
 		return axios.get(url, {
-				params: params
+				params: params,
+				headers: {
+					'Authorization': 'Bearer ' + localStorage.getItem('token')
+				}
 			})
 			.then((resp) => {
 				if (resp.status === 200) {
@@ -43,7 +50,10 @@ function fetch(url, {
 			})
 	} else if (method === 'DELETE') {
 		return axios.delete(url, {
-				params: params
+				params: params,
+				headers: {
+					'Authorization': 'Bearer ' + localStorage.getItem('token')
+				}
 			})
 			.then((resp) => {
 				if (resp.status === 200) {
@@ -61,7 +71,11 @@ function fetch(url, {
 				throw error.response
 			})
 	} else if (method === 'PATCH') {
-		return axios.patch(url, data)
+		return axios.patch(url, data, {
+				headers: {
+					'Authorization': 'Bearer ' + localStorage.getItem('token')
+				}
+			})
 			.then((resp) => {
 				if (resp.status === 200) {
 					// 正常结果

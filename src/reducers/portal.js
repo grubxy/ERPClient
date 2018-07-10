@@ -7,8 +7,22 @@ const defaultPortal = {
 export const globalPortal = (state = defaultPortal, action) => {
 	switch (action.type) {
 		case 'GLOBAL_PORTAL':
-			return { ...state,
-				...action.data
+			if (action.data.msgheader === 403) {
+				return { ...state,
+					...action.data,
+					msgheader: 100,
+					msgbody: '你没有权限'
+				}
+			} else if (action.data.msgheader === 500) {
+				return { ...state,
+					...action.data,
+					msgheader: 500,
+					msgbody: '链接不上网络'
+				}
+			} else {
+				return { ...state,
+					...action.data
+				}
 			}
 		default:
 			return state

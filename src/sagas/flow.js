@@ -25,7 +25,7 @@ function* updateFlowTable(result) {
 				dst: tmp.dstCounts,
 				cmp: tmp.cmplCounts,
 				err: tmp.errCounts,
-				owner: '',
+				owner: tmp.owner,
 				time: new Date(tmp.date).toLocaleString(),
 				button_list: [{
 					method: 'add',

@@ -57,7 +57,15 @@ function* updateProductTable(result) {
     })
 
   } catch (error) {
-
+    // 提示
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: '100',
+        msgbody: '更新产品表单数据失败'
+      }
+    })
   }
 }
 
@@ -79,7 +87,7 @@ export function* initBaseData(action) {
       data: {
         open: true,
         msgheader: error.status,
-        msgbody: error.data
+        msgbody: error.data.content
       }
     })
   }
@@ -87,34 +95,45 @@ export function* initBaseData(action) {
 }
 
 export function* initSeq(id) {
-  // 获取结果
-  let result = yield call(getSeqByProductIdApi, id, 0, 0)
-
-  // 更新工序列表
-  let seqList = []
-  for (let tmp of result) {
-    seqList.push({
-      id: tmp.idSeq,
-      index: tmp.seqIndex,
-      name: tmp.seqName,
-      cost: tmp.seqCost,
-      button_list: [{
-        method: 'delete',
-        icon: 'delete',
-        color: 'grey'
-      }, {
-        method: 'add',
-        icon: 'add',
-        color: 'teal'
-      }]
-    })
-  }
   try {
+    // 获取结果
+    let result = yield call(getSeqByProductIdApi, id, 0, 0)
+
+    // 更新工序列表
+    let seqList = []
+    for (let tmp of result) {
+      seqList.push({
+        id: tmp.idSeq,
+        index: tmp.seqIndex,
+        name: tmp.seqName,
+        cost: tmp.seqCost,
+        button_list: [{
+          method: 'delete',
+          icon: 'delete',
+          color: 'grey'
+        }, {
+          method: 'add',
+          icon: 'add',
+          color: 'teal'
+        }]
+      })
+    }
     yield put({
       type: 'UPDATE_SEQ_TABLE',
       data: seqList
     })
-  } catch (error) {}
+  } catch (error) {
+    // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data.content
+      }
+    })
+
+  }
 }
 
 export function* initDefaultStaff(id) {
@@ -141,7 +160,15 @@ export function* initDefaultStaff(id) {
     })
 
   } catch (error) {
-
+    // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data.content
+      }
+    })
   }
 }
 
@@ -200,7 +227,15 @@ export function* addProduct(action) {
     })
 
   } catch (error) {
-
+    // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data.content
+      }
+    })
   }
 }
 
@@ -230,9 +265,16 @@ export function* searchProduct(action) {
     console.log(searchParam)
 
   } catch (error) {
-
+    // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data.content
+      }
+    })
   }
-
 }
 
 export function* activePageProduct(action) {
@@ -247,7 +289,15 @@ export function* activePageProduct(action) {
     yield call(updateProductTable, result)
 
   } catch (error) {
-
+    // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data
+      }
+    })
   }
 }
 
@@ -277,7 +327,15 @@ export function* addSeq(action) {
     })
 
   } catch (error) {
-
+    // 提示 
+    yield put({
+      type: 'GLOBAL_PORTAL',
+      data: {
+        open: true,
+        msgheader: error.status,
+        msgbody: error.data
+      }
+    })
   }
 }
 
