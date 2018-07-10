@@ -123,6 +123,22 @@ export function* initSeqInfo(id) {
 	}
 }
 
+/***  工单状态枚举 ***/
+
+// ALL(0, "所有状态"),
+
+// WAITING(1, "等待材料出库"),
+
+// WORKING(2, "制作过程中"),
+
+// COMPLETE(3, "完工待入库"),
+
+// STORED(4, "入库完毕"),
+
+// APPROVING(5, "审批中"),
+
+// APPROVED(6, "审批完成");
+
 // 初始化施工单
 export function* initConstruction(id) {
 
@@ -131,29 +147,12 @@ export function* initConstruction(id) {
 		let result = yield call(getConstructionByFlowIdApi, id)
 		let constructonTable = []
 		for (let tmp of result) {
-
-			/***  工单状态枚举 ***/
-
-			// ALL(0, "所有状态"),
-
-			// WAITING(1, "等待材料出库"),
-
-			// WORKING(2, "制作过程中"),
-
-			// COMPLETE(3, "完工待入库"),
-
-			// STORED(4, "入库完毕"),
-
-			// APPROVING(5, "审批中"),
-
-			// APPROVED(6, "审批完成");
-
 			// 判断状态选择是否可用
 			let disabled = (tmp.enumConstructStatus.value === 2) ? false : true
 			constructonTable.push({
 				id: tmp.idConstruct,
 				dst: tmp.dstCount,
-				cmpl: tmp.cmpl,
+				cmpl: tmp.cmplCount,
 				err: tmp.errCount,
 				staff: tmp.staff.staffName,
 				status: tmp.enumConstructStatus.desc,

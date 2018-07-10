@@ -13,14 +13,8 @@ import {
 import {
   Menu,
   Container,
-  Image,
-  Dropdown,
-  Button
+  Image
 } from 'semantic-ui-react'
-
-import {
-  logOut
-} from '../actions/login'
 
 
 import BaseFlowData from '../containers/BaseFlowData'
@@ -53,6 +47,13 @@ const FixMenu = () => (
       <Menu.Item>
         <Link to="/staff">员工管理</Link>
       </Menu.Item>
+      <Menu.Item>
+        <Link to="/store">仓储管理</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to="/house">仓库配置</Link>
+      </Menu.Item>
+      {/*
       <Dropdown item simple text='仓储管理'>
       <Dropdown.Menu>
         <Dropdown.Item>
@@ -63,6 +64,7 @@ const FixMenu = () => (
         </Dropdown.Item>
       </Dropdown.Menu>
       </Dropdown>
+    */}
       <Menu.Item>
         <Link to="/data">生产配置</Link>
       </Menu.Item>

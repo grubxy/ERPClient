@@ -19,7 +19,7 @@ export const userTable = (state = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }, action) => {
 	switch (action.type) {
 		case 'UPDATE_USER_TABLE':

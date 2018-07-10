@@ -126,7 +126,7 @@ class StoreHouse extends Component {
           </Modal.Content>
           <Modal.Actions>
           <Button onClick={()=>operateConstructionModal({constructionIn:false})}> 取消 </Button>
-          <Button color='blue' onClick={()=>storeHouseConstrConfirm(constructionModal, 'in', houseOriginTable, constructionTable)}> 确定 </Button>
+          <Button color='teal' onClick={()=>storeHouseConstrConfirm(constructionModal, 'in', houseOriginTable, constructionTable)}> 确定 </Button>
           </Modal.Actions>
         </Modal>
         <MultiTable table={constructionTable} onAction={onConstructionAction} onActivePage={onActiveStoreHouseConstPage}/>

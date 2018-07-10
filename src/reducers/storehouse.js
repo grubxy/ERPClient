@@ -37,7 +37,7 @@ const defaultStoreConstrTable = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const storeConstrTable = (state = defaultStoreConstrTable, action) => {
@@ -104,7 +104,7 @@ const defaultHouseInfo = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const houseTable = (state = defaultHouseInfo, action) => {
@@ -182,7 +182,7 @@ const defaultHouseOriginTable = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const houseOriginTable = (state = defaultHouseOriginTable, action) => {

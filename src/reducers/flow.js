@@ -59,7 +59,7 @@ const defaultFlowTable = {
   search: {},
   totalPages: 0,
   activePage: 0,
-  size: 2
+  size: 20
 }
 
 export const flowTable = (state = defaultFlowTable, action) => {

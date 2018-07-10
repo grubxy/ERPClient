@@ -37,7 +37,7 @@ const defaultStaffTable = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const staffInfoTable = (state = defaultStaffTable, action) => {
@@ -92,7 +92,7 @@ const defaultSchedule = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const staffScheduleTable = (state = defaultSchedule, action) => {
@@ -131,7 +131,7 @@ const defaultSalary = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const staffSalaryTable = (state = defaultSalary, action) => {

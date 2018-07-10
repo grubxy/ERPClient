@@ -43,7 +43,7 @@ const defaultConstructionTable = {
 	search: {},
 	totalPages: 0,
 	activePage: 0,
-	size: 2
+	size: 20
 }
 
 export const constructionAllTable = (state = defaultConstructionTable, action) => {
