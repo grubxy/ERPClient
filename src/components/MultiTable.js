@@ -30,6 +30,9 @@ const MultiTableCell = ({
   onAction
 }) => {
   if (headkey === 'button_list') {
+    if (value === undefined) {
+      return <Table.Cell/>
+    }
     return (
       <Table.Cell>{
       Object.values(value).map((x, j) => {

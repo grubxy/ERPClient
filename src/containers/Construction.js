@@ -9,7 +9,12 @@ import {
   selectConstruction,
   activeConstructionPage,
   searchConstruction,
-  searchTime
+  searchTime,
+  actionConstruction,
+  operateModal,
+  clearModal,
+  completeConstruction,
+  changeInput
 } from '../actions/construction'
 import {
   Grid,
@@ -19,7 +24,8 @@ import {
   Divider,
   Form,
   Input,
-  Button
+  Button,
+  Modal
 } from 'semantic-ui-react'
 import {
   MultiTable
@@ -44,7 +50,13 @@ class Construction extends Component {
       onActivePage,
       onSearch,
       constructionTable,
-      onSearchTime
+      onSearchTime,
+      onAction,
+      onCompleteConstruction,
+      onClearModal,
+      operateCmplModal,
+      constructionModal,
+      onChange
     } = this.props
 
     return (
@@ -53,6 +65,21 @@ class Construction extends Component {
           <Icon name='settings'/>
         <Header.Content>工单总览</Header.Content>
         </Header>
+        <Modal open={constructionModal.complete}>
+          <Modal.Header>完工信息</Modal.Header>
+          <Modal.Content>
+            <Form size='large'>
+              <Form.Group>
+                <Form.Input label="正品数" name='constructionCmpl' onChange={(e)=>onChange(e.target)}/>
+                <Form.Input label="次品数" name='constructionErr' onChange={(e)=>onChange(e.target)}/>
+              </Form.Group>
+            </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={()=>operateCmplModal({complete:false})}> 取消 </Button>
+            <Button color='teal' onClick={()=>onCompleteConstruction(constructionModal, constructionTable)}> 确定 </Button>
+          </Modal.Actions>
+        </Modal>
         <Divider hidden/>
         <Grid>
           <Grid.Row>
@@ -80,22 +107,27 @@ class Construction extends Component {
               <Button.Group>
                 <Button color='orange' onClick={()=>selectConstruction(0, constructionTable)}>所有</Button>
                 <Button color='teal'onClick={()=>selectConstruction(1, constructionTable)}>等待材料出库</Button>
-                <Button color='teal'onClick={()=>selectConstruction(2, constructionTable)}>制作过程中</Button>
+                <Button color='teal'onClick={()=>selectConstruction(2, constructionTable)}>
+                  <Icon name='sort amount down'/>制作中
+                </Button>
                 <Button color='teal'onClick={()=>selectConstruction(3, constructionTable)}>完工待入库</Button>
-                <Button color='teal'onClick={()=>selectConstruction(4, constructionTable)}>入库完毕待审批</Button>
+                <Button color='teal'onClick={()=>selectConstruction(4, constructionTable)}>
+                  <Icon name='sort amount down'/>待审批
+                </Button>
                 <Button color='teal'onClick={()=>selectConstruction(5, constructionTable)}>审批完毕</Button>
               </Button.Group>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <MultiTable table={constructionTable} onActivePage={onActivePage}/>
+        <MultiTable table={constructionTable} onAction={onAction} onActivePage={onActivePage}/>
       </Container>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  constructionTable: state.construction.constructionAllTable
+  constructionTable: state.construction.constructionAllTable,
+  constructionModal: state.construction.constructionAllModal
 })
 
 const mapDispatchToProps = {
@@ -103,7 +135,12 @@ const mapDispatchToProps = {
   selectConstruction: selectConstruction,
   onActivePage: activeConstructionPage,
   onSearch: searchConstruction,
-  onSearchTime: searchTime
+  onSearchTime: searchTime,
+  onAction: actionConstruction,
+  operateCmplModal: operateModal,
+  onCompleteConstruction: completeConstruction,
+  onClearModal: clearModal,
+  onChange: changeInput
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Construction)

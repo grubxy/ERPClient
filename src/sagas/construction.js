@@ -1,5 +1,6 @@
 import {
-	getConstructionByStatusApi
+	getConstructionByStatusApi,
+	patchConstructionStatusApi
 } from '../api/BaihuiServerAPI'
 import {
 	call,
@@ -11,20 +12,52 @@ function* updateConstructionTable(result) {
 	try {
 		let constructionTable = []
 		for (let tmp of result.content) {
-			constructionTable.push({
-				cid: tmp.idConstruct,
-				productName: tmp.production.product.productName,
-				seq: tmp.seq.seqName,
-				dstCounts: tmp.dstCount,
-				cmplCounts: tmp.cmplCount,
-				errCounts: tmp.errCount,
-				staff: tmp.staff.staffName,
-				status: tmp.enumConstructStatus.desc,
-				srcMaterial: tmp.seq.srcMaterial.name,
-				dstMaterial: tmp.seq.dstMaterial.name,
-				managerName: tmp.production.owner,
-				time: new Date(tmp.sdate).toLocaleString()
-			})
+			let method;
+			let content;
+			let enumValue = tmp.enumConstructStatus.value;
+			if (enumValue === 2) {
+				method = 'complete'
+				content = '完工'
+			} else if (enumValue === 4) {
+				method = 'view'
+				content = '通过'
+			}
+			if (enumValue === 2 || enumValue === 4) {
+				constructionTable.push({
+					cid: tmp.idConstruct,
+					productName: tmp.production.product.productName,
+					seq: tmp.seq.seqName,
+					dstCounts: tmp.dstCount,
+					cmplCounts: tmp.cmplCount,
+					errCounts: tmp.errCount,
+					staff: tmp.staff.staffName,
+					status: tmp.enumConstructStatus.desc,
+					srcMaterial: tmp.seq.srcMaterial.name,
+					dstMaterial: tmp.seq.dstMaterial.name,
+					managerName: tmp.production.owner,
+					time: new Date(tmp.sdate).toLocaleString(),
+					button_list: [{
+						method: method,
+						color: 'teal',
+						content: content
+					}]
+				})
+			} else {
+				constructionTable.push({
+					cid: tmp.idConstruct,
+					productName: tmp.production.product.productName,
+					seq: tmp.seq.seqName,
+					dstCounts: tmp.dstCount,
+					cmplCounts: tmp.cmplCount,
+					errCounts: tmp.errCount,
+					staff: tmp.staff.staffName,
+					status: tmp.enumConstructStatus.desc,
+					srcMaterial: tmp.seq.srcMaterial.name,
+					dstMaterial: tmp.seq.dstMaterial.name,
+					managerName: tmp.production.owner,
+					time: new Date(tmp.sdate).toLocaleString()
+				})
+			}
 		}
 		yield put({
 			type: 'CONSTRUCTION_UPDATE_TABLE',
@@ -53,23 +86,6 @@ function* updateConstructionTable(result) {
 
 	} catch (error) {}
 }
-
-
-/***  工单状态枚举 ***/
-
-// ALL(0, "所有状态"),
-
-// WAITING(1, "等待材料出库"),
-
-// WORKING(2, "制作过程中"),
-
-// COMPLETE(3, "完工待入库"),
-
-// STORED(4, "入库完毕"),
-
-// APPROVING(5, "审批中"),
-
-// APPROVED(6, "审批完成");
 
 // 加载初始化
 export function* initConstruction(action) {
@@ -181,6 +197,109 @@ export function* timeConstruction(action) {
 	} catch (error) {
 		console.log(error)
 	}
+}
 
+// 处理action
+export function* actionConstructionAll(action) {
+	console.log('method' + action.method + 'row' + JSON.stringify(action.row))
+	// 清空模态框
+	try {
+		yield put({
+			type: 'CONSTRUCTON_ALL_MODAL_CLEAR'
+		})
+
+		// 如果是完工
+		if (action.method === 'complete') {
+			// 打开模态框
+			yield put({
+				type: 'CONSTRUCTION_ALL_MODAL_OPERATE',
+				data: {
+					complete: true,
+					constructionRow: action.row
+				}
+			})
+		} else if (action.method === 'view') {
+
+			// patch状态
+			let param = {
+				status: 5 // 审批完毕
+			}
+			yield call(patchConstructionStatusApi, action.row.cid, param)
+
+			let param1 = {
+				...action.table.search,
+				page: 0,
+				size: action.table.size
+			}
+
+			let result = yield call(getConstructionByStatusApi, param1)
+
+			// 更新结果
+			yield call(updateConstructionTable, result)
+
+			yield put({
+				type: 'GLOBAL_PORTAL',
+				data: {
+					open: true,
+					msgheader: '审批完成！',
+					msgbody: '工单：' + action.row.cid
+				}
+			})
+		}
+
+	} catch (error) {}
+}
+
+// 完工
+export function* actionConstructionAllComplete(action) {
+	console.log("row:" + JSON.stringify(action.data))
+	try {
+		// 设置施工单状态
+		let body = {
+			status: 3, // 3-完工待入库
+			idHouse: 0,
+			cmpl: action.data.constructionCmpl,
+			error: action.data.constructionErr
+		}
+
+		// 清空模态框
+		yield put({
+			type: 'CONSTRUCTON_ALL_MODAL_CLEAR'
+		})
+
+		// patch状态
+		yield call(patchConstructionStatusApi, action.data.constructionRow.cid, body)
+
+		// 更新表单
+		let param = { ...action.table.search,
+			// 默认第0页开始 
+			page: 0,
+			size: action.table.size
+		}
+
+		let result = yield call(getConstructionByStatusApi, param)
+
+		// 更新结果
+		yield call(updateConstructionTable, result)
+
+		yield put({
+			type: 'GLOBAL_PORTAL',
+			data: {
+				open: true,
+				msgheader: '完工！',
+				msgbody: '工单：' + action.data.constructionRow.cid
+			}
+		})
+
+	} catch (error) {
+		yield put({
+			type: 'GLOBAL_PORTAL',
+			data: {
+				open: true,
+				msgheader: '出错',
+				msgbody: error
+			}
+		})
+	}
 
 }

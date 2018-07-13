@@ -21,6 +21,44 @@ export const searchConstruction = (target, table) => ({
   table
 })
 
+// 表单按钮
+export const actionConstruction = (row, method, table) => ({
+  type: 'CONSTRUCTION_ACTION',
+  row,
+  method,
+  table
+})
+
+// 表单选中行
+// export const selectRowConstruction = (data) => ({
+//   type: 'CONSTRUCTION_SELECT_ROW',
+//   data
+// })
+// 完工模态框
+export const operateModal = (data) => ({
+  type: 'CONSTRUCTION_ALL_MODAL_OPERATE',
+  data
+})
+
+// 清空模态框
+export const clearModal = () => ({
+  type: 'CONSTRUCTON_ALL_MODAL_CLEAR'
+})
+
+// 输入变化
+export const changeInput = (target) => ({
+  type: 'CONSTRUCTON_ALL_MODAL_CHANGE',
+  name: target.name,
+  value: target.value
+})
+
+// 工单完工操作
+export const completeConstruction = (data, table) => ({
+  type: 'CONSTRUCTION_ALL_COMPLETE',
+  data,
+  table
+})
+
 // 分页
 export const activeConstructionPage = (activePage, table) => ({
   type: 'CONSTRUCTION_ACTIVEPAGE',

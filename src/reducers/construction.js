@@ -36,6 +36,9 @@ const defaultConstructionTable = {
 		},
 		time: {
 			title: '制单时间'
+		},
+		button_list: {
+			title: ''
 		}
 	},
 	selectable: false,
@@ -62,6 +65,29 @@ export const constructionAllTable = (state = defaultConstructionTable, action) =
 					[action.name]: action.value
 				}
 			}
+		default:
+			return state
+	}
+}
+
+const defaultModal = {
+	complete: false,
+	view: false,
+	constructionRow: {}
+}
+
+export const constructionAllModal = (state = defaultModal, action) => {
+	switch (action.type) {
+		case 'CONSTRUCTION_ALL_MODAL_OPERATE':
+			return { ...state,
+				...action.data
+			}
+		case 'CONSTRUCTON_ALL_MODAL_CHANGE':
+			return { ...state,
+				[action.name]: action.value
+			}
+		case 'CONSTRUCTON_ALL_MODAL_CLEAR':
+			return defaultModal
 		default:
 			return state
 	}

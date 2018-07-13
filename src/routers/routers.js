@@ -27,6 +27,11 @@ import Manage from '../containers/Manage'
 import GlobalPortal from '../containers/GlobalPortal'
 import Login from '../containers/Login'
 
+const linkStyle = {
+  fontSize: '1.1em',
+  fontWeight: 'bold'
+}
+
 const FixMenu = () => (
   <Menu fixed={'top'} inverted>
     <Container fluid style={{padding:'0em 3em 0em 3em'}}>
@@ -34,24 +39,24 @@ const FixMenu = () => (
         <Image
         size = 'mini'
         src='/logo.png'
-        style={{ marginRight: '1.5em' }}
+        style={{ marginRight: '1.5em'}}
         />
         百汇管理系统
       </Menu.Item>
       <Menu.Item>
-        <Link to="/flow">生产流程</Link>
+        <Link style={linkStyle} to="/flow">生产流程</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/construction">工单总览</Link>
+        <Link style={linkStyle} to="/construction">工单总览</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/staff">员工管理</Link>
+        <Link style={linkStyle} to="/staff">员工管理</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/store">仓储管理</Link>
+        <Link style={linkStyle} to="/store">仓储管理</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/house">仓库配置</Link>
+        <Link style={linkStyle} to="/house">仓库配置</Link>
       </Menu.Item>
       {/*
       <Dropdown item simple text='仓储管理'>
@@ -66,13 +71,13 @@ const FixMenu = () => (
       </Dropdown>
     */}
       <Menu.Item>
-        <Link to="/data">生产配置</Link>
+        <Link style={linkStyle} to="/data">生产配置</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/manage">系统管理</Link>
+        <Link  style={linkStyle} to="/manage">系统管理</Link>
       </Menu.Item>
       <Menu.Item position='right'>
-        <Link to ='/login'>退出</Link>
+        <Link  style={linkStyle} to ='/login'>退出</Link>
       </Menu.Item>
     </Container>
   </Menu>

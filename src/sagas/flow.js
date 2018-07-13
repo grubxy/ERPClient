@@ -312,16 +312,15 @@ export function* completeConstruction(action) {
 			error: action.data.constructionErr
 		}
 
-		yield call(patchConstructionStatusApi, action.data.constructionRow.id, body)
-
-
-		// 更新工程栏目
-		yield call(initConstruction, action.data.constructionRow.id)
-
 		// 清空模态框
 		yield put({
 			type: 'FLOW_MODAL_CLEAR'
 		})
+
+		yield call(patchConstructionStatusApi, action.data.constructionRow.id, body)
+
+		// 更新工程栏目
+		yield call(initConstruction, action.data.constructionRow.id)
 
 		yield put({
 			type: 'GLOBAL_PORTAL',

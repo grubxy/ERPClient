@@ -28,7 +28,8 @@ import {
   staffSalaryTable
 } from './staffmanage'
 import {
-  constructionAllTable
+  constructionAllTable,
+  constructionAllModal
 } from './construction'
 import {
   storeConstrTable,
@@ -56,7 +57,8 @@ let storehouse = combineReducers({
 })
 
 let construction = combineReducers({
-  constructionAllTable
+  constructionAllTable,
+  constructionAllModal
 })
 
 let staffmanage = combineReducers({
