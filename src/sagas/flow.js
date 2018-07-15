@@ -13,6 +13,10 @@ import {
 	getConstructionByFlowIdApi,
 	patchConstructionStatusApi
 } from '../api/BaihuiServerAPI'
+import {
+	portalTrig,
+	delayTime
+} from './portal'
 
 // 更新生产流程表格
 function* updateFlowTable(result) {
@@ -62,7 +66,7 @@ function* updateFlowTable(result) {
 		})
 
 	} catch (error) {
-
+		yield call(portalTrig, 400, '更新列表失败', delayTime)
 	}
 }
 
@@ -90,7 +94,7 @@ export function* initFlow(action) {
 		})
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -119,25 +123,9 @@ export function* initSeqInfo(id) {
 			data: seqinfoTable
 		})
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
-
-/***  工单状态枚举 ***/
-
-// ALL(0, "所有状态"),
-
-// WAITING(1, "等待材料出库"),
-
-// WORKING(2, "制作过程中"),
-
-// COMPLETE(3, "完工待入库"),
-
-// STORED(4, "入库完毕"),
-
-// APPROVING(5, "审批中"),
-
-// APPROVED(6, "审批完成");
 
 // 初始化施工单
 export function* initConstruction(id) {
@@ -171,7 +159,7 @@ export function* initConstruction(id) {
 			data: constructonTable
 		})
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -188,7 +176,9 @@ export function* selectFlow(action) {
 		// 更新工单
 		yield call(initConstruction, id)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 
 }
 
@@ -203,7 +193,8 @@ export function* actionFlow(action) {
 	if (action.method === 'add') {
 		// 获取员工，工序下拉框
 		try {
-			let result = yield call(getSeqByFlowIdApi, action.row.id, 0, 0)
+			let result = yield call(getSeqByFlowIdApi, action.row.id)
+
 			let seqDropdown = []
 			for (let tmp of result) {
 				seqDropdown.push({
@@ -212,6 +203,7 @@ export function* actionFlow(action) {
 					value: tmp.idSeq
 				})
 			}
+
 			//
 			yield put({
 				type: 'FLOW_MODAL_OPERATE',
@@ -228,7 +220,9 @@ export function* actionFlow(action) {
 					flowRow: action.row
 				}
 			})
-		} catch (error) {}
+		} catch (error) {
+			yield call(portalTrig, error.status, error.data.content, delayTime)
+		}
 	}
 
 }
@@ -303,8 +297,15 @@ export function* actionConstruction(action) {
 export function* completeConstruction(action) {
 
 	try {
-		// 设置施工单状态
 
+		// 判断数字
+		if (isNaN(action.data.constructionCmpl) ||
+			isNaN(action.data.constructionErr)) {
+			yield call(portalTrig, 400, '提交已完成和次品数目必须为数字')
+			return
+		}
+
+		// 设置施工单状态
 		let body = {
 			status: 3, // 3-完工待入库
 			idHouse: 0,
@@ -354,7 +355,10 @@ export function* selectSeqDropDown(action) {
 	})
 	// 获取工序默认员工
 	try {
-		let result = yield call(getStaffBySeqIdApi, action.value, 0, 0)
+		let result = yield call(getStaffBySeqIdApi, action.value, {
+			page: 0,
+			size: 0
+		})
 		let dropDown = []
 		for (let tmp of result) {
 			dropDown.push({
@@ -407,6 +411,12 @@ export function* openProductionModal(action) {
 
 // 添加产品
 export function* addProduction(action) {
+
+	// 判断数字
+	if (isNaN(action.data.flowDst)) {
+		yield call(portalTrig, 400, '提交计划数目必须为数字')
+		return
+	}
 
 	// 组装消息体
 	let body = {

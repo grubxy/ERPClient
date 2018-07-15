@@ -9,6 +9,11 @@ import {
 	createBrowserHistory
 } from 'history';
 
+import {
+	portalTrig,
+	delayTime
+} from './portal'
+
 const history = createBrowserHistory();
 
 export function* login(action) {
@@ -16,7 +21,6 @@ export function* login(action) {
 	try {
 
 		// 发送请求
-
 		let body = {
 			username: action.user.username,
 			password: action.user.password
@@ -38,7 +42,10 @@ export function* login(action) {
 
 		history.push('/')
 
-	} catch (error) {}
+	} catch (error) {
+
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 

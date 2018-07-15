@@ -53,7 +53,6 @@ class Construction extends Component {
       onSearchTime,
       onAction,
       onCompleteConstruction,
-      onClearModal,
       operateCmplModal,
       constructionModal,
       onChange

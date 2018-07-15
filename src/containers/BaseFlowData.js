@@ -35,6 +35,7 @@ import {
   dropdownStaff
 } from '../actions/basedata'
 
+
 class BaseFlowData extends Component {
   componentDidMount = () => {
     const {
@@ -105,7 +106,7 @@ class BaseFlowData extends Component {
                   <Form size='large'>
                     <Form.Group>
                       <Form.Input label="工序名" name='seqName' onChange={(e)=>onChange(e.target)}/>
-                      <Form.Input label="工序单价" name='seqPrice' onChange={(e)=>onChange(e.target)}/>
+                      <Form.Input label="工序单价(0.01-100)" name='seqPrice' onChange={(e)=>onChange(e.target)}/>
                     </Form.Group>
                   </Form>
                 </Modal.Content>

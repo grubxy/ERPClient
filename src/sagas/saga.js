@@ -1,5 +1,6 @@
 import {
-  takeEvery
+  takeEvery,
+  takeLatest
 } from 'redux-saga/effects'
 
 import {

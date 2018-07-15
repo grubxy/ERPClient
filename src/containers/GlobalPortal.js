@@ -17,7 +17,7 @@ const GlobalPortal = ({
 }) => {
 	return (
 		<Portal onClose={()=>operatePortal({open:false, msgheader:'', msgbody:''})} open={portal.open}>
-			<Segment style={{ left: '30%', position: 'fixed', top: '50%', zIndex: 1000 }}>
+			<Segment style={{ position: 'fixed', zIndex: 1000, margin:'auto',left:0, right:0, top:0, bottom:0, width:'400px', height:'200px'}}>
 				<Header color='orange'>{portal.msgheader}</Header>
 				<p>{portal.msgbody}</p>
 			</Segment>

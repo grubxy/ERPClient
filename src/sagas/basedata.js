@@ -11,9 +11,14 @@ import {
   call,
   put
 } from 'redux-saga/effects'
+import {
+  portalTrig,
+  delayTime
+} from './portal'
 
 function* updateProductTable(result) {
   try {
+
     let productTableList = []
     for (let tmp of result.content) {
       productTableList.push({
@@ -58,14 +63,7 @@ function* updateProductTable(result) {
 
   } catch (error) {
     // 提示
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: '100',
-        msgbody: '更新产品表单数据失败'
-      }
-    })
+    yield call(portalTrig, 400, '更新产品表单数据失败', delayTime)
   }
 }
 
@@ -77,19 +75,13 @@ export function* initBaseData(action) {
       page: 0,
       size: action.size
     })
+
     // 更新产品表格
     yield call(updateProductTable, result)
 
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data.content
-      }
-    })
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 
 }
@@ -97,7 +89,10 @@ export function* initBaseData(action) {
 export function* initSeq(id) {
   try {
     // 获取结果
-    let result = yield call(getSeqByProductIdApi, id, 0, 0)
+    let result = yield call(getSeqByProductIdApi, id, {
+      page: 0,
+      size: 0
+    })
 
     // 更新工序列表
     let seqList = []
@@ -124,21 +119,16 @@ export function* initSeq(id) {
     })
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data.content
-      }
-    })
-
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
 export function* initDefaultStaff(id) {
   // 获取结果
-  let result = yield call(getStaffBySeqIdApi, id, 0, 0)
+  let result = yield call(getStaffBySeqIdApi, id, {
+    page: 0,
+    size: 0
+  })
 
   // 更新默认员工列表
   let defaultStaff = []
@@ -161,37 +151,34 @@ export function* initDefaultStaff(id) {
 
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data.content
-      }
-    })
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
 
 export function* selectPro(action) {
+  try {
+    // 更新后一级列表数据
+    yield call(initSeq, action.data.id)
 
-  // 获取对应类型数据
-  console.log('id:' + action.data.id)
-
-  // 更新后一级列表数据
-  yield call(initSeq, action.data.id)
-
-  // 清空员工
-  yield put({
-    type: 'UPDATE_STAFF_TABLE',
-    data: []
-  })
+    // 清空员工
+    yield put({
+      type: 'UPDATE_STAFF_TABLE',
+      data: []
+    })
+  } catch (error) { // 提示 
+    yield call(portalTrig, error.status, error.data.content, delayTime)
+  }
 }
 
 export function* selectSeq(action) {
-
-  // 获取对应id
-  yield call(initDefaultStaff, action.data.id)
+  try {
+    // 获取对应id
+    yield call(initDefaultStaff, action.data.id)
+  } catch (error) {
+    // 提示 
+    yield call(portalTrig, error.status, error.data.content, delayTime)
+  }
 
 }
 
@@ -228,14 +215,7 @@ export function* addProduct(action) {
 
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data.content
-      }
-    })
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
@@ -266,14 +246,7 @@ export function* searchProduct(action) {
 
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data.content
-      }
-    })
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
@@ -290,18 +263,24 @@ export function* activePageProduct(action) {
 
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data
-      }
-    })
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
 export function* addSeq(action) {
+
+  // 校验类型
+  if (isNaN(action.data.seqPrice)) {
+    // 提示 
+    yield call(portalTrig, 400, '提交的价格必须为数字', delayTime)
+    return
+  }
+  // 校验大小
+  if (action.data.seqPrice > 1000 || action.data.seqPrice < 0.01) {
+    // 提示 
+    yield call(portalTrig, 400, '提交的价格必须为0.01-100', delayTime)
+    return
+  }
 
   // 组装请求体
   let id = action.data.productRow.id
@@ -328,14 +307,7 @@ export function* addSeq(action) {
 
   } catch (error) {
     // 提示 
-    yield put({
-      type: 'GLOBAL_PORTAL',
-      data: {
-        open: true,
-        msgheader: error.status,
-        msgbody: error.data
-      }
-    })
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
@@ -360,10 +332,9 @@ export function* addDefaultStaff(action) {
     })
 
   } catch (error) {
-
+    // 提示 
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
-
-
 }
 
 export function* productAction(action) {
@@ -395,49 +366,58 @@ export function* productAction(action) {
 
 export function* seqAction(action) {
 
-  // 判断是哪个action
-  if (action.method === 'add') {
-    // 清空模态框数据
-    yield put({
-      type: 'BASEDATA_MODAL_CLEAR'
-    })
-    // 获取员工下拉菜单列表(在职员工)
-    let result = yield call(getStaffApi, {
-      page: 0,
-      size: 0,
-      status: 1
-    })
-    let dropDown = []
-    for (let tmp of result.content) {
-      dropDown.push({
-        key: tmp.idStaff,
-        text: tmp.staffName,
-        value: tmp.idStaff
+  try {
+    // 判断是哪个action
+    if (action.method === 'add') {
+      // 清空模态框数据
+      yield put({
+        type: 'BASEDATA_MODAL_CLEAR'
       })
+      // 获取员工下拉菜单列表(在职员工)
+      let result = yield call(getStaffApi, {
+        page: 0,
+        size: 0,
+        status: 1
+      })
+
+      // 没有员工
+      if (result.content.length === 0 || result.content === null) {
+        // 提示 
+        yield call(portalTrig, 400, "没有员工信息请先添加员工信息", delayTime)
+        return
+      }
+
+      let dropDown = []
+      for (let tmp of result.content) {
+        dropDown.push({
+          key: tmp.idStaff,
+          text: tmp.staffName,
+          value: tmp.idStaff
+        })
+      }
+      // 更新数据
+      yield put({
+        type: 'BASEDATA_MODAL_STAFFDROPDOWN',
+        data: {
+          dropDown: dropDown
+        }
+      })
+
+      // 打开默认员工模态框
+      yield put({
+        type: 'BASEDATA_MODAL_OPERATE',
+        data: {
+          staff: true,
+          seqRow: action.row
+        }
+      })
+    } else if (action.method === 'delete') {
+      // 删除
     }
-    // 更新数据
-    yield put({
-      type: 'BASEDATA_MODAL_STAFFDROPDOWN',
-      data: {
-        dropDown: dropDown
-      }
-    })
 
-    // 打开默认员工模态框
-    yield put({
-      type: 'BASEDATA_MODAL_OPERATE',
-      data: {
-        staff: true,
-        seqRow: action.row
-      }
-    })
-  } else if (action.method === 'delete') {
-
+  } catch (error) { // 提示 
+    yield call(portalTrig, error.status, error.data.content, delayTime)
   }
-
-  // 删除按钮 
-
-  // 添加按钮，打开模态框，并复制row数据
 }
 
 export function* delDefaultStaff(action) {

@@ -87,7 +87,6 @@ const Home = () => (
   <div>
     <FixMenu/>
     <Container fluid style={{ marginTop: '7em',padding:'0em 3em 1em 3em' }}>
-      <GlobalPortal/>
       <Route path="/data" component={BaseFlowData}/>
       <Route path="/flow" component={Flow}/>
       <Route path="/construction" component={Construction}/>
@@ -109,6 +108,7 @@ class Routes extends React.Component {
     return (
       <Router>
          <div>
+         <GlobalPortal/>
          <Switch>
           <Route path="/login" component={Login}/>
           <PrivateRoute path="/" component={Home}/>

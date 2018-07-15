@@ -24,6 +24,10 @@ export const globalPortal = (state = defaultPortal, action) => {
 					...action.data
 				}
 			}
+		case 'GLOBAL_PORTAL_CLEAR':
+			return {
+				...defaultPortal
+			}
 		default:
 			return state
 	}

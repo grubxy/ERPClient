@@ -161,9 +161,10 @@ export const postSeqByProductIdApi = (id, data) => {
 
 
 // 获取某个产品工序
-export const getSeqByProductIdApi = (id, page, size) => {
-	return fetch(`/product/${id}/seq?page=${page}&size=${size}`, {
-		method: 'GET'
+export const getSeqByProductIdApi = (id, param) => {
+	return fetch(`/product/${id}/seq`, {
+		method: 'GET',
+		params: param
 	})
 }
 
@@ -175,9 +176,10 @@ export const postStaffBySeqIdApi = (id, data) => {
 }
 
 // 获取工序默认员工
-export const getStaffBySeqIdApi = (id, page, size) => {
-	return fetch(`/seq/${id}/staff?page=${page}&size=${size}`, {
-		method: 'GET'
+export const getStaffBySeqIdApi = (id, param) => {
+	return fetch(`/seq/${id}/staff`, {
+		method: 'GET',
+		params: param
 	})
 }
 
