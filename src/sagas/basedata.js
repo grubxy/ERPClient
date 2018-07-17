@@ -265,7 +265,16 @@ export function* searchProduct(action) {
 
     yield call(updateProductTable, result)
 
-    console.log(searchParam)
+    // 更新产品对应工序数据(理论新增后为空)}
+    yield put({
+      type: 'UPDATE_SEQ_TABLE',
+      data: []
+    })
+
+    yield put({
+      type: 'UPDATE_STAFF_TABLE',
+      data: []
+    })
 
   } catch (error) {
     // 提示 
@@ -320,7 +329,10 @@ export function* addSeq(action) {
 
     // 关闭模态框
     yield put({
-      type: 'BASEDATA_MODAL_CLEAR'
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        seq: false
+      }
     })
     // 后一级置空
     yield put({
@@ -351,7 +363,10 @@ export function* addDefaultStaff(action) {
 
     // 关闭模态框
     yield put({
-      type: 'BASEDATA_MODAL_CLEAR'
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        staff: false
+      }
     })
 
   } catch (error) {
@@ -481,6 +496,12 @@ export function* delBaseConfirm(action) {
 
       // 重新获取工序
       yield call(initSeq, action.data.productRow.id)
+
+      // 清空员工框
+      yield put({
+        type: 'UPDATE_STAFF_TABLE',
+        data: []
+      })
 
       // 关闭模态框
       yield put({
