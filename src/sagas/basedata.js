@@ -207,6 +207,15 @@ export function* selectSeq(action) {
 
 export function* addProduct(action) {
 
+  // 判断是否为空
+  if (action.data.productName === '' ||
+    action.data.productName === undefined ||
+    action.data.productName === null) {
+    // 提示 
+    yield call(portalTrig, 400, "请输入产品名", delayTime)
+    return
+  }
+
   // 组装请求体
   let body = {
     productName: action.data.productName
@@ -215,14 +224,17 @@ export function* addProduct(action) {
     // 发送请求
     yield call(postProductAPI, body)
 
-    // 关闭模态框
-    yield put({
-      type: 'BASEDATA_MODAL_CLEAR'
-    })
-
     // 更新产品数据
     yield call(initBaseData, {
       size: action.table.size
+    })
+
+    // 关闭模态框
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        product: false
+      }
     })
 
     // 更新产品对应工序数据(理论新增后为空)}
@@ -380,9 +392,6 @@ export function* productAction(action) {
   // 判断是哪个action
   if (action.method === 'add') {
     // 清空模态框数据
-    yield put({
-      type: 'BASEDATA_MODAL_CLEAR'
-    })
     //打开工序模态框
     yield put({
       type: 'BASEDATA_MODAL_OPERATE',
@@ -411,9 +420,6 @@ export function* seqAction(action) {
     // 判断是哪个action
     if (action.method === 'add') {
       // 清空模态框数据
-      yield put({
-        type: 'BASEDATA_MODAL_CLEAR'
-      })
       // 获取员工下拉菜单列表(在职员工)
       let result = yield call(getStaffApi, {
         page: 0,
