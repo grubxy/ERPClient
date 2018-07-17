@@ -138,7 +138,7 @@ class StaffManage extends Component {
         <Header.Content>员工管理</Header.Content>
         </Header>
         <Divider hidden/>
-        <Tab panes={panes}/>
+        <Tab menu={{ color:'teal',secondary: true, pointing: true }} panes={panes}/>
       </Container>
     )
   }

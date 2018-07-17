@@ -195,6 +195,11 @@ export function* actionFlow(action) {
 		try {
 			let result = yield call(getSeqByFlowIdApi, action.row.id)
 
+			if (result.length === 0) {
+				yield call(portalTrig, 400, "没有找到对应的工序", delayTime)
+				return
+			}
+
 			let seqDropdown = []
 			for (let tmp of result) {
 				seqDropdown.push({
@@ -332,16 +337,8 @@ export function* completeConstruction(action) {
 			}
 		})
 	} catch (error) {
-		yield put({
-			type: 'GLOBAL_PORTAL',
-			data: {
-				open: true,
-				msgheader: '出错',
-				msgbody: error
-			}
-		})
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
-
 }
 
 // 添加施工单弹框中的工序下拉菜单选中
@@ -359,6 +356,11 @@ export function* selectSeqDropDown(action) {
 			page: 0,
 			size: 0
 		})
+		if (result.length === 0) {
+			yield call(portalTrig, 400, '工序没有默认员工', delayTime)
+			return
+		}
+
 		let dropDown = []
 		for (let tmp of result) {
 			dropDown.push({
@@ -374,7 +376,9 @@ export function* selectSeqDropDown(action) {
 				dropDownStaff: dropDown
 			}
 		})
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 打开生产流程模态框 需要获取所有产品信息
@@ -387,6 +391,7 @@ export function* openProductionModal(action) {
 			size: 0
 		}
 		let result = yield call(getProductApi, param)
+
 		let dropDown = []
 		for (let tmp of result.content) {
 			dropDown.push({
@@ -404,7 +409,7 @@ export function* openProductionModal(action) {
 			}
 		})
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 
 }
@@ -453,7 +458,7 @@ export function* addProduction(action) {
 		})
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -485,6 +490,6 @@ export function* addConstructionByFlowId(action) {
 		yield call(initSeqInfo, action.data.flowRow.id)
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }

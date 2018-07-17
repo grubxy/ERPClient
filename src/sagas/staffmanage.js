@@ -8,7 +8,10 @@ import {
 	getConstructionByStatusApi,
 	getStaffSalaryApi
 } from '../api/BaihuiServerAPI'
-
+import {
+	portalTrig,
+	delayTime
+} from './portal'
 
 function* updateStaffInfoTable(result) {
 	try {
@@ -49,7 +52,7 @@ function* updateStaffInfoTable(result) {
 		})
 
 	} catch (error) {
-
+		yield call(portalTrig, 400, '更新表单失败', delayTime)
 	}
 }
 
@@ -69,7 +72,7 @@ export function* initStaffManage(action) {
 		yield call(updateSalaryTable, result)
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -87,7 +90,7 @@ export function* initStaff(size) {
 		yield call(updateStaffInfoTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -116,7 +119,7 @@ export function* addStaff(action) {
 		yield call(updateStaffInfoTable, result)
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -160,7 +163,9 @@ function* updateScheduleTable(result) {
 			value: result.size
 		})
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 function* initStaffSchedule(size) {
@@ -176,7 +181,7 @@ function* initStaffSchedule(size) {
 		yield call(updateScheduleTable, result)
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -200,7 +205,9 @@ export function* searchStaff(action) {
 
 		yield call(updateStaffInfoTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 分页
@@ -214,7 +221,9 @@ export function* activePageStaff(action) {
 
 		yield call(updateStaffInfoTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 //搜索
@@ -235,7 +244,9 @@ export function* searchSchedule(action) {
 
 		yield call(updateScheduleTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 分页
@@ -249,7 +260,9 @@ export function* activePageSchedule(action) {
 
 		yield call(updateScheduleTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 
@@ -288,7 +301,7 @@ function* updateSalaryTable(result) {
 		})
 
 	} catch (error) {
-
+		yield call(portalTrig, 400, '更新表单失败', delayTime)
 	}
 }
 
@@ -313,7 +326,7 @@ export function* searchSalary(action) {
 		yield call(updateSalaryTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -331,7 +344,7 @@ export function* activePageSalary(action) {
 		yield call(updateSalaryTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 
 }
@@ -356,6 +369,8 @@ export function* timeSalary(action) {
 
 		yield call(updateSalaryTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 
 }

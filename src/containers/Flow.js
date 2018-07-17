@@ -93,10 +93,10 @@ class Flow extends Component {
                   <Button color='teal' onClick={()=>addProduction(modal, flowTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <Form>
-                <Form.Group inline>
+              <Form size='large'>
+                <Form.Group>
                   <Form.Field>
-                    <Button content='流程' color='teal' icon='add' onClick={()=>openProductionModal(modal)}/>
+                    <Button size='large' content='流程' color='teal' icon='add' onClick={()=>openProductionModal(modal)}/>
                   </Form.Field>
                   <Form.Field>
         					 <Input placeholder='生产批次' name='id' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>

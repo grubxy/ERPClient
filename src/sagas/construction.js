@@ -6,6 +6,10 @@ import {
 	call,
 	put
 } from 'redux-saga/effects'
+import {
+	portalTrig,
+	delayTime
+} from './portal'
 
 // 更新施工单表格
 function* updateConstructionTable(result) {
@@ -84,7 +88,9 @@ function* updateConstructionTable(result) {
 			value: result.size
 		})
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, 400, '更新表单失败', delayTime)
+	}
 }
 
 // 加载初始化
@@ -97,10 +103,10 @@ export function* initConstruction(action) {
 			size: action.size
 		}
 		let result = yield call(getConstructionByStatusApi, param)
-
 		yield call(updateConstructionTable, result)
-
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 选择状态 
@@ -127,7 +133,9 @@ export function* selectConstruction(action) {
 
 		yield call(updateConstructionTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 搜索
@@ -151,7 +159,9 @@ export function* searchConstruction(action) {
 
 		yield call(updateConstructionTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 分页
@@ -167,7 +177,9 @@ export function* activePageConstruction(action) {
 
 		yield call(updateConstructionTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 搜索时间
@@ -195,7 +207,7 @@ export function* timeConstruction(action) {
 		yield call(updateConstructionTable, result)
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -247,13 +259,21 @@ export function* actionConstructionAll(action) {
 			})
 		}
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 完工
 export function* actionConstructionAllComplete(action) {
-	console.log("row:" + JSON.stringify(action.data))
 	try {
+		// 校验数据
+		if (isNaN(action.data.constructionCmpl) ||
+			isNaN(action.data.constructionErr)) {
+			yield call(portalTrig, 400, '正品数和次品数必须为数字', delayTime)
+			return
+		}
+
 		// 设置施工单状态
 		let body = {
 			status: 3, // 3-完工待入库
@@ -261,11 +281,6 @@ export function* actionConstructionAllComplete(action) {
 			cmpl: action.data.constructionCmpl,
 			error: action.data.constructionErr
 		}
-
-		// 清空模态框
-		yield put({
-			type: 'CONSTRUCTON_ALL_MODAL_CLEAR'
-		})
 
 		// patch状态
 		yield call(patchConstructionStatusApi, action.data.constructionRow.cid, body)
@@ -282,6 +297,11 @@ export function* actionConstructionAllComplete(action) {
 		// 更新结果
 		yield call(updateConstructionTable, result)
 
+		// 清空模态框
+		yield put({
+			type: 'CONSTRUCTON_ALL_MODAL_CLEAR'
+		})
+
 		yield put({
 			type: 'GLOBAL_PORTAL',
 			data: {
@@ -290,16 +310,8 @@ export function* actionConstructionAllComplete(action) {
 				msgbody: '工单：' + action.data.constructionRow.cid
 			}
 		})
-
 	} catch (error) {
-		yield put({
-			type: 'GLOBAL_PORTAL',
-			data: {
-				open: true,
-				msgheader: '出错',
-				msgbody: error
-			}
-		})
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 
 }

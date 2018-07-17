@@ -83,8 +83,8 @@ class Construction extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-              <Form>
-                <Form.Group inline>
+              <Form size='large'>
+                <Form.Group>
                   <Form.Field>
                     <Input placeholder='施工单号' name='id' onChange={(e)=>onSearch(e.target, constructionTable)}/>
                   </Form.Field>
@@ -103,7 +103,7 @@ class Construction extends Component {
           </Grid.Row>
           <Grid.Row >
             <Grid.Column>
-              <Button.Group>
+              <Button.Group size='large'>
                 <Button color='orange' onClick={()=>selectConstruction(0, constructionTable)}>所有</Button>
                 <Button color='teal'onClick={()=>selectConstruction(1, constructionTable)}>等待材料出库</Button>
                 <Button color='teal'onClick={()=>selectConstruction(2, constructionTable)}>

@@ -86,8 +86,8 @@ class StoreHouse extends Component {
         <Grid>
           <Grid.Row>
           <Grid.Column>
-          <Form>
-            <Form.Group inline>
+          <Form size='large'>
+            <Form.Group>
             <Form.Field>
               <Input placeholder='施工单号' name='id' onChange={(e)=>onSearchStoreHouseConst(e.target, constructionTable)}/>
             </Form.Field>
@@ -98,7 +98,7 @@ class StoreHouse extends Component {
               <Input placeholder='工人' icon='search' name='staff' onChange={(e)=>onSearchStoreHouseConst(e.target, constructionTable)}/>
             </Form.Field>
             <Form.Field>
-            <Button.Group>
+            <Button.Group size='large'>
               <Button color='teal'onClick={()=>selectConstruction(1, constructionTable)}>等待材料出库</Button>
               <Button color='teal'onClick={()=>selectConstruction(3, constructionTable)}>完工待入库</Button>
             </Button.Group>
@@ -138,13 +138,13 @@ class StoreHouse extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-            <Form>
-            <Form.Group inline>
-            <Form.Field>
-               <Input placeholder='仓库名' icon='search' />
-            </Form.Field>
+            <Form size='large'>
+            <Form.Group>
+              <Form.Field>
+                 <Input placeholder='仓库名' icon='search' />
+              </Form.Field>
                <Form.Field>
-            <Button.Group>
+              <Button.Group size='large'>
                 <Button content='入库' color='teal' icon='add' onClick={()=>operateHouseOriginModalOpen('input')}/>
                 <Button content='出库' color='orange' icon='minus' onClick={()=>operateHouseOriginModalOpen('output')}/>
             </Button.Group>
@@ -173,7 +173,7 @@ class StoreHouse extends Component {
          <Modal open={houseOriginModal.output}>
         <Modal.Header>出库</Modal.Header>
         <Modal.Content>
-          <Form>
+          <Form size='large'>
             <Form.Group>
               <Form.Dropdown placeholder='仓库' label="仓库" name='idHouseOutput' search selection options={dropDowns.house} onChange={(e, {name, value})=>dropDownSelectHouseOrigin(name, value)}/>
               <Form.Dropdown placeholder='物料' label="物料" name='idOrigin' search selection options={dropDowns.origins} onChange={(e, {name, value})=>dropDownHouseOrigin(name, value)}/>

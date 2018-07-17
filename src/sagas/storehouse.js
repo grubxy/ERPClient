@@ -12,23 +12,10 @@ import {
 	postHouseOrigin,
 	deleteHouseOrigin
 } from '../api/BaihuiServerAPI'
-
-
-/***  工单状态枚举 ***/
-
-// ALL(0, "所有状态"),
-
-// WAITING(1, "等待材料出库"),
-
-// WORKING(2, "制作过程中"),
-
-// COMPLETE(3, "完工待入库"),
-
-// STORED(4, "入库完毕"),
-
-// APPROVING(5, "审批中"),
-
-// APPROVED(6, "审批完成");
+import {
+	portalTrig,
+	delayTime
+} from './portal'
 
 function* updateStoreConstrTable(result) {
 
@@ -51,7 +38,7 @@ function* updateStoreConstrTable(result) {
 				content = '入库'
 
 			} else {
-				// error
+				yield call(portalTrig, 400, '系统状态错误', delayTime)
 			}
 
 			constructionTable.push({
@@ -99,7 +86,9 @@ function* updateStoreConstrTable(result) {
 		})
 
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, 400, '更新表单失败', delayTime)
+	}
 }
 
 // 初始化整个页面
@@ -125,7 +114,9 @@ export function* initStoreHouse(action) {
 
 		yield call(updateHouseOriginTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 
 }
 
@@ -149,7 +140,9 @@ export function* searchStoreHouseConst(action) {
 
 		yield call(updateStoreConstrTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 工单状态选择
@@ -165,7 +158,9 @@ export function* selectStoreHouseConstr(action) {
 
 		yield call(updateStoreConstrTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
 
 // 工单分页
@@ -180,7 +175,7 @@ export function* activePageStoreHouseConst(action) {
 		yield call(updateStoreConstrTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -317,7 +312,7 @@ export function* storeConstrConfirm(action) {
 
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 	// 构造请求
 
@@ -333,45 +328,48 @@ export function* storeConstrConfirm(action) {
 
 function* updateHouseInfoTable(result) {
 
-	let houseTableList = []
-	for (let tmp of result.content) {
-		houseTableList.push({
-			id: tmp.idHouse,
-			name: tmp.houseName,
-			desc: tmp.houseDesc,
-			button_list: [{
-				method: 'delete',
-				icon: 'delete',
-				color: 'gray'
-			}]
+	try {
+		let houseTableList = []
+		for (let tmp of result.content) {
+			houseTableList.push({
+				id: tmp.idHouse,
+				name: tmp.houseName,
+				desc: tmp.houseDesc,
+				button_list: [{
+					method: 'delete',
+					icon: 'delete',
+					color: 'gray'
+				}]
+			})
+		}
+
+		// 更新表格
+		yield put({
+			type: 'STOREHOUSE_UPDATE_HOUSEINFO_TABLE',
+			data: houseTableList
 		})
+
+		// 更新activepage total size
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+			name: 'totalPages',
+			value: result.totalPages
+		})
+
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+			name: 'activePage',
+			value: result.number
+		})
+
+		yield put({
+			type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
+			name: 'size',
+			value: result.size
+		})
+	} catch (error) {
+		yield call(portalTrig, 400, '更新仓库表单失败', delayTime)
 	}
-
-	// 更新表格
-	yield put({
-		type: 'STOREHOUSE_UPDATE_HOUSEINFO_TABLE',
-		data: houseTableList
-	})
-
-	// 更新activepage total size
-	yield put({
-		type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
-		name: 'totalPages',
-		value: result.totalPages
-	})
-
-	yield put({
-		type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
-		name: 'activePage',
-		value: result.number
-	})
-
-	yield put({
-		type: 'STOREHOUSE_HOUSEINFO_TABLE_CHANGE',
-		name: 'size',
-		value: result.size
-	})
-
 }
 
 // 初始化
@@ -385,7 +383,7 @@ export function* initHouseInfo(action) {
 		yield call(updateHouseInfoTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -401,7 +399,9 @@ export function* activeHouseInfoPage(action) {
 
 		yield call(updateHouseInfoTable, result)
 
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 
 }
 
@@ -428,7 +428,7 @@ export function* addHouseInfo(action) {
 		yield call(updateHouseInfoTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 
 }
@@ -505,7 +505,7 @@ function* updateHouseOriginTable(result) {
 			value: result.size
 		})
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -526,6 +526,12 @@ export function* openHouseOriginModal(action) {
 				page: 0,
 				size: 0
 			})
+
+			if (result.content.length === 0) {
+				yield call(portalTrig, 400, '没有仓库信息', delayTime)
+				return
+			}
+
 			let dropDown = []
 			for (let tmp of result.content) {
 				dropDown.push({
@@ -556,6 +562,10 @@ export function* openHouseOriginModal(action) {
 				page: 0,
 				size: 0
 			})
+			if (result.content.length === 0) {
+				yield call(portalTrig, 400, '没有仓库信息', delayTime)
+				return
+			}
 			let dropDown = []
 			for (let tmp of result.content) {
 				dropDown.push({
@@ -583,7 +593,7 @@ export function* openHouseOriginModal(action) {
 
 		}
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -592,8 +602,14 @@ export function* selectHouseOrigin(action) {
 	console.log('select house origin:' + action.value)
 
 	try {
-		// 获取无聊
+		// 获取物料
 		let result = yield call(getHouseOrigin, action.value)
+
+		if (result.length === 0) {
+			yield call(portalTrig, 400, '该仓库没有物料', delayTime)
+			return
+		}
+
 		let dropDown = []
 		for (let tmp of result) {
 			dropDown.push({
@@ -617,7 +633,7 @@ export function* selectHouseOrigin(action) {
 		})
 
 	} catch (error) {
-		console.log(error)
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 
 }
@@ -626,7 +642,14 @@ export function* selectHouseOrigin(action) {
 export function* confirmHouseOrigin(action) {
 	console.log('house origin confirm:' + action.data.outCounts)
 	try {
+
 		if (action.method === 'input') {
+			// 校验类型
+			if (isNaN(action.data.inputCounts)) {
+				// 提示 
+				yield call(portalTrig, 400, '提交的入库数必须为数字', delayTime)
+				return
+			}
 			let body = {
 				name: action.data.materialName,
 				counts: action.data.inputCounts
@@ -634,6 +657,13 @@ export function* confirmHouseOrigin(action) {
 			yield call(postHouseOrigin, action.data.idHouseInput, body)
 
 		} else if (action.method === 'output') {
+			// 校验类型
+			if (isNaN(action.data.outCounts)) {
+				// 提示 
+				yield call(portalTrig, 400, '提交的出库数必须为数字', delayTime)
+				return
+			}
+
 			yield call(deleteHouseOrigin, action.data.idHouse, action.data.idOrigin, action.data.outCounts)
 		}
 		yield put({
@@ -646,6 +676,8 @@ export function* confirmHouseOrigin(action) {
 		})
 
 		yield call(updateHouseOriginTable, result)
-	} catch (error) {}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 
 }

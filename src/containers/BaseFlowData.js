@@ -77,8 +77,16 @@ class BaseFlowData extends Component {
         <Grid divided='vertically'>
           <Grid.Row>
           <Grid.Column>
-            <Button content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
-            <Input placeholder='产品名' name='name' onChange={(e)=>onSearch(e.target, productTable)}/>
+          <Form size='large'>
+            <Form.Group>
+              <Form.Field>
+                <Button size='large' content='产品' color='teal' icon='add' onClick={()=>onModal({product:true})}/>
+              </Form.Field>
+              <Form.Field>
+                <Input placeholder='产品名' name='name' onChange={(e)=>onSearch(e.target, productTable)}/>
+              </Form.Field>
+            </Form.Group>
+          </Form>
           </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={3}>
