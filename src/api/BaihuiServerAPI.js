@@ -159,12 +159,18 @@ export const postSeqByProductIdApi = (id, data) => {
 	})
 }
 
-
 // 获取某个产品工序
 export const getSeqByProductIdApi = (id, param) => {
 	return fetch(`/product/${id}/seq`, {
 		method: 'GET',
 		params: param
+	})
+}
+
+// 删除工序
+export const deleteSeqByProductIdApi = (id, idseq) => {
+	return fetch(`/product/${id}/seq/${idseq}`, {
+		method: 'DELETE'
 	})
 }
 
@@ -180,6 +186,13 @@ export const getStaffBySeqIdApi = (id, param) => {
 	return fetch(`/seq/${id}/staff`, {
 		method: 'GET',
 		params: param
+	})
+}
+
+// 删除默认员工
+export const deleteStaffBySeqIdApi = (id, idStaff) => {
+	return fetch(`/seq/${id}/staff/${idStaff}`, {
+		method: 'DELETE'
 	})
 }
 

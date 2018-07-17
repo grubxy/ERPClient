@@ -80,6 +80,13 @@ export const delStaff = (row) => ({
   row
 })
 
+// 员工按钮
+export const actionStaff = (row, method) => ({
+  type: 'DEFAULT_STAFF_ACTION',
+  row,
+  method
+})
+
 // 多个模态框操作
 export const operateModal = (data) => ({
   type: 'BASEDATA_MODAL_OPERATE',
@@ -96,4 +103,11 @@ export const changeInput = (target) => ({
   type: 'BASEDATA_MODAL_CHANGE',
   name: target.name,
   value: target.value
+})
+
+// 删除确认框
+export const confirmDel = (method, data) => ({
+  type: 'BASEDATE_DELETE',
+  method,
+  data
 })

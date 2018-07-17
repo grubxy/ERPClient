@@ -5,7 +5,10 @@ import {
   postStaffBySeqIdApi,
   getSeqByProductIdApi,
   getStaffBySeqIdApi,
-  getStaffApi
+  getStaffApi,
+  deleteStaffBySeqIdApi,
+  deleteSeqByProductIdApi,
+  deleteProductAPI
 } from '../api/BaihuiServerAPI'
 import {
   call,
@@ -158,6 +161,15 @@ export function* initDefaultStaff(id) {
 
 export function* selectPro(action) {
   try {
+
+    // 更新行信息
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        productRow: action.data
+      }
+    })
+
     // 更新后一级列表数据
     yield call(initSeq, action.data.id)
 
@@ -166,15 +178,26 @@ export function* selectPro(action) {
       type: 'UPDATE_STAFF_TABLE',
       data: []
     })
-  } catch (error) { // 提示 
+  } catch (error) {
+    // 提示 
     yield call(portalTrig, error.status, error.data.content, delayTime)
   }
 }
 
 export function* selectSeq(action) {
   try {
+
+    // 更新行信息
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        seqRow: action.data
+      }
+    })
+
     // 获取对应id
     yield call(initDefaultStaff, action.data.id)
+
   } catch (error) {
     // 提示 
     yield call(portalTrig, error.status, error.data.content, delayTime)
@@ -356,12 +379,15 @@ export function* productAction(action) {
 
   } else if (action.method === 'delete') {
 
+    // 打开删除确认模态框
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        productDel: true,
+        productRow: action.row
+      }
+    })
   }
-
-  // 删除按钮 
-
-  // 添加按钮，打开模态框，并复制row数据
-
 }
 
 export function* seqAction(action) {
@@ -412,7 +438,15 @@ export function* seqAction(action) {
         }
       })
     } else if (action.method === 'delete') {
-      // 删除
+
+      // 打开默认员工模态框
+      yield put({
+        type: 'BASEDATA_MODAL_OPERATE',
+        data: {
+          seqDel: true,
+          seqRow: action.row
+        }
+      })
     }
 
   } catch (error) { // 提示 
@@ -420,7 +454,61 @@ export function* seqAction(action) {
   }
 }
 
-export function* delDefaultStaff(action) {
+export function* staffAction(action) {
 
-  //发送请求
+  try {
+    yield put({
+      type: 'BASEDATA_MODAL_OPERATE',
+      data: {
+        staffDel: true,
+        staffRow: action.row
+      }
+    })
+  } catch (error) {
+    yield call(portalTrig, 400, '模态框打开失败', delayTime)
+  }
+}
+
+// 删除按钮
+export function* delBaseConfirm(action) {
+  console.log('del...' + action.method + 'data:' + JSON.stringify(action.data))
+  try {
+    if (action.method === 'product') {
+
+    } else if (action.method === 'seq') {
+
+      yield call(deleteSeqByProductIdApi, action.data.productRow.id, action.data.seqRow.id)
+
+      // 重新获取工序
+      yield call(initSeq, action.data.productRow.id)
+
+      // 关闭模态框
+      yield put({
+        type: 'BASEDATA_MODAL_OPERATE',
+        data: {
+          seqDel: false
+        }
+      })
+
+    } else if (action.method === 'staff') {
+
+      yield call(deleteStaffBySeqIdApi, action.data.seqRow.id, action.data.staffRow.id)
+
+      // 重新获取成员更新
+      yield call(initDefaultStaff, action.data.seqRow.id)
+
+      // 关闭模态框
+      yield put({
+        type: 'BASEDATA_MODAL_OPERATE',
+        data: {
+          staffDel: false
+        }
+      })
+
+    } else {
+      yield call(portalTrig, 400, '系统错误', delayTime)
+    }
+  } catch (error) {
+    yield call(portalTrig, error.status, error.data.content, delayTime)
+  }
 }

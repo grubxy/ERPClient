@@ -32,7 +32,9 @@ import {
   changeInput,
   selectProduct,
   selectSeq,
-  dropdownStaff
+  dropdownStaff,
+  confirmDel,
+  actionStaff
 } from '../actions/basedata'
 
 
@@ -64,7 +66,9 @@ class BaseFlowData extends Component {
       onChange,
       onDropDown,
       onSearch,
-      onActivePage
+      onActivePage,
+      onDel,
+      onStaffAction
     } = this.props
 
     return (
@@ -105,6 +109,14 @@ class BaseFlowData extends Component {
                   <Button color='teal' onClick={()=>onProAdd(modal, productTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
+              <Modal open={modal.productDel}>
+                <Modal.Header>删除产品</Modal.Header>
+                <Modal.Content>是否确认删除产品?</Modal.Content>
+                <Modal.Actions>
+                  <Button onClick={()=>onModal({productDel:false})}> 取消 </Button>
+                  <Button color='teal' onClick={()=>onDel('product', modal)}> 确定 </Button>
+                </Modal.Actions>
+              </Modal>
               <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect} onActivePage={onActivePage}/>
             </Grid.Column>
             <Grid.Column>
@@ -121,6 +133,14 @@ class BaseFlowData extends Component {
                 <Modal.Actions>
                   <Button onClick={()=>onModal({seq:false})}> 取消 </Button>
                   <Button color='teal' onClick={()=>onSeqAdd(modal)}> 确定 </Button>
+                </Modal.Actions>
+              </Modal>
+              <Modal open={modal.seqDel}>
+                <Modal.Header>删除工序</Modal.Header>
+                <Modal.Content>是否确认删除工序?</Modal.Content>
+                <Modal.Actions>
+                  <Button onClick={()=>onModal({seqDel:false})}> 取消 </Button>
+                  <Button color='teal' onClick={()=>onDel('seq', modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={seqTable} onAction={onSeqAction} onSelect={onSeqSelect}/>
@@ -140,7 +160,15 @@ class BaseFlowData extends Component {
                   <Button color='teal' onClick={()=>onStaffAdd(modal)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-              <MultiTable table={staffTable}/>
+              <Modal open={modal.staffDel}>
+                <Modal.Header>删除默认员工</Modal.Header>
+                <Modal.Content>是否确认删除默认员工?</Modal.Content>
+                <Modal.Actions>
+                  <Button onClick={()=>onModal({staffDel:false})}> 取消 </Button>
+                  <Button color='teal' onClick={()=>onDel('staff', modal)}> 确定 </Button>
+                </Modal.Actions>
+              </Modal>
+              <MultiTable table={staffTable} onAction={onStaffAction}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -169,8 +197,10 @@ const mapDispatchToProps = {
   onSeqAction: actionSeq,
   onStaffAdd: addStaff,
   onStaffDel: delStaff,
+  onStaffAction: actionStaff,
   onModal: operateModal,
-  onDropDown: dropdownStaff
+  onDropDown: dropdownStaff,
+  onDel: confirmDel
 }
 
 

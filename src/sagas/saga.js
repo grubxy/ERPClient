@@ -21,7 +21,9 @@ import {
   addDefaultStaff,
   productAction,
   seqAction,
-  delDefaultStaff
+  delDefaultStaff,
+  delBaseConfirm,
+  staffAction
 } from './basedata'
 
 import {
@@ -106,7 +108,8 @@ function* mySaga() {
   yield takeEvery('DEFAULT_STAFF_ADD', addDefaultStaff)
   yield takeEvery('PRODUCT_ACTION', productAction)
   yield takeEvery('SEQ_ACTION', seqAction)
-  yield takeEvery('DEFAULT_STAFF_DEL', delDefaultStaff)
+  yield takeEvery('BASEDATE_DELETE', delBaseConfirm)
+  yield takeEvery('DEFAULT_STAFF_ACTION', staffAction)
 
   // 生产流程 
   yield takeEvery('FLOW_INIT', initFlow)
