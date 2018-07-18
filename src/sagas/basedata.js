@@ -496,6 +496,37 @@ export function* delBaseConfirm(action) {
   try {
     if (action.method === 'product') {
 
+      yield call(deleteProductAPI, action.data.productRow.id)
+
+      // 获取产品数据
+      let result = yield call(getProductApi, {
+        page: 0,
+        size: action.table.size
+      })
+
+      // 更新产品表格
+      yield call(updateProductTable, result)
+
+      // 更新产品对应工序数据(理论新增后为空)}
+      yield put({
+        type: 'UPDATE_SEQ_TABLE',
+        data: []
+      })
+
+      yield put({
+        type: 'UPDATE_STAFF_TABLE',
+        data: []
+      })
+
+      // 关闭模态框
+      yield put({
+        type: 'BASEDATA_MODAL_OPERATE',
+        data: {
+          productDel: false
+        }
+      })
+
+
     } else if (action.method === 'seq') {
 
       yield call(deleteSeqByProductIdApi, action.data.productRow.id, action.data.seqRow.id)

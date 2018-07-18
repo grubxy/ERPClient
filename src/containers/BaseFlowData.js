@@ -114,7 +114,7 @@ class BaseFlowData extends Component {
                 <Modal.Content>是否确认删除产品?</Modal.Content>
                 <Modal.Actions>
                   <Button onClick={()=>onModal({productDel:false})}> 取消 </Button>
-                  <Button color='teal' onClick={()=>onDel('product', modal)}> 确定 </Button>
+                  <Button color='teal' onClick={()=>onDel('product', modal, productTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
               <MultiTable table={productTable} onAction={onProAction} onSelect={onProSelect} onActivePage={onActivePage}/>

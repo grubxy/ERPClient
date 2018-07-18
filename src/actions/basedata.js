@@ -106,8 +106,9 @@ export const changeInput = (target) => ({
 })
 
 // 删除确认框
-export const confirmDel = (method, data) => ({
+export const confirmDel = (method, data, table) => ({
   type: 'BASEDATE_DELETE',
   method,
-  data
+  data,
+  table
 })
