@@ -125,6 +125,13 @@ export const deleteUserAPI = (id) => {
 	})
 }
 
+// 获取当前用户信息
+export const getCurrentUserApi = () => {
+	return fetch('/currentuser', {
+		method: 'GET'
+	})
+}
+
 /*** 基础数据 ***/
 
 // 增加产品

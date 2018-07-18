@@ -82,7 +82,8 @@ import {
 
 import {
   login,
-  logout
+  logout,
+  getLogInfo
 } from './login'
 
 function* mySaga() {
@@ -96,6 +97,7 @@ function* mySaga() {
   yield takeEvery('USER_INIT', initUser)
   yield takeEvery('USER_DEL', delUser)
   yield takeEvery('USER_ACTIVEPAGE', activePageUser)
+  yield takeEvery('LOGIN_GETINFO', getLogInfo)
 
   // 基础 生产数据配置
   yield takeEvery('BASEDATA_INIT', initBaseData)

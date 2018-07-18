@@ -3,7 +3,8 @@ import {
 	put
 } from 'redux-saga/effects'
 import {
-	authAPI
+	authAPI,
+	getCurrentUserApi
 } from '../api/BaihuiServerAPI'
 import {
 	createBrowserHistory
@@ -60,4 +61,22 @@ export function* logout() {
 			redirectToReferrer: false,
 		}
 	})
+}
+
+export function* getLogInfo() {
+	try {
+		let result = yield call(getCurrentUserApi)
+
+		yield put({
+			type: 'LOGIN_LOGINCHANGE',
+			data: {
+				user: {
+					username: result.current
+				}
+			}
+		})
+
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
 }
