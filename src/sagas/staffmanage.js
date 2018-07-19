@@ -6,7 +6,8 @@ import {
 	postStaffApi,
 	getStaffApi,
 	getConstructionByStatusApi,
-	getStaffSalaryApi
+	getStaffSalaryApi,
+	patchStaffStatusApi
 } from '../api/BaihuiServerAPI'
 import {
 	portalTrig,
@@ -18,11 +19,27 @@ function* updateStaffInfoTable(result) {
 
 		let staffList = []
 		for (let tmp of result.content) {
+
+			let method = 'release'
+			let color = 'grey'
+			let content = '离职'
+
+			if (tmp.enumStaffStatus.value === 2) {
+				method = 'deploy'
+				color = 'teal'
+				content = '重新入职'
+			}
+
 			staffList.push({
 				id: tmp.idStaff,
 				name: tmp.staffName,
 				phone: tmp.staffPhone,
-				status: tmp.enumStaffStatus.desc
+				status: tmp.enumStaffStatus.desc,
+				button_list: [{
+					method: method,
+					color: color,
+					content: content
+				}]
 			})
 		}
 
@@ -101,6 +118,14 @@ export function* addStaff(action) {
 		staffPhone: action.data.staffPhone
 	}
 
+	console.log(action.data.staffPhone.toString().length)
+	// 校验电话号码
+	if (action.data.staffPhone.toString().length != 11 ||
+		action.data.staffPhone.toString().length != 8) {
+		yield call(portalTrig, 400, '号码位数不对', delayTime)
+		return
+	}
+
 	try {
 		// 发送请求
 		yield call(postStaffApi, body)
@@ -115,6 +140,74 @@ export function* addStaff(action) {
 			page: 0,
 			size: action.table.size
 		})
+
+		yield call(updateStaffInfoTable, result)
+
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
+}
+
+export function* actionStaff(action) {
+	console.log(JSON.stringify(action))
+	try {
+		if (action.method === 'release') {
+			yield call(patchStaffStatusApi, action.row.id, {
+				status: 2
+			})
+		} else if (action.method === 'deploy') {
+			yield call(patchStaffStatusApi, action.row.id, {
+				status: 1
+			})
+		} else {
+			yield call(portalTrig, 400, '系统错误', delayTime)
+		}
+
+		// 更新表单
+		let result = yield call(getStaffApi, { ...action.table.search,
+			page: 0,
+			size: action.table.size
+		})
+
+		yield call(updateStaffInfoTable, result)
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
+}
+
+//搜索
+export function* searchStaff(action) {
+	try {
+		// 更新表信息
+		yield put({
+			type: 'UPDATE_STAFFINFO_SEARCH_CHANGE',
+			name: action.name,
+			value: action.value
+		})
+
+		let param = { ...action.table.search,
+			[action.name]: action.value,
+			page: 0,
+			size: action.table.size
+		}
+
+		let result = yield call(getStaffApi, param)
+
+		yield call(updateStaffInfoTable, result)
+
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
+}
+
+// 分页
+export function* activePageStaff(action) {
+	try {
+		let param = { ...action.table.search,
+			page: action.activePage,
+			size: action.table.size
+		}
+		let result = yield call(getStaffApi, param)
 
 		yield call(updateStaffInfoTable, result)
 
@@ -179,47 +272,6 @@ function* initStaffSchedule(size) {
 		})
 
 		yield call(updateScheduleTable, result)
-
-	} catch (error) {
-		yield call(portalTrig, error.status, error.data.content, delayTime)
-	}
-}
-
-//搜索
-export function* searchStaff(action) {
-	try {
-		// 更新表信息
-		yield put({
-			type: 'UPDATE_STAFFINFO_SEARCH_CHANGE',
-			name: action.name,
-			value: action.value
-		})
-
-		let param = { ...action.table.search,
-			[action.name]: action.value,
-			page: 0,
-			size: action.table.size
-		}
-
-		let result = yield call(getStaffApi, param)
-
-		yield call(updateStaffInfoTable, result)
-
-	} catch (error) {
-		yield call(portalTrig, error.status, error.data.content, delayTime)
-	}
-}
-
-// 分页
-export function* activePageStaff(action) {
-	try {
-		let param = { ...action.table.search,
-			page: action.activePage,
-			size: action.table.size
-		}
-		let result = yield call(getStaffApi, param)
-
-		yield call(updateStaffInfoTable, result)
 
 	} catch (error) {
 		yield call(portalTrig, error.status, error.data.content, delayTime)

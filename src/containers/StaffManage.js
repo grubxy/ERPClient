@@ -32,7 +32,8 @@ import {
   activeSchedulePage,
   searchTimeSalary,
   searchStaffSalary,
-  activePageSalary
+  activePageSalary,
+  actionStaff
 } from '../actions/staffmanage'
 
 class StaffManage extends Component {
@@ -63,7 +64,8 @@ class StaffManage extends Component {
       onActiveSchedulePage,
       onStaffSalarySearchTime,
       onSalarySearch,
-      onActiveSalaryPage
+      onActiveSalaryPage,
+      onStaffAction
     } = this.props
 
     const panes = [{
@@ -125,7 +127,7 @@ class StaffManage extends Component {
                   <Button color='teal' onClick={()=>onAddStaff(staffModal, staffTable)}> 确定 </Button>
                 </Modal.Actions>
               </Modal>
-          <MultiTable table={staffTable} onActivePage={onActiveStaffPage}/>
+          <MultiTable table={staffTable} onActivePage={onActiveStaffPage} onAction={onStaffAction}/>
         </Tab.Pane>
         )
       }
@@ -163,7 +165,8 @@ const mapDispatchToProps = {
   onActiveSchedulePage: activeSchedulePage,
   onStaffSalarySearchTime: searchTimeSalary,
   onSalarySearch: searchStaffSalary,
-  onActiveSalaryPage: activePageSalary
+  onActiveSalaryPage: activePageSalary,
+  onStaffAction: actionStaff
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaffManage)

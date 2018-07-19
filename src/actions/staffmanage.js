@@ -21,6 +21,14 @@ export const operateStaffModal = (data) => ({
 	data
 })
 
+// 按钮处理
+export const actionStaff = (row, method, table) => ({
+	type: 'STAFF_ACTION',
+	row,
+	method,
+	table
+})
+
 // 搜索
 export const searchStaff = (target, table) => ({
 	type: 'STAFF_SEARCH',

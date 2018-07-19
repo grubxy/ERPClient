@@ -290,6 +290,14 @@ export const getStaffApi = (param) => {
 	})
 }
 
+// 更新员工信息
+export const patchStaffStatusApi = (id, data) => {
+	return fetch(`/staff/${id}`, {
+		data,
+		method: 'PATCH'
+	})
+}
+
 /*** 薪酬管理 ***/
 export const getStaffSalaryApi = (param) => {
 	return fetch('/salary', {

@@ -30,6 +30,9 @@ const defaultStaffTable = {
 		},
 		status: {
 			title: '在职状态'
+		},
+		button_list: {
+			title: ''
 		}
 	},
 	selectable: false,
