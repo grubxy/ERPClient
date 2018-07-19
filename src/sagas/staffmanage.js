@@ -118,10 +118,34 @@ export function* addStaff(action) {
 		staffPhone: action.data.staffPhone
 	}
 
-	console.log(action.data.staffPhone.toString().length)
+	// 校验内容
+	if (action.data.staffName === '' ||
+		action.data.staffName === undefined ||
+		action.data.staffName === null) {
+		// 提示 
+		yield call(portalTrig, 400, "请输入员工姓名", delayTime)
+		return
+	}
+
+	if (action.data.staffPhone === '' ||
+		action.data.staffPhone === undefined ||
+		action.data.staffPhone === null) {
+		// 提示 
+		yield call(portalTrig, 400, "请输入电话号码", delayTime)
+		return
+	}
+
+	if (isNaN(action.data.staffPhone)) {
+		// 提示 
+		yield call(portalTrig, 400, "电话号码为数字", delayTime)
+		return
+	}
+
 	// 校验电话号码
-	if (action.data.staffPhone.toString().length != 11 ||
-		action.data.staffPhone.toString().length != 8) {
+	let reg = /^\d{11}$/;
+	let reg8 = /^\d{8}$/;
+	if (!reg.test(action.data.staffPhone) &&
+		!reg8.test(action.data.staffPhone)) {
 		yield call(portalTrig, 400, '号码位数不对', delayTime)
 		return
 	}
