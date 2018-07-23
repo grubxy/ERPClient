@@ -32,6 +32,14 @@ class FixMenu extends Component {
 		onGetUser()
 	}
 
+	userName(username) {
+		if (username === '' || username === null || username === undefined) {
+			return '未登录'
+		} else {
+			return `${username}`
+		}
+	}
+
 	render() {
 
 		const {
@@ -83,7 +91,7 @@ class FixMenu extends Component {
 		      </Dropdown>
 				*/}
 			 <Menu.Menu position='right'>
-			  <Menu.Item name={`${username}`}/>
+			  <Menu.Item name={this.userName(username)}/>
 		      <Menu.Item>
 		        <Link  style={linkStyle} to ='/login'>退出</Link>
 		      </Menu.Item>

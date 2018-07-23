@@ -72,14 +72,14 @@ class HouseInof extends Component {
               <Button color='teal' onClick={()=>onAddHouseInfo(modal, table)}> 确定 </Button>
             </Modal.Actions>
             </Modal>	  
-						<Modal open={modal.houseConfirm}>
-							<Modal.Header>确认删除仓库</Modal.Header>
-							<Modal.Content>是否确认删除该仓库?</Modal.Content>
-							<Modal.Actions>
-							<Button onClick={()=>onModal({houseConfirm:false})}> 取消 </Button>
-							<Button color='teal' onClick={()=>onConfirm(modal)}> 确定 </Button>
-							</Modal.Actions>
-						</Modal>      
+			<Modal open={modal.houseConfirm}>
+				<Modal.Header>确认删除仓库</Modal.Header>
+				<Modal.Content>是否确认删除该仓库?</Modal.Content>
+				<Modal.Actions>
+				<Button onClick={()=>onModal({houseConfirm:false})}> 取消 </Button>
+				<Button color='teal' onClick={()=>onConfirm(modal)}> 确定 </Button>
+				</Modal.Actions>
+			</Modal>      
 	        <MultiTable table = {table} onAction={onActionHouseInfo} onActivePage={onActiveHouseInfoPage}/>
 	        </Container>
 		)

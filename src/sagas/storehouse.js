@@ -181,52 +181,56 @@ export function* activePageStoreHouseConst(action) {
 
 export function* storeConstrAction(action) {
 
-	// 清空模态框内容
-	yield put({
-		type: 'STOREHOUSE_CONSTRUCTION_MODAL_CLEAR'
-	})
-
-	// 判断处理类型 待入库or待出库
-	if (action.method === 'out') {
-		// 出库
-
-		// 拷贝行内容并打开模态框
+	try {
+		// 清空模态框内容
 		yield put({
-			type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
-			data: {
-				constructionOut: true,
-				constructionRow: action.row
-			}
+			type: 'STOREHOUSE_CONSTRUCTION_MODAL_CLEAR'
 		})
 
-	} else if (action.method === 'in') {
-		// 入库
+		// 判断处理类型 待入库or待出库
+		if (action.method === 'out') {
+			// 出库
 
-		// 仓库下拉dropdown内容设置
-		let result = yield call(getHouseApi, {
-			page: 0,
-			size: 0
-		})
-
-		let dropDown = []
-		for (let tmp of result.content) {
-			dropDown.push({
-				key: tmp.idHouse,
-				text: tmp.houseName,
-				value: tmp.idHouse
+			// 拷贝行内容并打开模态框
+			yield put({
+				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
+				data: {
+					constructionOut: true,
+					constructionRow: action.row
+				}
 			})
-		}
 
-		// 拷贝行内容并打开模态框
-		yield put({
-			type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
-			data: {
-				constructionIn: true,
-				constructionRow: action.row,
-				houseDropDown: dropDown
+		} else if (action.method === 'in') {
+			// 入库
+
+			// 仓库下拉dropdown内容设置
+			let result = yield call(getHouseApi, {
+				page: 0,
+				size: 0
+			})
+
+			let dropDown = []
+			for (let tmp of result.content) {
+				dropDown.push({
+					key: tmp.idHouse,
+					text: tmp.houseName,
+					value: tmp.idHouse
+				})
 			}
-		})
 
+			// 拷贝行内容并打开模态框
+			yield put({
+				type: 'STOREHOUSE_CONSTRUCTION_MODAL_OPERATE',
+				data: {
+					constructionIn: true,
+					constructionRow: action.row,
+					houseDropDown: dropDown
+				}
+			})
+
+		}
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
