@@ -19,7 +19,8 @@ import {
   dropDown,
   dropDownSeq,
   activeProductionPage,
-  searchProduction
+  searchProduction,
+  timeProduction
 } from '../actions/flow'
 
 import {
@@ -36,6 +37,9 @@ import {
 import {
   MultiTable
 } from '../components/MultiTable'
+import {
+  Calendar
+} from '../components/Calendar'
 
 class Flow extends Component {
   componentDidMount = () => {
@@ -65,7 +69,8 @@ class Flow extends Component {
       openProductionModal,
       dropDown,
       changeInput,
-      dropDownSeq
+      dropDownSeq,
+      onSearchTime
     } = this.props
 
     return (
@@ -103,6 +108,9 @@ class Flow extends Component {
         			    </Form.Field>
                   <Form.Field>
                     <Input icon='search' placeholder='产品名称' name='name' onChange={(e)=>onSearchProduction(e.target, flowTable)}/>
+                  </Form.Field>
+                  <Form.Field>
+                    <Calendar onChange={onSearchTime} moment={flowTable.search.moment} data={flowTable}/>
                   </Form.Field>
                 </Form.Group>
               </Form>
@@ -182,6 +190,7 @@ const mapDispatchToProps = {
   dropDown: dropDown,
   dropDownSeq: dropDownSeq,
   onActivePageProduction: activeProductionPage,
+  onSearchTime: timeProduction
 }
 
 

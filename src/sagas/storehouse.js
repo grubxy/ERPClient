@@ -48,8 +48,7 @@ function* updateStoreConstrTable(result) {
 				status: tmp.enumConstructStatus.desc,
 				srcMaterial: tmp.seq.srcMaterial.name,
 				dstMaterial: tmp.seq.dstMaterial.name,
-				cmplCount: tmp.cmplCount,
-				errCount: tmp.errCount,
+				dstCount: tmp.dstCount,
 				managerName: tmp.production.owner,
 				time: new Date(tmp.sdate).toLocaleString(),
 				button_list: [{

@@ -257,7 +257,31 @@ export function* searchFlow(action) {
 
 		console.log(searchParam)
 	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
+	}
+}
 
+// 搜索时间
+export function* timeFlow(action) {
+	try {
+		yield put({
+			type: 'UPDATE_PRODUCTION_TABLE_SEARCH_CHANGE',
+			name: 'moment',
+			value: action.moment
+		})
+
+		let param = { ...action.data.search,
+			moment: action.moment,
+			page: 0,
+			size: action.data.size
+		}
+
+		let result = yield call(getFlowApi, param)
+
+		yield call(updateFlowTable, result)
+
+	} catch (error) {
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 
@@ -275,7 +299,7 @@ export function* activePageFlow(action) {
 		yield call(updateFlowTable, result)
 
 	} catch (error) {
-
+		yield call(portalTrig, error.status, error.data.content, delayTime)
 	}
 }
 

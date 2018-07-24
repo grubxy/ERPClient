@@ -28,6 +28,13 @@ export const searchProduction = (target, table) => ({
   table
 })
 
+// 设置时间
+export const timeProduction = (moment, data) => ({
+  type: 'PRODUCTION_TIME',
+  moment,
+  data
+})
+
 // 打开生产流程模态框
 export const openProductionModal = (data) => ({
   type: 'PRODUCTION_MODAL_OPEN',

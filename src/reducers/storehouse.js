@@ -13,11 +13,8 @@ const defaultStoreConstrTable = {
 		status: {
 			title: '工单状态'
 		},
-		cmplCount: {
-			title: '完成入库数量'
-		},
-		errCount: {
-			title: '次品数量'
+		dstCount: {
+			title: '计划生产数'
 		},
 		srcMaterial: {
 			title: '需要物料'

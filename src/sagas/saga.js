@@ -31,6 +31,7 @@ import {
   selectFlow,
   actionFlow,
   searchFlow,
+  timeFlow,
   activePageFlow,
   openProductionModal,
   addProduction,
@@ -126,6 +127,7 @@ function* mySaga() {
   yield takeEvery('CONSTRUCTION_ACTION', actionConstruction)
   yield takeEvery('CONSTRUCTION_COMPLETE', completeConstruction)
   yield takeEvery('CONSTRUCTION_ADD', addConstructionByFlowId)
+  yield takeEvery('PRODUCTION_TIME', timeFlow)
 
   // 员工管理
   yield takeEvery('STAFF_MANAGE_INIT', initStaffManage)
