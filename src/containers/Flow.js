@@ -130,7 +130,7 @@ class Flow extends Component {
                   <Modal.Content>
                     <Form size='large'>
                       <Form.Group>
-                        <Form.Dropdown placeholder='工序' label="工序" name='seqId' search selection options={modal.dropDownSeq} onChange={(e, {name, value})=>dropDownSeq(name, value)}/>
+                        <Form.Dropdown placeholder='工序' label="工序" name='seqInfoId' search selection options={modal.dropDownSeq} onChange={(e, {name, value})=>dropDownSeq(name, value)}/>
                         <Form.Dropdown placeholder='默认员工' label="默认员工" name='staffId' search selection options={modal.dropDownStaff} onChange={(e, {name, value})=>dropDown(name, value)}/>
                         <Form.Input label="计划生产数" name='constructionDst' onChange={(e)=>changeInput(e.target)}/>
                       </Form.Group>

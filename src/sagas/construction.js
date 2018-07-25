@@ -30,14 +30,14 @@ function* updateConstructionTable(result) {
 				constructionTable.push({
 					cid: tmp.idConstruct,
 					productName: tmp.production.product.productName,
-					seq: tmp.seq.seqName,
+					seq: tmp.seqInfo.seq.seqName,
 					dstCounts: tmp.dstCount,
 					cmplCounts: tmp.cmplCount,
 					errCounts: tmp.errCount,
 					staff: tmp.staff.staffName,
 					status: tmp.enumConstructStatus.desc,
-					srcMaterial: tmp.seq.srcMaterial.name,
-					dstMaterial: tmp.seq.dstMaterial.name,
+					srcMaterial: tmp.seqInfo.seq.srcMaterial.name,
+					dstMaterial: tmp.seqInfo.seq.dstMaterial.name,
 					managerName: tmp.production.owner,
 					time: new Date(tmp.sdate).toLocaleString(),
 					button_list: [{
@@ -50,14 +50,14 @@ function* updateConstructionTable(result) {
 				constructionTable.push({
 					cid: tmp.idConstruct,
 					productName: tmp.production.product.productName,
-					seq: tmp.seq.seqName,
+					seq: tmp.seqInfo.seq.seqName,
 					dstCounts: tmp.dstCount,
 					cmplCounts: tmp.cmplCount,
 					errCounts: tmp.errCount,
 					staff: tmp.staff.staffName,
 					status: tmp.enumConstructStatus.desc,
-					srcMaterial: tmp.seq.srcMaterial.name,
-					dstMaterial: tmp.seq.dstMaterial.name,
+					srcMaterial: tmp.seqInfo.seq.srcMaterial.name,
+					dstMaterial: tmp.seqInfo.seq.dstMaterial.name,
 					managerName: tmp.production.owner,
 					time: new Date(tmp.sdate).toLocaleString()
 				})

@@ -7,8 +7,7 @@ import {
 	getFlowApi,
 	getFlowSeqInfoApi,
 	getProductApi,
-	getSeqByFlowIdApi,
-	getStaffBySeqIdApi,
+	getStaffBySeqInfoIdApi,
 	postConstructionByFlowIdApi,
 	getConstructionByFlowIdApi,
 	patchConstructionStatusApi
@@ -193,7 +192,7 @@ export function* actionFlow(action) {
 	if (action.method === 'add') {
 		// 获取员工，工序下拉框
 		try {
-			let result = yield call(getSeqByFlowIdApi, action.row.id)
+			let result = yield call(getFlowSeqInfoApi, action.row.id)
 
 			if (result.length === 0) {
 				yield call(portalTrig, 400, "没有找到对应的工序", delayTime)
@@ -203,9 +202,9 @@ export function* actionFlow(action) {
 			let seqDropdown = []
 			for (let tmp of result) {
 				seqDropdown.push({
-					key: tmp.idSeq,
-					text: tmp.seqName,
-					value: tmp.idSeq
+					key: tmp.idSeqInfo,
+					text: tmp.seq.seqName,
+					value: tmp.idSeqInfo
 				})
 			}
 
@@ -376,7 +375,7 @@ export function* selectSeqDropDown(action) {
 	})
 	// 获取工序默认员工
 	try {
-		let result = yield call(getStaffBySeqIdApi, action.value, {
+		let result = yield call(getStaffBySeqInfoIdApi, action.value, {
 			page: 0,
 			size: 0
 		})
@@ -492,8 +491,8 @@ export function* addConstructionByFlowId(action) {
 	// 组装消息体
 	let body = {
 		dstCount: action.data.constructionDst,
-		seq: {
-			idSeq: action.data.seqId
+		seqInfo: {
+			idSeqInfo: action.data.seqInfoId
 		},
 		staff: {
 			idStaff: action.data.staffId

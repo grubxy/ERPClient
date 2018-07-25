@@ -196,6 +196,14 @@ export const getStaffBySeqIdApi = (id, param) => {
 	})
 }
 
+// 获取工序详情默认员工
+export const getStaffBySeqInfoIdApi = (id, param) => {
+	return fetch(`/seqInfo/${id}/staff`, {
+		method: 'GET',
+		params: param
+	})
+}
+
 // 删除默认员工
 export const deleteStaffBySeqIdApi = (id, idStaff) => {
 	return fetch(`/seq/${id}/staff/${idStaff}`, {
